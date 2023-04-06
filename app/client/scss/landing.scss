@@ -1,0 +1,12 @@
+#landing-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#landing-carousel {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
