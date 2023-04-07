@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useNavigate } from 'react-router';
 import SignIn from '../components/SignIn';
@@ -17,16 +17,15 @@ const Landing = () => {
   }, []);
 
   return (
-    <Container id="landing-page" fluid className="py-3">
-      <Row className="align-middle text-center">
-        <Col xs={7}>
-          <LandingCarousel />
-        </Col>
-
-        <Col xs={5}>
+    <Container id="landing-page" fluid>
+      <div className="landing-page-responsive-container">
+        <LandingCarousel />
+        <div>
+          <h2>Welcome!</h2>
           <SignIn />
-        </Col>
-      </Row>
+        </div>
+        {/* <LandingCarousel reverse /> */}
+      </div>
     </Container>
   );
 };

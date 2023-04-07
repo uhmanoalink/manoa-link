@@ -5,17 +5,17 @@ import { Image } from 'react-bootstrap';
 /**
  * Individual items to be displayed on the landing page carousel.
  *
- * @param {{ contentType: 'image' | 'text', data: string }} props
+ * @param {{ contentType: 'image' | 'text', data: string, offset: number }} props
  */
-const LandingCarouselItem = ({ contentType, data }) => {
+const LandingCarouselItem = ({ contentType, data, offset }) => {
   const itemType = contentType;
 
-  const createImage = () => <Image src={data} />;
+  const createImage = () => <Image src={data} width="250x" />;
 
   const createText = () => <h3>{data}</h3>;
 
   return (
-    <div>
+    <div className="landing-carousel-item" style={{ marginLeft: offset }}>
       {itemType === 'image' && createImage()}
       {itemType === 'text' && createText()}
     </div>
@@ -25,6 +25,7 @@ const LandingCarouselItem = ({ contentType, data }) => {
 LandingCarouselItem.propTypes = {
   contentType: PropTypes.oneOf(['image', 'text']).isRequired,
   data: PropTypes.string.isRequired,
+  offset: PropTypes.number.isRequired,
 };
 
 export default LandingCarouselItem;

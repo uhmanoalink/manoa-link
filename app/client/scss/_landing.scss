@@ -1,0 +1,79 @@
+$landing-page-bg: $background-light;
+
+#landing-page {
+  .landing-page-responsive-container {
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  background: $landing-page-bg;
+
+  .sign-in {
+    margin-top: 1rem;
+    border-radius: 20px;
+    box-shadow: 0 0 20px 0 darken($landing-page-bg, 60%);
+
+    .card {
+      border-radius: 20px 20px 0 0;
+    }
+
+    .alert {
+      border-radius: 0 0 20px 20px;
+    }
+  }
+}
+
+#landing-carousel {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+
+  .landing-carousel-track {
+    animation: slide-up 15s linear infinite;
+
+    .landing-carousel-item {
+      padding-top: 3rem;
+    }
+  }
+
+  &::after,
+  &::before {
+    z-index: 1;
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background-image: linear-gradient(to bottom, $landing-page-bg, rgba(255, 255, 255, 0));
+  }
+
+  &::before {
+    top: 0;
+  }
+
+  &::after {
+    bottom: 0;
+    rotate: 180deg;
+  }
+}
+
+@media (max-width: 768px) {
+  #landing-page {
+    justify-content: center;
+  }
+
+  #landing-carousel {
+    display: none;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}

@@ -5,29 +5,24 @@ import LandingCarouselItem from './LandingCarouselItem';
 /**
  * Landing page carousel, displaying an infinitely scrolling wall of items.
  *
- * @param {{ itemProps: { contentType: 'image' | 'text', data: string }[] }} props
+ * @param {{ itemProps: { contentType: 'image' | 'text', data: string }[], reverse: bool }} props
  */
-const LandingCarousel = ({ itemProps }) => {
-  const sampleData = itemProps ?? [
-    {
-      contentType: 'text',
-      data: 'test',
-    },
-    {
-      contentType: 'text',
-      data: 'test2',
-    },
-    {
-      contentType: 'text',
-      data: 'test3',
-    },
-  ];
+const LandingCarousel = ({ itemProps, reverse }) => {
+  const offsets = Array.from({ length: itemProps.length }, () => Math.floor(Math.random() * 100));
+  const items = reverse ? itemProps.reverse() : itemProps;
 
   return (
     <div id="landing-carousel">
-      {sampleData.map(({ contentType, data }, index) => (
-        <LandingCarouselItem key={index} contentType={contentType} data={data} />
-      ))}
+      <div className="landing-carousel-track" style={{ animationDirection: reverse ? 'reverse' : 'normal' }}>
+        {items.slice().map(({ contentType, data }, i) => (
+          <LandingCarouselItem key={i} contentType={contentType} data={data} offset={offsets[i]} />
+        ))}
+      </div>
+      <div className="landing-carousel-track" style={{ animationDirection: reverse ? 'reverse' : 'normal' }}>
+        {items.slice().map(({ contentType, data }, i) => (
+          <LandingCarouselItem key={i} contentType={contentType} data={data} offset={offsets[i]} />
+        ))}
+      </div>
     </div>
   );
 };
@@ -38,7 +33,38 @@ LandingCarousel.propTypes = {
       contentType: PropTypes.oneOf(['image', 'text']),
       data: PropTypes.string,
     }),
-  ).isRequired,
+  ),
+  reverse: PropTypes.bool,
+};
+
+LandingCarousel.defaultProps = {
+  itemProps: [
+    {
+      contentType: 'text',
+      data: 'Manoa Link',
+    },
+    {
+      contentType: 'text',
+      data: 'Item 2',
+    },
+    {
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
+    },
+    {
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
+    },
+    {
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
+    },
+    {
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
+    },
+  ],
+  reverse: false,
 };
 
 export default LandingCarousel;
