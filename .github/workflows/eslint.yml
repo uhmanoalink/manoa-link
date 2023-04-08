@@ -44,25 +44,25 @@ jobs:
       - name: Run ESLint on /imports
         run: |
           echo "----RUNNING ESLINT ON /imports"
-          npx eslint ./app/imports/ --config ./app/.eslintrc.js --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file eslint-results-imports.sarif
+          npx eslint ./app/imports/ --config ./app/.eslintrc.js --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file results/eslint-results-imports.sarif
           echo "----DONE RUNNING ESLINT ON /imports"
         continue-on-error: true
 
       - name: Run ESLint on /tests
         run: |
           echo "----RUNNING ESLINT ON /tests"
-          npx eslint ./app/tests/ --config ./app/.eslintrc.js --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file eslint-results-tests.sarif
+          npx eslint ./app/tests/ --config ./app/.eslintrc.js --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file results/eslint-results-tests.sarif
           echo "----DONE RUNNING ESLINT ON /tests"
         continue-on-error: true
 
       - name: Upload /imports lint analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: eslint-results-imports.sarif
+          sarif_file: results/ # eslint-results-imports.sarif
           wait-for-processing: true
 
-      - name: Upload /tests lint analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: eslint-results-tests.sarif
-          wait-for-processing: true
+      # - name: Upload /tests lint analysis results to GitHub
+      #   uses: github/codeql-action/upload-sarif@v2
+      #   with:
+      #     sarif_file: eslint-results-tests.sarif
+      #     wait-for-processing: true
