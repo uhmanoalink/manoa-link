@@ -1,7 +1,7 @@
 @import './scss/colors';
 
-@use './scss/landing';
-@use './scss/components';
+@import './scss/landing';
+@import './scss/components';
 
 /* Use Open Sans as the default sans serif font. */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700|Source+Code+Pro:300,400,500,700');
