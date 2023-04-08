@@ -1,7 +1,9 @@
+import {} from 'testcafe';
+
 import { landingPage } from './landing.page';
-import { signinPage } from './signin.page';
-import { signoutPage } from './signout.page';
-import { navBar } from './navbar.component';
+// import { signinPage } from './signin.page';
+// import { signoutPage } from './signout.page';
+// import { navBar } from './navbar.component';
 
 /* global fixture:false, test:false */
 
@@ -11,6 +13,14 @@ const credentials = { username: 'john@foo.com', password: 'changeme' };
 fixture('ManoaLink localhost test with default db').page(
   'http://localhost:3000'
 );
+
+/*
+  Test format:
+  test(testName, async (t) => {
+    await test1;
+    await test2;
+  });
+*/
 
 test('Test that landing page shows up', async (testController) => {
   await landingPage.isDisplayed(testController);
