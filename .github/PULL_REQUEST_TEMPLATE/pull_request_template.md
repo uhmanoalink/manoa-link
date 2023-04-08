@@ -1,3 +1,5 @@
+[https://github.com/gameboiss/ask-me/blob/main/.github/pull_request_template.md]: #
+
 # PR Description
 
 # Checklist:
@@ -11,6 +13,4 @@
 
 Please include additional context.
 
-## Issue Link
-
-Please link the original issue URL.
+### [Issue Link](Add link to issue here)
