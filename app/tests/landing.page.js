@@ -11,6 +11,10 @@ class LandingPage {
     // This is first test to be run. Wait 10 seconds to avoid timeouts with GitHub Actions.
     await testController.wait(10000).expect(this.pageSelector.exists).ok();
   }
+
+  async canLogIn(testController) {
+    // Check if login component works
+  }
 }
 
 export const landingPage = new LandingPage();
