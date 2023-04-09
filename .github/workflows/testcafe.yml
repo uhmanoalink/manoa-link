@@ -1,9 +1,10 @@
-name: ci-meteor-application-template-react
+name: Testcafe
 
 on:
   push:
-    branches:
-      - main
+    branches: ['main']
+  pull_request:
+    branches: ['main']
 
 defaults:
   run:
@@ -11,7 +12,6 @@ defaults:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
