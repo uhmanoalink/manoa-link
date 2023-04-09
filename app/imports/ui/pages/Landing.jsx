@@ -13,12 +13,12 @@ const Landing = () => {
           { isLogged ? <p /> : <p>Sign in or sign up to get connected with hirers and recruiters in your area.</p> }
         </Col>
         <Col xs={4}>
-          <Image roundedCircle src="/images/meteor-logo.png" width="150px"/>
+          <Image roundedCircle src="/images/meteor-logo.png" width="150px" />
         </Col>
 
       </Row>
     </Container>
-  )
+  );
 };
 
 export default Landing;

@@ -1,6 +1,9 @@
 import { landingPage } from './landing.page';
 import { signinPage } from './signin.page';
 import { signoutPage } from './signout.page';
+import { companyListingPage } from './companylisting.page';
+import { addEventsPage } from './addevents.page.js';
+import { listEventsPage } from './listevents.page.js';
 import { navBar } from './navbar.component';
 
 /* global fixture:false, test:false */
@@ -21,4 +24,16 @@ test('Test that signin and signout work', async (testController) => {
   await navBar.isLoggedIn(testController, credentials.username);
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
+});
+
+test('Test that company listing, add events, and list events are accessible via navbar', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.isLoggedIn(testController, credentials.username);
+  await navBar.gotoCompanyListingPage(testController);
+  await companyListingPage.isDisplayed(testController);
+  await navBar.gotoAddEventsPage(testController);
+  await addEventsPage.isDisplayed(testController);
+  await navBar.gotoListEventsPage(testController);
+  await listEventsPage.isDisplayed(testController);
 });

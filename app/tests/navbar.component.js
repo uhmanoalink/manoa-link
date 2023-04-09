@@ -21,6 +21,18 @@ class NavBar {
     await testController.click('#login-dropdown-sign-in');
   }
 
+  async gotoCompanyListingPage(testController) {
+    await testController.click('#company-listing');
+  }
+
+  async gotoAddEventsPage(testController) {
+    await testController.click('#add-events-nav');
+  }
+
+  async gotoListEventsPage(testController) {
+    await testController.click('#list-events-nav');
+  }
+
   /** Check that the specified user is currently logged in. */
   async isLoggedIn(testController, username) {
     const visible = await Selector('#basic-navbar-nav').visible;
