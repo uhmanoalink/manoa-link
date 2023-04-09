@@ -11,18 +11,8 @@ To install this project, follow these steps:
 1. Clone the repository to your local machine
 2. Install [Meteor](https://docs.meteor.com/install.html)
 3. `cd` into the app directory
-4. Install dependencies:
-
-```bash
-$ meteor npm install
-```
-
-5. Start the app:
-
-```bash
-$ meteor npm start
-```
-
+4. Install dependencies with `meteor npm install`
+5. Start the app with `meteor npm start`
 6. The app should be running at http://localhost:3000
 
 ## License
