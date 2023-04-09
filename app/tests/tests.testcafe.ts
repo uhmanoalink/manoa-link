@@ -13,8 +13,17 @@ import { navBar } from './navbar.component';
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
 
-fixture('meteor-application-template-react localhost test with default db')
-  .page('http://localhost:3000');
+fixture('ManoaLink localhost test with default db').page(
+  'http://localhost:3000'
+);
+
+/*
+  Test format:
+  test(testName, async (t) => {
+    await test1;
+    await test2;
+  });
+*/
 
 test('Test that landing page shows up', async (testController) => {
   await landingPage.isDisplayed(testController);

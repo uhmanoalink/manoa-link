@@ -10,12 +10,11 @@ const Landing = () => {
       <Row className="align-middle text-center">
         <Col xs={8} className="d-flex flex-column justify-content-center">
           <h1>Welcome to Manoa-Link!</h1>
-          { isLogged ? <p /> : <p>Sign in or sign up to get connected with hirers and recruiters in your area.</p> }
+          {isLogged ? <p /> : <p>Sign in or sign up to get connected with hirers and recruiters in your area.</p>}
         </Col>
         <Col xs={4}>
           <Image roundedCircle src="/images/meteor-logo.png" width="150px" />
         </Col>
-
       </Row>
     </Container>
   );
