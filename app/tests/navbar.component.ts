@@ -3,7 +3,7 @@ import { Selector } from 'testcafe';
 class NavBar {
 
   /** If someone is logged in, then log them out, otherwise do nothing. */
-  async ensureLogout(testController) {
+  async ensureLogout(testController: TestController) {
     const loggedInUser = await Selector('#navbar-current-user').exists;
     if (loggedInUser) {
       await testController.click('#navbar-current-user');
@@ -11,7 +11,7 @@ class NavBar {
     }
   }
 
-  async gotoSignInPage(testController) {
+  async gotoSignInPage(testController: TestController) {
     await this.ensureLogout(testController);
     const visible = await Selector('#basic-navbar-nav').visible;
     if (!visible) {
@@ -21,20 +21,20 @@ class NavBar {
     await testController.click('#login-dropdown-sign-in');
   }
 
-  async gotoCompanyListingPage(testController) {
+  async gotoCompanyListingPage(testController: TestController) {
     await testController.click('#company-listing');
   }
 
-  async gotoAddEventsPage(testController) {
+  async gotoAddEventsPage(testController: TestController) {
     await testController.click('#add-events-nav');
   }
 
-  async gotoListEventsPage(testController) {
+  async gotoListEventsPage(testController: TestController) {
     await testController.click('#list-events-nav');
   }
 
   /** Check that the specified user is currently logged in. */
-  async isLoggedIn(testController, username) {
+  async isLoggedIn(testController: TestController, username) {
     const visible = await Selector('#basic-navbar-nav').visible;
     if (!visible) {
       await testController.click('button.navbar-toggler');
@@ -44,7 +44,7 @@ class NavBar {
   }
 
   /** Check that someone is logged in, then click items to logout. */
-  async logout(testController) {
+  async logout(testController: TestController) {
     const visible = await Selector('#basic-navbar-nav').visible;
     if (!visible) {
       await testController.click('button.navbar-toggler');
@@ -55,7 +55,7 @@ class NavBar {
   }
 
   /** Pull down login menu, go to sign up page. */
-  async gotoSignUpPage(testController) {
+  async gotoSignUpPage(testController: TestController) {
     await this.ensureLogout(testController);
     const visible = await Selector('#basic-navbar-nav').visible;
     if (!visible) {

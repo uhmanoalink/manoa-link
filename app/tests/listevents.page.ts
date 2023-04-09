@@ -1,13 +1,15 @@
 import { Selector } from 'testcafe';
 
 class ListEventsPage {
+  private pageId: string;
+  private pageSelector: Selector;
   constructor() {
     this.pageId = '#list-events-page';
     this.pageSelector = Selector(this.pageId);
   }
 
   /** Checks that this page is currently displayed. */
-  async isDisplayed(testController) {
+  async isDisplayed(testController: TestController) {
     await testController.expect(this.pageSelector.exists).ok();
   }
 }

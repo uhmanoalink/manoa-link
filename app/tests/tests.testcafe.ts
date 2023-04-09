@@ -1,9 +1,11 @@
+import {} from 'testcafe';
+
 import { landingPage } from './landing.page';
 import { signinPage } from './signin.page';
 import { signoutPage } from './signout.page';
 import { companyListingPage } from './companylisting.page';
-import { addEventsPage } from './addevents.page.js';
-import { listEventsPage } from './listevents.page.js';
+import { addEventsPage } from './addevents.page';
+import { listEventsPage } from './listevents.page';
 import { navBar } from './navbar.component';
 
 /* global fixture:false, test:false */
