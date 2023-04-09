@@ -41,7 +41,7 @@
     "lint-fix": "eslint --quiet --fix --ext .jsx --ext .js ./imports && eslint --quiet --ext .js ./tests",
     "testcafe": "testcafe chrome tests/*.testcafe.ts",
     "testcafe-single": "testcafe chrome tests/*.testcafe.ts -t \"Test that signin and signout work\"",
-    "testcafe-ci": "testcafe chrome:headless tests/*.testcafe.ts -q",
+    "testcafe-ci": "testcafe chrome:headless tests/*.testcafe.ts -q --app \"meteor npm run start\" --app-init-delay 30000",
     "test-all": "meteor reset && meteor npm run lint && meteor npm run unimported && meteor npm run testcafe-ci",
     "unimported": "npx unimported"
   }
