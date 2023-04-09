@@ -1,6 +1,6 @@
 *.iml
-.idea/
-.vscode/
+.vscode
+.idea
 .DS_Store
 node_modules/
 settings.production.json
