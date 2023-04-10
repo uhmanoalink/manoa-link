@@ -27,7 +27,7 @@ const SignIn = () => {
       if (err) {
         setError(err.reason);
       } else {
-        navigate('/');
+        navigate('/home');
       }
     });
     // console.log('submit2', email, password, error, redirect);
@@ -38,7 +38,7 @@ const SignIn = () => {
   // if correct authentication, redirect to page instead of login screen
   // Otherwise return the Login form.
   return (
-    <div className="sign-in">
+    <div className="signin">
       <AutoForm schema={bridge} onSubmit={(data) => submit(data)}>
         <Card>
           <Card.Body>
