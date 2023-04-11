@@ -15,6 +15,7 @@ class CompanysCollection {
       companyName: String,
       address: String,
       description: String,
+      image: String,
       tag: String,
       owner: String,
     });
