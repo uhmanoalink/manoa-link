@@ -1,4 +1,6 @@
 import { Selector } from 'testcafe';
+import { signinComponent } from './signin.component';
+import Credentials from './types/CredentialsType';
 
 class LandingPage {
   private pageId: string;
@@ -10,9 +12,20 @@ class LandingPage {
   }
 
   /** Asserts that this page is currently displayed. */
-  async isDisplayed(testController: TestController) {
+  private async isDisplayed(testController: TestController) {
     // This is first test to be run. Wait 10 seconds to avoid timeouts with GitHub Actions.
-    await testController.wait(10000).expect(this.pageSelector.exists).ok();
+    await testController.expect(this.pageSelector.exists).ok();
+    await testController.expect(this.pageSelector.visible).ok();
+  }
+
+  private async hasSignIn(testController: TestController, credentials: Credentials) {
+    await signinComponent.isDisplayed(testController);
+    await signinComponent.signin(testController, credentials.username, credentials.password)
+  }
+
+  async test(testController: TestController, credentials: Credentials) {
+    await this.isDisplayed(testController);
+    await this.hasSignIn(testController, credentials)
   }
 }
 
