@@ -22,7 +22,7 @@ class UsersCollection {
     this.collection.attachSchema(this.schema);
     // Define names for publications and subscriptions
     this.userPublicationName = `${this.name}.publication.user`;
-    this.companyPublicationName = `${this.name}.publication.user`;
+    this.companyPublicationName = `${this.name}.publication.company`;
     this.adminPublicationName = `${this.name}.publication.admin`;
   }
 }
