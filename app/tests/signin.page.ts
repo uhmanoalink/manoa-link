@@ -2,18 +2,20 @@ import { Selector } from 'testcafe';
 import { navBar } from './navbar.component';
 
 class SigninPage {
+  private pageId: string;
+  private pageSelector: Selector;
   constructor() {
     this.pageId = '#signin-page';
     this.pageSelector = Selector(this.pageId);
   }
 
   /** Checks that this page is currently displayed. */
-  async isDisplayed(testController) {
+  async isDisplayed(testController: TestController) {
     await testController.expect(this.pageSelector.exists).ok();
   }
 
   /** Fills out and submits the form to signin, then checks to see that login was successful. */
-  async signin(testController, username, password) {
+  async signin(testController: TestController, username: string, password: string) {
     await this.isDisplayed(testController);
     await testController.typeText('#signin-form-email', username);
     await testController.typeText('#signin-form-password', password);

@@ -22,7 +22,7 @@ class NavBar {
   }
 
   async gotoCompanyListingPage(testController: TestController) {
-    await testController.click('#company-listing');
+    await testController.click('#company-listing-nav');
   }
 
   async gotoAddEventsPage(testController: TestController) {
@@ -34,7 +34,7 @@ class NavBar {
   }
 
   /** Check that the specified user is currently logged in. */
-  async isLoggedIn(testController: TestController, username) {
+  async isLoggedIn(testController: TestController, username: string) {
     const visible = await Selector('#basic-navbar-nav').visible;
     if (!visible) {
       await testController.click('button.navbar-toggler');
