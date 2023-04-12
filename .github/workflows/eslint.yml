@@ -48,14 +48,14 @@ jobs:
       - name: Run ESLint on /imports
         run: |
           echo "---- RUNNING ESLINT ON /imports ----"
-          npx eslint ./app/imports/ --config ./app/.eslintrc.cjs --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file results/eslint-results-imports.sarif
+          npx eslint ./app/imports/ --config ./app/.eslintrc.js --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file results/eslint-results-imports.sarif
           echo "---- DONE RUNNING ESLINT ON /imports ----"
         continue-on-error: true
 
       - name: Run ESLint on /tests
         run: |
           echo "---- RUNNING ESLINT ON /tests ----"
-          npx eslint ./app/tests/ --config ./app/.eslintrc.cjs --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file results/eslint-results-tests.sarif
+          npx eslint ./app/tests/ --config ./app/.eslintrc.js --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file results/eslint-results-tests.sarif
           echo "---- DONE RUNNING ESLINT ON /tests ----"
         continue-on-error: true
 
