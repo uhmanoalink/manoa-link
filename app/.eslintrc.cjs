@@ -8,7 +8,10 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:meteor/recommended',
     'airbnb',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -20,7 +23,9 @@ module.exports = {
     'jsx',
     'meteor',
     'react',
+    '@typescript-eslint',
   ],
+  root: true,
   rules: {
     'arrow-parens': 'off',
     camelcase: 'off',
