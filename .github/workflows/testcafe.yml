@@ -11,7 +11,7 @@ defaults:
     working-directory: ./app
 
 jobs:
-  build:
+  testcafe:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,14 +27,20 @@ jobs:
 
       - uses: actions/setup-node@v1
         with:
-          node-version: '16.x'
+          node-version: '14.x'
 
       - run: npm ci --legacy-peer-deps
 
       - run: curl https://install.meteor.com/ | sh
 
-      - name: Run Meteor commands
-        shell: bash -l {0}
-        run: |
-          meteor npm install
-          meteor npm run testcafe-ci
+      - name: Install wait-on
+        run: npm install wait-on --save-dev
+
+      - name: Start the app
+        run: meteor npm run start &
+
+      - name: Wait for the app to start
+        run: npx wait-on http://localhost:3000
+
+      - name: Run TestCafe tests
+        run: npm run testcafe-ci
