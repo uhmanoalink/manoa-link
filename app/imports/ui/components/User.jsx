@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom';
 const User = ({ user }) => (
   <Card className="h-100">
     <Card.Header>
-      <Card.Title>{user.userName}</Card.Title>
-      <Card.Subtitle>{user.companyName}</Card.Subtitle>
+      <Card.Title>{user.firstName} {user.lastName}</Card.Title>
+      <Card.Subtitle>{user.major}</Card.Subtitle>
     </Card.Header>
     <Card.Body>
-      <Card.Text>{user.description}</Card.Text>
+      <Card.Text>{user.address}</Card.Text>
       <Link to={`/edit/${user._id}`}>Edit</Link>
     </Card.Body>
   </Card>
