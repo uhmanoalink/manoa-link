@@ -38,8 +38,8 @@
     "eslint-utils": "^3.0.0",
     "prettier": "^2.8.7",
     "testcafe": "^2.3.1",
-    "typescript": "^5.0.4"
-    "sass": "^1.61.0",
+    "typescript": "^5.0.4",
+    "sass": "^1.61.0"
   },
   "scripts": {
     "dev": "concurrently -n \"sass,meteor\" \"sass client/style.scss client/style.css --watch\" \"meteor npm run start\"",
