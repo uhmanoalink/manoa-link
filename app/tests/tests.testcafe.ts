@@ -12,7 +12,7 @@ import Credentials from './types/CredentialsType';
 const credentials: Credentials = { username: 'john@foo.com', password: 'changeme' };
 
 fixture('ManoaLink localhost test with default db').page(
-  'http://localhost:3000'
+  'http://localhost:3000',
 );
 
 /*

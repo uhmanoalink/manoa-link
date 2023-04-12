@@ -2,6 +2,7 @@ import { ClientFunction, Selector } from 'testcafe';
 
 class SigninComponent {
   private pageId: string;
+
   private pageSelector: SelectorAPI;
 
   constructor() {
@@ -22,7 +23,7 @@ class SigninComponent {
     await testController.click('.signin-form-submit input.btn.btn-primary');
     await testController.wait(500);
     const getPageUrl = ClientFunction(() => window.location.href);
-    const expectedUrl: string = 'http://localhost:3000/home';
+    const expectedUrl = 'http://localhost:3000/home';
     const currentUrl = await getPageUrl();
     await testController.expect(currentUrl).eql(expectedUrl);
   }
