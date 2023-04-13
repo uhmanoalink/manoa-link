@@ -10,7 +10,7 @@ const FooterCol = ({ title, items }) => (
     {items.map(({ name, to }, index) => {
       if (to) {
         return (
-          <NavLink key={index} href={to}>
+          <NavLink key={index} to={to}>
             {name}
           </NavLink>
         );
