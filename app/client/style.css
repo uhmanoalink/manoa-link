@@ -149,6 +149,16 @@
   grid-area: calendar;
 }
 
+#profile-main {
+  align-self: center;
+  align-items: center;
+  width: 600px;
+}
+
+#manoa-green {
+  color: #024731;
+}
+
 /* Use Open Sans as the default sans serif font. */
 /* Set up some CSS variables to theme the application. */
 :root {
