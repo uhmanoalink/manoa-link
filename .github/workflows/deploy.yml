@@ -28,6 +28,9 @@ jobs:
 
       - name: Install mup
         run: npm i -g mup
+        
+      - name: Build
+        run: meteor npm run prestart
 
       - name: Write mup.js content to file
         run: echo "${{ secrets.MUP_JS_CONTENT }}" > ./mup.js
