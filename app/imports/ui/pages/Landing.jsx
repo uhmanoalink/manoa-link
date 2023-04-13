@@ -43,7 +43,7 @@ const Landing = () => {
         <h2>Streamlined Student interface</h2>
         <div className="features">
           <div className="feature">
-            <h2>Never miss upcoming events</h2>
+            <h3>Never miss upcoming events</h3>
             <p>
               Manoa Link showcases a variety of events, including job fairs,
               workshops, and networking sessions, giving students the chance to
@@ -51,7 +51,7 @@ const Landing = () => {
             </p>
           </div>
           <div className="feature">
-            <h2>Notification management</h2>
+            <h3>Notification management</h3>
             <p>
               Manoa Link’s notification system keeps users informed about
               important updates, such as new events, job openings, or changes to
@@ -60,7 +60,7 @@ const Landing = () => {
             </p>
           </div>
           <div className="feature">
-            <h2>Comprehensive company listings</h2>
+            <h3>Comprehensive company listings</h3>
             <p>
               Students can browse through a wide range of company listings,
               filter them by tags, and save their favorite companies for future
