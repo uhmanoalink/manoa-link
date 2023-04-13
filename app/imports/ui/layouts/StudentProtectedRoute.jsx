@@ -13,7 +13,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
  *
  * @type { React.FC<{ ready: boolean, children: React.ReactNode }> }
  */
-const UserProtectedRoute = ({ ready, children }) => {
+const StudentProtectedRoute = ({ ready, children }) => {
   const isLogged = Meteor.userId() !== null;
   if (!isLogged) {
     return <Navigate to="/signin" />;
@@ -21,20 +21,20 @@ const UserProtectedRoute = ({ ready, children }) => {
   if (!ready) {
     return <LoadingSpinner />;
   }
-  const isUser = Roles.userIsInRole(Meteor.userId(), 'user');
+  const isStudent = Roles.userIsInRole(Meteor.userId(), 'student');
   const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
-  return (isLogged && (isUser || isAdmin)) ? children : <Navigate to="/notauthorized" />;
+  return (isLogged && (isStudent || isAdmin)) ? children : <Navigate to="/notauthorized" />;
 };
 
 // Require a component and location to be passed to each AdminProtectedRoute.
-UserProtectedRoute.propTypes = {
+StudentProtectedRoute.propTypes = {
   ready: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 
-UserProtectedRoute.defaultProps = {
+StudentProtectedRoute.defaultProps = {
   ready: false,
   children: <Landing />,
 };
 
-export default UserProtectedRoute;
+export default StudentProtectedRoute;

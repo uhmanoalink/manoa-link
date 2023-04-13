@@ -23,7 +23,7 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            {(Roles.userIsInRole(Meteor.userId(), 'user') || Roles.userIsInRole(Meteor.userId(), 'admin')) ? (
+            {(Roles.userIsInRole(Meteor.userId(), 'student') || Roles.userIsInRole(Meteor.userId(), 'admin')) ? (
               <Nav.Link id="my-profile-nav" as={NavLink} to="/my-profile" key="my-profile">
                 My Profile
               </Nav.Link>
