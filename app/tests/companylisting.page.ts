@@ -4,6 +4,7 @@ import Credentials from './types/CredentialsType';
 
 class CompanyListingPage {
   private pageId: string;
+
   private pageSelector: Selector;
 
   constructor() {
@@ -20,12 +21,12 @@ class CompanyListingPage {
 
   private async hasSignIn(testController: TestController, credentials: Credentials) {
     await signinComponent.isDisplayed(testController);
-    await signinComponent.signin(testController, credentials.username, credentials.password)
+    await signinComponent.signin(testController, credentials.username, credentials.password);
   }
 
   async test(testController: TestController, credentials: Credentials) {
     await this.isDisplayed(testController);
-    await this.hasSignIn(testController, credentials)
+    await this.hasSignIn(testController, credentials);
   }
 }
 

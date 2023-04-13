@@ -3,7 +3,9 @@ import { navBar } from './navbar.component';
 
 class SigninPage {
   private pageId: string;
+
   private pageSelector: Selector;
+
   constructor() {
     this.pageId = '#signin-page';
     this.pageSelector = Selector(this.pageId);
