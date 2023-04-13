@@ -8,8 +8,8 @@ import Landing from '../pages/Landing';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 /**
- * AdminProtectedRoute (see React Router v6 sample)
- * Checks for Meteor login and admin role before routing to the requested page, otherwise goes to signin page.
+ * StudentProtectedRoute (see React Router v6 sample)
+ * Checks for Meteor login and student role before routing to the requested page, otherwise goes to signin page.
  *
  * @type { React.FC<{ ready: boolean, children: React.ReactNode }> }
  */
