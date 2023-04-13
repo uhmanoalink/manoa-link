@@ -17,7 +17,7 @@ const Landing = () => {
   }, []);
 
   return (
-    <Container id="landing-page" fluid>
+    <div id="landing-page" fluid>
       <div className="landing-page-responsive-container">
         <LandingCarousel />
         <div>
@@ -27,9 +27,17 @@ const Landing = () => {
       </div>
       <section id="tagline">
         <h2>
-          Company-to-student networking <em>made easy!</em>
+          Company-to-student networking <strong>made easy!</strong>
         </h2>
-        <img src="/images" alt="" />
+        <div className="img-container">
+          <img src="/images/networking.jpg" alt="networking" />
+          <small>
+            <a href="https://www.freepik.com/free-vector/successful-partnership-negotiation-partners-handshaking_11669283.htm#query=vectorjuice%20networking&position=13&from_view=search&track=robertav1_2_sidr">
+              Image by vectorjuice
+            </a>{" "}
+            on Freepik
+          </small>
+        </div>
       </section>
       <section id="interface-features">
         <h2>Streamlined Student interface</h2>
@@ -61,7 +69,7 @@ const Landing = () => {
           </div>
         </div>
       </section>
-    </Container>
+    </div>
   );
 };
 
