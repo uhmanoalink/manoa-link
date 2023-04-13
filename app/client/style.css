@@ -149,6 +149,16 @@
   grid-area: calendar;
 }
 
+#profile-main {
+  align-self: center;
+  align-items: center;
+  width: 600px;
+}
+
+#manoa-green {
+  color: #024731;
+}
+
 #company-card-image {
   padding-top: 0;
   padding-bottom: 10px;
