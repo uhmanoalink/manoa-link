@@ -22,3 +22,5 @@ test('Test that Navbar links are accessible', async (testController: TestControl
 test('Test footer component', async (testController) => {
   await footerComponent.test(testController);
 });
+
+test('Should fail', async (tc) => tc.expect(false));
