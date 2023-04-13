@@ -1,25 +1,87 @@
 import React from 'react';
-import { Col, Container } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
+import { Twitter, Github, Discord } from 'react-bootstrap-icons';
+
+const FooterCol = ({ title, items }) => (
+  <div className="footer-column">
+    <h3>{title}</h3>
+    <hr />
+    {items.map(({ name, to }, index) => {
+      if (to) {
+        return (
+          <NavLink key={index} href={to}>
+            {name}
+          </NavLink>
+        );
+      }
+      return <span key={index}>{name}</span>;
+    })}
+  </div>
+);
+
+FooterCol.propTypes = {
+  title: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      to: PropTypes.string,
+    }),
+  ).isRequired,
+};
 
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 const Footer = () => (
-  <footer className="mt-auto py-3 bg-light">
-    <Container>
-      <Col className="text-center">
-        Department of Information and Computer Sciences
-        {' '}
-        <br />
-        University of Hawaii
-        <br />
-        Honolulu, HI 96822
-        {' '}
-        <br />
-        <a href="http://ics-software-engineering.github.io/meteor-application-template-react">
-          Template Home
-          Page
+  <footer>
+    <div className="footer-columns">
+      <FooterCol
+        title="Manoa Link"
+        items={[
+          { name: 'About Us', to: '/about' },
+          { name: 'Blog', to: '/blog' },
+          { name: 'FAQ', to: '/faq' },
+        ]}
+      />
+      <FooterCol
+        title="Sitemap"
+        items={[
+          { name: 'Register Now', to: '/register' },
+          { name: 'Dashboard', to: '/dashboard' },
+          { name: 'Your Profile', to: '/profile' },
+          { name: 'Help', to: '/help' },
+        ]}
+      />
+      <div className="align-right">
+        <FooterCol
+          title="Contact"
+          items={[
+            { name: '1680 East-West Road Honolulu, HI 96822' },
+            { name: 'Office: 808.956.7420' },
+            { name: 'Fax: 808.956.3548' },
+            { name: 'Fax: 808.956.3548' },
+          ]}
+        />
+      </div>
+    </div>
+    <hr />
+    <div className="footer-bottom">
+      <div>
+        <a href="/">Copyright © 2023 ManoaLink</a>
+        <a href="/">Privacy Policy</a>
+        <a href="/">Terms of Service</a>
+      </div>
+      <div>
+        <a href="/" className="footer-icon">
+          <Twitter width={24} height={24} />
         </a>
-      </Col>
-    </Container>
+        <a href="/" className="footer-icon">
+          <Github width={24} height={24} />
+        </a>
+        <a href="/" className="footer-icon">
+          <Discord width={24} height={24} />
+        </a>
+      </div>
+    </div>
   </footer>
 );
 
