@@ -49,6 +49,14 @@
   rotate: 180deg;
 }
 
+#tagline {
+  background: #151515;
+  color: white;
+}
+#tagline h2 {
+  max-width: 700px;
+}
+
 @media (max-width: 768px) {
   #landing-page {
     justify-content: center;
