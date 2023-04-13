@@ -20,12 +20,30 @@ jobs:
         with:
           node-version: '14.x'
 
-      - name: Install
+      - name: Run npm ci
         run: meteor npm ci --legacy-peer-deps
+
+      - name: Install mup
         run: meteor npm i mup
+
+      - name: Write mup.js content to file
+        run: echo '${{ secrets.MUP_JS_CONTENT }}' > ./mup.js
+        shell: bash
+        working-directory: ./app/.deploy
+
+      - name: Write settings.json content to file
+        run: echo '${{ secrets.SETTINGS_JSON_CONTENT }}' > ./settings.json
+        shell: bash
+        working-directory: ./app/.deploy
 
       - name: Run mup setup
         run: mup setup
+        working-directory: ./app/.deploy
+
+      - name: Run mup stop
+        run: mup stop
+        working-directory: ./app/.deploy
 
       - name: Run mup deploy
         run: mup deploy
+        working-directory: ./app/.deploy
