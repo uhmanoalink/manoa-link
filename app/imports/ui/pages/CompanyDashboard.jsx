@@ -1,10 +1,6 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Badge } from 'react-bootstrap';
-import { useTracker } from 'meteor/react-meteor-data';
-import { Stuffs } from '../../api/stuff/Stuff';
 import Sidebar from '../components/Sidebar';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const CompanyDashboard = () => {
