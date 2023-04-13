@@ -15,6 +15,16 @@ const CompanyDashboard = () => {
       image: '/images/sample-image-landscape.png',
       date: 'April 13, 2023',
     },
+    {
+      name: 'This is another sample event',
+      image: '/images/sample-image-landscape.png',
+      date: 'April 15, 2023',
+    },
+    {
+      name: 'This is a final sample event',
+      image: '/images/sample-image-landscape.png',
+      date: 'April 17, 2023',
+    },
   ];
 
   return (
@@ -28,21 +38,13 @@ const CompanyDashboard = () => {
             <section id="upcoming-events">
               <h2>Upcoming Events</h2>
               <div className="events">
-                <div className="event">
-                  <h3 className="event-name">This is a sample event</h3>
-                  <img src="/images/sample-image-landscape.png" alt="sample" />
-                  <h4 className="event-date">April 13, 2023</h4>
-                </div>
-                <div className="event">
-                  <h3 className="event-name">This is another sample event</h3>
-                  <img src="/images/sample-image-landscape.png" alt="sample" />
-                  <h4 className="event-date">April 15, 2023</h4>
-                </div>
-                <div className="event">
-                  <h3 className="event-name">This is one final sample event</h3>
-                  <img src="/images/sample-image-landscape.png" alt="sample" />
-                  <h4 className="event-date">April 17, 2023</h4>
-                </div>
+                {sampleEvents.map(({ name, image, date }, index) => (
+                  <div key={index} className="event">
+                    <h3 className="event-name">{name}</h3>
+                    <img src={image} alt="sample" />
+                    <h4 className="event-date">{date}</h4>
+                  </div>
+                ))}
               </div>
             </section>
             <section id="listings">
