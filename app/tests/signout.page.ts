@@ -2,7 +2,9 @@ import { Selector } from 'testcafe';
 
 class SignoutPage {
   private pageId: string;
+
   private pageSelector: Selector;
+
   constructor() {
     this.pageId = '#signout-page';
     this.pageSelector = Selector(this.pageId);

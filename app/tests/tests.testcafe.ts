@@ -28,10 +28,10 @@ test('Test landing page', async (testController) => {
   await landingPage.test(testController, credentials);
 });
 
-test('Test that Navbar links are accessible', async(testController: TestController) => {
+test('Test that Navbar links are accessible', async (testController: TestController) => {
   await landingPage.test(testController, credentials);
   await navBar.gotoNavLinkPages(testController);
-})
+});
 
 // test('Test that signin and signout work', async (testController) => {
 //   await navBar.gotoSignInPage(testController);
