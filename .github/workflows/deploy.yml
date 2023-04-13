@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: '14.x'
 
+      - name: Install Meteor
+        run: curl https://install.meteor.com/ | sh
+
       - name: Run npm ci
         run: meteor npm ci --legacy-peer-deps
 
