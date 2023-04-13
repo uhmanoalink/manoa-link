@@ -22,7 +22,6 @@ import NotAuthorized from '../pages/NotAuthorized';
 import ProtectedRoute from './ProtectedRoute';
 import AdminProtectedRoute from './AdminProtectedRoute';
 import StudentProtectedRoute from './StudentProtectedRoute';
-import CompanyProtectedRoute from './CompanyProtectedRoute';
 import Dashboard from '../pages/Dashboard';
 import CompanyDashboard from '../pages/CompanyDashboard';
 
@@ -44,7 +43,6 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/company-dashboard" element={<ProtectedRoute><CompanyDashboard /></ProtectedRoute>} />
           <Route path="/home" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
           <Route path="/add" element={<ProtectedRoute><AddStuff /></ProtectedRoute>} />
