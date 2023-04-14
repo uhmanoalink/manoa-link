@@ -6,6 +6,7 @@ import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { Roles } from 'meteor/alanning:roles';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -29,6 +30,7 @@ const SignUp = ({ location }) => {
   const submit = (doc) => {
     const { email, password, role } = doc;
     console.log(email + password + role);
+
     const userID = Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
         setError(err.reason);
@@ -37,15 +39,19 @@ const SignUp = ({ location }) => {
         setRedirectToRef(true);
       }
     });
-    if (role === 'student') {
-      console.log("assigning student");
-      Roles.createRole(role, { unlessExists: true });
-      Roles.addUsersToRoles(userID, 'student');
-    } else if (role === 'company') {
-      console.log("assigning company");
-      Roles.createRole(role, { unlessExists: true });
-      Roles.addUsersToRoles(userID, 'company');
+    if (!error){
+      if (role === 'student') {
+        console.log("assigning student");
+        Roles.createRole(role, { unlessExists: true });
+        Roles.addUsersToRoles(userID, 'student');
+      } else if (role === 'company') {
+        console.log("assigning company");
+        Roles.createRole(role, { unlessExists: true });
+        Roles.addUsersToRoles(userID, 'company');
+      }
     }
+    const userRoles = Roles.getRolesForUser(userID);
+    console.log(userRoles);
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */

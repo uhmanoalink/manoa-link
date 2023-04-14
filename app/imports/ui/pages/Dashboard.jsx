@@ -11,6 +11,8 @@ const Dashboard = () => {
   if (!isLogged) {
     return <Navigate to="/signin" />;
   }
+  const userRoles = Roles.getRolesForUser(Meteor.userId());
+  console.log(userRoles);
   const isStudent = Roles.userIsInRole(Meteor.userId(), 'student');
   if (isStudent) {
     console.log('yep, he a student');
@@ -22,7 +24,7 @@ const Dashboard = () => {
     return <CompanyDashboard />;
   }
   const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
-  if (isAdmin){
+  if (isAdmin) {
     return (
       <Container>
         <StudentDashboard />
@@ -30,6 +32,7 @@ const Dashboard = () => {
       </Container>
     );
   }
+  return <Container />;
 };
 
 export default Dashboard;
