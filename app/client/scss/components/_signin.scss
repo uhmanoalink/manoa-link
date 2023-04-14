@@ -1,0 +1,26 @@
+.signin-container {
+  border: 1px solid #ccc;
+  padding: 1.5rem;
+  width: clamp(200px, 85vw, 350px);
+  font-family: "Montserrat", sans-serif;
+
+  h2 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+
+  .card {
+    border-radius: 0;
+
+    input[type="submit"] {
+      width: 100%;
+      background: #08c64e;
+      border-color: darken(#08c64e, 10%);
+    }
+  }
+
+  .alert {
+    border-radius: 0;
+  }
+}
