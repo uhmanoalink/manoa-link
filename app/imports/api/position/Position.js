@@ -13,9 +13,10 @@ class PositionsCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       positionName: String,
-      companyId: String,
-      address: String,
+      companyName: String,
+      description: String,
       pay: Number,
+      tag: String,
       createdAt: Date,
       owner: String,
     });
