@@ -27,10 +27,13 @@ jobs:
         run: meteor npm ci --legacy-peer-deps
 
       - name: Install mup
-        run: npm i mup
+        run: npm i -g mup
+
+      - name: Build app
+        run: meteor npm run build
 
       - name: Write mup.js content to file
-        run: echo '${{ secrets.MUP_JS_CONTENT }}' > ./mup.js
+        run: echo "${{ secrets.MUP_JS_CONTENT }}" > ./mup.js
         shell: bash
         working-directory: ./app/.deploy
 

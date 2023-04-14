@@ -15,12 +15,18 @@ To install this project, follow these steps:
 5. Start the app with `meteor npm start`
 6. The app should be running at http://localhost:3000
 
+### During development
+
+If working with Sass, it is advised to run `meteor npm run dev` instead of `meteor npm start`. This makes Sass watch your `.scss` files for changes and automatically recompile, so you don't need to manually restart the app to see them.
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
-For details, please see http://ics-software-engineering.github.io/meteor-application-template-react/
+To view the full project page, containing the full-length overview and progress updates, go to https://uhmanoalink.github.io/
+
+For more details regarding the template used, please see http://ics-software-engineering.github.io/meteor-application-template-react/
 
 [![ci-meteor-application-template-react](https://github.com/ics-software-engineering/meteor-application-template-react/actions/workflows/ci.yml/badge.svg)](https://github.com/ics-software-engineering/meteor-application-template-react/actions/workflows/ci.yml)

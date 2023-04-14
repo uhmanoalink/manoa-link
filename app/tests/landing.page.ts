@@ -12,11 +12,14 @@ class LandingPage {
     this.pageSelector = Selector(this.pageId);
   }
 
-  /** Asserts that this page is currently displayed. */
   private async isDisplayed(testController: TestController) {
-    // This is first test to be run. Wait 10 seconds to avoid timeouts with GitHub Actions.
     await testController.expect(this.pageSelector.exists).ok();
     await testController.expect(this.pageSelector.visible).ok();
+  }
+
+  private async checkSections(tc: TestController) {
+    await tc.expect(Selector('section#tagline').visible).ok();
+    await tc.expect(Selector('section#interface-features').visible).ok();
   }
 
   private async hasSignIn(testController: TestController, credentials: Credentials) {
@@ -26,6 +29,7 @@ class LandingPage {
 
   async test(testController: TestController, credentials: Credentials) {
     await this.isDisplayed(testController);
+    await this.checkSections(testController);
     await this.hasSignIn(testController, credentials);
   }
 }

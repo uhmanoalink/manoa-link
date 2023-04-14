@@ -23,10 +23,15 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
+            {(Roles.userIsInRole(Meteor.userId(), 'student') || Roles.userIsInRole(Meteor.userId(), 'admin')) ? (
+              <Nav.Link id="my-profile-nav" as={NavLink} to="/my-profile" key="my-profile">
+                My Profile
+              </Nav.Link>
+            ) : undefined}
             {currentUser ? (
               <>
-                <Nav.Link id="my-profile-nav" as={NavLink} to="/my-profile" key="my-profile">
-                  My Profile
+                <Nav.Link id="dashboard-nav" as={NavLink} to="/dashboard" key="dashboard">
+                  Dashboard
                 </Nav.Link>
                 <Nav.Link id="add-events-nav" as={NavLink} to="/add-events" key="add-events">
                   Add Events
