@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
+import HelpButton from '../components/HelpButton';
 import { Stuffs } from '../../api/stuff/Stuff';
 
 // Create a schema to specify the structure of the data to appear in the form.
@@ -60,6 +61,7 @@ const AddStuff = () => {
           </AutoForm>
         </Col>
       </Row>
+      <HelpButton />
     </Container>
   );
 };

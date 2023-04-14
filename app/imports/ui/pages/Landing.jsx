@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { useNavigate } from 'react-router';
 import SignIn from '../components/SignIn';
 import LandingCarousel from '../components/LandingCarousel';
+import HelpButton from '../components/HelpButton';
 
 /* A simple static component to render some text for the landing page. */
 const Landing = () => {
@@ -71,6 +72,7 @@ const Landing = () => {
           </div>
         </section>
       </main>
+      <HelpButton />
     </div>
   );
 };
