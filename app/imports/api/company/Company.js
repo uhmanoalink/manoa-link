@@ -31,4 +31,4 @@ class CompanysCollection {
  * The singleton instance of the CompanysCollection.
  * @type {CompanysCollection}
  */
-export const Companys = new CompanysCollection();
+export const Company = new CompanysCollection();
