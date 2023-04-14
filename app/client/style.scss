@@ -2,16 +2,6 @@
 @import "./scss/components/_components";
 @import "./scss/pages/_pages";
 
-@import './scss/colors';
-@import './scss/typography';
-
-@import './scss/landing';
-@import './scss/components';
-@import './scss/company-dashboard';
-@import './scss/student-dashboard';
-@import './scss/my-profile';
-@import './scss/company-listing';
-
 /* Set up some CSS variables to theme the application. */
 :root {
   --matr-navbar-bg: #ececec;
