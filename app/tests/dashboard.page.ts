@@ -1,4 +1,5 @@
 import { Selector } from 'testcafe';
+import { navBar } from './navbar.component';
 
 class DashboardPage {
   private pageId: string;
@@ -24,7 +25,7 @@ class DashboardPage {
   }
 
   async test(tc: TestController) {
-    await tc.navigateTo('http://localhost:3000/dashboard');
+    await navBar.gotoDashboardPage(tc);
     await this.isDisplayed(tc);
     await this.showsEvents(tc);
     await this.showsListings(tc);

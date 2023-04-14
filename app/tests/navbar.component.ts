@@ -28,6 +28,10 @@ class NavBar {
     await testController.click('#company-listing-nav');
   }
 
+  async gotoDashboardPage(testController: TestController) {
+    await testController.click('#dashboard-nav');
+  }
+
   /** Check that the specified user is currently logged in. */
   async isLoggedIn(testController: TestController, username: string) {
     const visible = await Selector('#basic-navbar-nav').visible;

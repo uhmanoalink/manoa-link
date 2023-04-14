@@ -12,7 +12,7 @@ const Landing = () => {
   useEffect(() => {
     const isLogged = Meteor.userId() !== null;
     if (isLogged) {
-      navigate('/home');
+      navigate('/dashboard');
     }
   }, []);
 

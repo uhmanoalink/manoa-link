@@ -27,7 +27,7 @@ const SignIn = () => {
       if (err) {
         setError(err.reason);
       } else {
-        navigate('/home');
+        navigate('/dashboard');
       }
     });
     // console.log('submit2', email, password, error, redirect);
