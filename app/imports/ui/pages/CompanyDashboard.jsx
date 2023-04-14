@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Container, Row, Badge } from 'react-bootstrap';
 import Sidebar from '../components/Sidebar';
+import HelpButton from '../components/HelpButton';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const CompanyDashboard = () => {
@@ -79,6 +80,7 @@ const CompanyDashboard = () => {
           </main>
         </Col>
       </Row>
+      <HelpButton />
     </Container>
   );
 };

@@ -3,9 +3,13 @@ $manoa-green: $background-dark;
 #profile-main {
   align-self: center;
   align-items: center;
-  width: 600px;
+  width: 800px;
 }
 
 #manoa-green {
   color: $manoa-green;
+}
+
+#pfp {
+  width: 200px;
 }

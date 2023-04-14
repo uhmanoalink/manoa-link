@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Image, Row } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
+import HelpButton from '../components/HelpButton';
 
 const MyProfile = () => {
   const { currentUser } = useTracker(
@@ -40,8 +41,7 @@ const MyProfile = () => {
   return (
     <Container id="profile-main" className="py-3 justify-content-center">
       <Row className="justify-content-center align-items-center">
-        <Image src="images/sample-pfp.png" width="200px" />
-        <p>{ currentUser }</p>
+        <Image src="images/sample-pfp.png" id="pfp" />
         <h1 id="manoa-green">{ sampleProfile.name }</h1>
         <h2>About Me</h2>
         <p>{ sampleProfile.description }</p>
@@ -61,6 +61,7 @@ const MyProfile = () => {
           </div>
         ))}
       </Row>
+      <HelpButton />
     </Container>
   );
 };
