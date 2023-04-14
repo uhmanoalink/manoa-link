@@ -20,10 +20,7 @@ const Landing = () => {
     <div id="landing-page" fluid>
       <div className="landing-page-responsive-container">
         <LandingCarousel />
-        <div className="signin-container">
-          <h2>Welcome Back!</h2>
-          <SignIn />
-        </div>
+        <SignIn />
       </div>
       <main>
         <section id="tagline">

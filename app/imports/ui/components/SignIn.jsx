@@ -43,40 +43,43 @@ const SignIn = () => {
   // if correct authentication, redirect to page instead of login screen
   // Otherwise return the Login form.
   return (
-    <div className="signin">
-      <AutoForm schema={bridge} onSubmit={(data) => submit(data)}>
-        <Card>
-          <Card.Body>
-            <TextField
-              className="signin-form-email"
-              name="email"
-              placeholder="Email"
-            />
-            <TextField
-              className="signin-form-password"
-              name="password"
-              placeholder="Password"
-              type="password"
-            />
-            <ErrorsField />
-            <SubmitField className="signin-form-submit" value="Login" />
-          </Card.Body>
-        </Card>
-      </AutoForm>
-      <Alert variant="light">
-        <span>
-          Don't have an account?{" "}
-          <Link className="font-accent" to="/signup">
-            Sign Up!
-          </Link>
-        </span>
-      </Alert>
-      {error !== "" ? (
-        <Alert variant="danger">
-          <Alert.Heading>Login was not successful</Alert.Heading>
-          {error}
+    <div className="signin-container">
+      <h2>Welcome Back!</h2>
+      <div className="signin">
+        <AutoForm schema={bridge} onSubmit={(data) => submit(data)}>
+          <Card>
+            <Card.Body>
+              <TextField
+                className="signin-form-email"
+                name="email"
+                placeholder="Email"
+              />
+              <TextField
+                className="signin-form-password"
+                name="password"
+                placeholder="Password"
+                type="password"
+              />
+              <ErrorsField />
+              <SubmitField className="signin-form-submit" value="Login" />
+            </Card.Body>
+          </Card>
+        </AutoForm>
+        <Alert variant="light">
+          <span>
+            Don't have an account?{" "}
+            <Link className="font-accent" to="/signup">
+              Sign Up!
+            </Link>
+          </span>
         </Alert>
-      ) : undefined}
+        {error !== "" ? (
+          <Alert variant="danger">
+            <Alert.Heading>Login was not successful</Alert.Heading>
+            {error}
+          </Alert>
+        ) : undefined}
+      </div>
     </div>
   );
 };
