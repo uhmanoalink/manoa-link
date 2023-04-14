@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Meteor } from "meteor/meteor";
-import { Alert, Card } from "react-bootstrap";
-import SimpleSchema from "simpl-schema";
-import SimpleSchema2Bridge from "uniforms-bridge-simple-schema-2";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+import { Alert, Card } from 'react-bootstrap';
+import SimpleSchema from 'simpl-schema';
+import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import {
   AutoForm,
   ErrorsField,
   SubmitField,
   TextField,
-} from "uniforms-bootstrap5";
+} from 'uniforms-bootstrap5';
 
 /**
  * Signin page overrides the form’s submit event and call Meteor’s loginWithPassword().
  * Authentication errors modify the component’s state to be displayed
  */
 const SignIn = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const schema = new SimpleSchema({
     email: String,
     password: String,
@@ -32,7 +32,7 @@ const SignIn = () => {
       if (err) {
         setError(err.reason);
       } else {
-        navigate("/home");
+        navigate('/home');
       }
     });
     // console.log('submit2', email, password, error, redirect);
@@ -67,13 +67,13 @@ const SignIn = () => {
         </AutoForm>
         <Alert variant="light">
           <span>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{' '}
             <Link className="font-accent" to="/signup">
               Sign Up!
             </Link>
           </span>
         </Alert>
-        {error !== "" ? (
+        {error !== '' ? (
           <Alert variant="danger">
             <Alert.Heading>Login was not successful</Alert.Heading>
             {error}

@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { Container } from "react-bootstrap";
-import { Meteor } from "meteor/meteor";
-import { useNavigate } from "react-router";
-import SignIn from "../components/SignIn";
-import LandingCarousel from "../components/LandingCarousel";
+import React, { useEffect } from 'react';
+import { Container } from 'react-bootstrap';
+import { Meteor } from 'meteor/meteor';
+import { useNavigate } from 'react-router';
+import SignIn from '../components/SignIn';
+import LandingCarousel from '../components/LandingCarousel';
 
 /* A simple static component to render some text for the landing page. */
 const Landing = () => {
@@ -12,12 +12,12 @@ const Landing = () => {
   useEffect(() => {
     const isLogged = Meteor.userId() !== null;
     if (isLogged) {
-      navigate("/home");
+      navigate('/home');
     }
   }, []);
 
   return (
-    <div id="landing-page" fluid>
+    <div id="landing-page">
       <div className="landing-page-responsive-container">
         <LandingCarousel />
         <SignIn />
@@ -25,7 +25,7 @@ const Landing = () => {
       <main>
         <section id="tagline">
           <h2>
-            Company-to-student networking{" "}
+            Company-to-student networking{' '}
             <span className="font-accent">made easy!</span>
           </h2>
           <div className="img-container">
@@ -33,7 +33,7 @@ const Landing = () => {
             <small>
               <a href="https://www.freepik.com/free-vector/successful-partnership-negotiation-partners-handshaking_11669283.htm#query=vectorjuice%20networking&position=13&from_view=search&track=robertav1_2_sidr">
                 Image by vectorjuice
-              </a>{" "}
+              </a>{' '}
               on Freepik
             </small>
           </div>
