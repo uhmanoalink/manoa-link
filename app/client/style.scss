@@ -1,35 +1,3 @@
-@import './scss/colors';
-@import './scss/typography';
-
-@import './scss/landing';
-@import './scss/components';
-@import './scss/dashboard';
-@import './scss/my-profile';
-@import './scss/company-listing';
-
-/* Set up some CSS variables to theme the application. */
-:root {
-  --matr-navbar-bg: #ececec;
-  --matr-navbar-bg-rgb: 236, 236, 236;
-}
-
-/* Change bootstrap variable values.
- See https://getbootstrap.com/docs/5.2/customize/css-variables/
- */
-body {
-  --bs-light-rgb: var(--matr-navbar-bg-rgb);
-}
-
-/* Set the alert background on the signin and signup pages. */
-#signin-page .alert-light,
-#signup-page .alert-light {
-  --bs-alert-bg: var(--matr-navbar-bg);
-}
-
-/* Define custom styles */
-.gray-background {
-  background-color: var(--matr-navbar-bg);
-  color: var(--bs-dark);
-  padding-top: 10px;
-  padding-bottom: 20px;
-}
+@import "./scss/globals/_globals";
+@import "./scss/components/_components";
+@import "./scss/pages/_pages";
