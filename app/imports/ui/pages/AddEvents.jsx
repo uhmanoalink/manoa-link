@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Events } from '../../api/event/Event';
-import { Company } from '../../api/company/Company';
+import { Companies } from '../../api/company/Company';
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
   eventName: String,
@@ -27,7 +27,7 @@ const formSchema = new SimpleSchema({
   },
   companyId: {
     type: String,
-    defaultValue: Company.companyPublicationName,
+    defaultValue: Companies.companyPublicationName,
   },
   createdAt: {
     type: Date,
