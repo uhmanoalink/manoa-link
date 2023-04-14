@@ -42,8 +42,9 @@
     "sass": "^1.61.0"
   },
   "scripts": {
+    "build": "meteor reset && sass client/style.scss client/style.css",
     "dev": "concurrently -n \"sass,meteor\" \"sass client/style.scss client/style.css --watch\" \"meteor npm run start\"",
-    "prestart": "sass client/style.scss client/style.css",
+    "prestart": "meteor npm run build",
     "start": "meteor --no-release-check --exclude-archs web.browser.legacy,web.cordova --settings ../config/settings.development.json",
     "lint": "eslint --quiet --ext .jsx,.js,.tsx,.ts ./imports && eslint --quiet --ext .js,.ts ./tests",
     "lint-fix": "eslint --quiet --fix --ext .jsx,.js,.tsx,.ts ./imports && eslint --quiet --fix --ext .js,.ts ./tests",
