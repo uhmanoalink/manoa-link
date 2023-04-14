@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Card, Container, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import HelpButton from '../components/HelpButton';
 import Sidebar from '../components/Sidebar';
 
 const CompanyListing = () => {
@@ -66,6 +67,7 @@ const CompanyListing = () => {
           </Row>
         </Col>
       </Row>
+      <HelpButton />
     </Container>
   );
 };
