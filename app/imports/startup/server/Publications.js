@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Stuffs } from '../../api/stuff/Stuff';
-import { Companys } from '../../api/company/Company';
+import { Company } from '../../api/company/Company';
 import { Events } from '../../api/event/Event';
 import { Positions } from '../../api/position/Position';
 import { Users } from '../../api/user/User';
@@ -25,29 +25,29 @@ Meteor.publish(Stuffs.adminPublicationName, function () {
   return this.ready();
 });
 
-Meteor.publish(Companys.userPublicationName, function () {
+Meteor.publish(Company.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return Companys.collection.find({ owner: username });
+    return Company.collection.find({ owner: username });
   }
   return this.ready();
 });
 
 // Company-level publication.
 // If logged in and with company role, then publish the documents for companys. Otherwise publish nothing.
-Meteor.publish(Companys.companyPublicationName, function () {
+Meteor.publish(Company.companyPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return Companys.collection.find({ owner: username });
+    return Company.collection.find({ owner: username });
   }
   return this.ready();
 });
 
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
-Meteor.publish(Companys.adminPublicationName, function () {
+Meteor.publish(Company.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return Companys.collection.find();
+    return Company.collection.find();
   }
   return this.ready();
 });
