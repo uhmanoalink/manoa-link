@@ -50,33 +50,21 @@ const CompanyListing = () => {
         <Col xs={12} md={3}>
           <Sidebar />
         </Col>
-        { sampleCompanies.map(({ image, name, text, link }, index) => {
-          if (index % 3 === 0 && index !== 0) {
-            return (
-              <>
-                <Col xs={12} md={3} />
-                <Col xs={12} md={3}>
-                  <Card id="company-card">
-                    <Card.Img id="company-card-image" variant="top" src={image} />
-                    <Card.Title id="company-card-title">{name}</Card.Title>
-                    <Card.Text id="company-card-text">{text}</Card.Text>
-                    <Card.Link id="company-card-link" to={link}><Button>Visit</Button></Card.Link>
-                  </Card>
-                </Col>
-              </>
-            );
-          }
-          return (
-            <Col xs={12} md={3}>
-              <Card id="company-card">
-                <Card.Img id="company-card-image" variant="top" src={image} />
-                <Card.Title id="company-card-title">{name}</Card.Title>
-                <Card.Text id="company-card-text">{text}</Card.Text>
-                <Card.Link id="company-card-link" to={link}><Button>Visit</Button></Card.Link>
-              </Card>
-            </Col>
-          );
-        }) }
+        <Col>
+          <Row>
+            { sampleCompanies.map(({ image, name, text, link }, index) => (
+
+              <Col xs={12} md={4}>
+                <Card id="company-card">
+                  <Card.Img id="company-card-image" variant="top" src={image} />
+                  <Card.Title id="company-card-title">{name}</Card.Title>
+                  <Card.Text id="company-card-text">{text}</Card.Text>
+                  <Card.Link id="company-card-link" to={link}><Button>Visit</Button></Card.Link>
+                </Card>
+              </Col>
+            )) }
+          </Row>
+        </Col>
       </Row>
     </Container>
   );

@@ -22,7 +22,7 @@ import NotAuthorized from '../pages/NotAuthorized';
 import ProtectedRoute from './ProtectedRoute';
 import AdminProtectedRoute from './AdminProtectedRoute';
 import StudentProtectedRoute from './StudentProtectedRoute';
-import CompanyProtectedRoute from './CompanyProtectedRoute';
+import Dashboard from '../pages/Dashboard';
 import CompanyDashboard from '../pages/CompanyDashboard';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
@@ -42,8 +42,7 @@ const App = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
-          <Route path="/dashboard" element={<CompanyProtectedRoute ready={ready}><CompanyDashboard /></CompanyProtectedRoute>} />
-          <Route path="/home" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
           <Route path="/add" element={<ProtectedRoute><AddStuff /></ProtectedRoute>} />
           <Route path="/my-profile" element={<StudentProtectedRoute ready={ready}><MyProfile /></StudentProtectedRoute>} />

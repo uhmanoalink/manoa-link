@@ -4,10 +4,10 @@ import SimpleSchema from 'simpl-schema';
 /**
  * The CompanysCollection. It encapsulates state and variable values for stuff.
  */
-class CompanysCollection {
+class CompaniesCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'CompanysCollection';
+    this.name = 'CompaniesCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
@@ -30,6 +30,6 @@ class CompanysCollection {
 
 /**
  * The singleton instance of the CompanysCollection.
- * @type {CompanysCollection}
+ * @type {CompaniesCollection}
  */
-export const Companys = new CompanysCollection();
+export const Companies = new CompaniesCollection();

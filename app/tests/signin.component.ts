@@ -23,7 +23,7 @@ class SigninComponent {
     await testController.click('.signin-form-submit input.btn.btn-primary');
     await testController.wait(500);
     const getPageUrl = ClientFunction(() => window.location.href);
-    const expectedUrl = 'http://localhost:3000/home';
+    const expectedUrl = 'http://localhost:3000/dashboard';
     const currentUrl = await getPageUrl();
     await testController.expect(currentUrl).eql(expectedUrl);
   }
