@@ -11,6 +11,9 @@ import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstra
  * Authentication errors modify the component’s state to be displayed
  */
 const SignIn = () => {
+  if (Meteor.userId() !== null) {
+    return (<Navigate to="/dashboard" />);
+  }
   const [error, setError] = useState('');
   const [redirect, setRedirect] = useState(false);
   const schema = new SimpleSchema({
@@ -37,7 +40,7 @@ const SignIn = () => {
   // console.log('render', error, redirect);
   // if correct authentication, redirect to page instead of login screen
   if (redirect) {
-    return (<Navigate to="/" />);
+    return (<Navigate to="/dashboard" />);
   }
   // Otherwise return the Login form.
   return (

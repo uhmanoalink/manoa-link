@@ -9,22 +9,27 @@ import StudentDashboard from './StudentDashboard';
 const Dashboard = () => {
   const isLogged = Meteor.userId() !== null;
   if (!isLogged) {
-    return <Navigate to="/sign-in" />;
+    return <Navigate to="/signin" />;
   }
   const isStudent = Roles.userIsInRole(Meteor.userId(), 'student');
   if (isStudent) {
+    console.log('yep, he a student');
     return <StudentDashboard />;
   }
   const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
   if (isCompany) {
+    console.log('yep, he a company');
     return <CompanyDashboard />;
   }
-  return (
-    <Container>
-      <StudentDashboard />
-      <CompanyDashboard />
-    </Container>
-  );
+  const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
+  if (isAdmin){
+    return (
+      <Container>
+        <StudentDashboard />
+        <CompanyDashboard />
+      </Container>
+    );
+  }
 };
 
 export default Dashboard;
