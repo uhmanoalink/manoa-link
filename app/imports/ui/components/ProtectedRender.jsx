@@ -33,7 +33,7 @@ import PropTypes from 'prop-types';
  *
  * @type { React.FC<{ allowedRoles?: string[], children: React.ReactNode }> }
  *
- * *Note: mostly generated w/ ChatGPT*
+ * *Note: Documentation mostly generated w/ ChatGPT*
  */
 const ProtectedRender = ({ allowedRoles, children }) => {
   if (allowedRoles === undefined) {
