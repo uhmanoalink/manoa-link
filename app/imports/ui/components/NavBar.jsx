@@ -25,14 +25,14 @@ const NavBar = () => {
           Manoa Link
           {/* <Image src="/images/logo.png" alt="Logo" width={85} /> */}
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav">
+        <Navbar.Toggle aria-controls="navbar-collapse">
           <svg className="hamburger" width={35} height={30} viewBox="0 0 35 30" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect className="hamburger-1" x={0} y={0} width={35} height={4} fill="white" rx={2} />
             <rect className="hamburger-2" x={0} y={13} width={35} height={4} fill="white" rx={2} />
             <rect className="hamburger-3" x={0} y={26} width={35} height={4} fill="white" rx={2} />
           </svg>
         </Navbar.Toggle>
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse id="navbar-collapse">
           <Nav className="ms-auto">
             <ProtectedRender>
               <Nav.Link
@@ -100,11 +100,14 @@ const NavBar = () => {
               </NavDropdown>
             ) : (
               <NavDropdown
+                id="navbar-user"
                 align="end"
                 title={(
                   <Image
+                    style={{ aspectRatio: '1 / 1' }}
                     src="/images/sample-pfp.png"
                     alt="pfp"
+                    aria-details={currentUser}
                     width={36}
                   />
                 )}
