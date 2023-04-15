@@ -25,7 +25,7 @@ class DashboardPage {
   }
 
   async test(tc: TestController) {
-    await navBar.gotoDashboardPage(tc);
+    await navBar.clickNavLink(tc, 'Dashboard');
     await this.isDisplayed(tc);
     await this.showsEvents(tc);
     await this.showsListings(tc);
