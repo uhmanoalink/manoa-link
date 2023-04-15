@@ -19,6 +19,10 @@ To install this project, follow these steps:
 
 If working with Sass, it is advised to run `meteor npm run dev` instead of `meteor npm start`. This makes Sass watch your `.scss` files for changes and automatically recompile, so you don't need to manually restart the app to see them.
 
+## Deployment
+
+Sinec the files required for MeteorUp (`mup.js` and `settings.json`) contain sensitive information, they are stored in GitHub as environment secrets. A deployment action is triggered on pushes to the main branch to automatically deploy the app to DigitalOcean.
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
