@@ -35,60 +35,43 @@ const NavBar = () => {
         <Navbar.Collapse id="navbar-collapse">
           <Nav className="ms-auto">
             <ProtectedRender>
-              <Nav.Link
-                as={NavLink}
-                to="/dashboard"
-              >
+              <Nav.Link as={NavLink} to="/dashboard">
                 Dashboard
               </Nav.Link>
               <ProtectedRender allowedRoles={['company']}>
-                <Nav.Link
-                  as={NavLink}
-                  to="/company-listing"
-                >
+                <Nav.Link as={NavLink} to="/company-listing">
                   Manage Listings
                 </Nav.Link>
-                <Nav.Link
-                  as={NavLink}
-                  to="/manage-events"
-                >
+                <Nav.Link as={NavLink} to="/manage-events">
                   Manage Events
                 </Nav.Link>
               </ProtectedRender>
               <ProtectedRender allowedRoles={['student']}>
-                <Nav.Link
-                  as={NavLink}
-                  to="/company-listing"
-                >
+                <Nav.Link as={NavLink} to="/company-listing">
                   Job Listings
                 </Nav.Link>
-                <Nav.Link
-                  as={NavLink}
-                  to="/events"
-                >
+                <Nav.Link as={NavLink} to="/events">
                   Events Board
                 </Nav.Link>
                 <ProtectedRender allowedRoles={['admin']}>
-                  <Nav.Link
-                    as={NavLink}
-                    to="/"
-                  >
+                  <Nav.Link as={NavLink} to="/">
                     TO DO
                   </Nav.Link>
                 </ProtectedRender>
               </ProtectedRender>
 
               <ProtectedRender allowedRoles={['admin']}>
-                <Nav.Link
-                  as={NavLink}
-                  to="/admin"
-                >
+                <Nav.Link as={NavLink} to="/admin">
                   Admin
                 </Nav.Link>
               </ProtectedRender>
             </ProtectedRender>
             {(currentUser === '') ? (
-              <NavDropdown align="end" title="Login">
+              <NavDropdown
+                id="navbar-dropdown"
+                align="end"
+                title="Login"
+              >
                 <NavDropdown.Item as={NavLink} to="/signin">
                   <PersonFill />
                   Sign in
@@ -100,7 +83,7 @@ const NavBar = () => {
               </NavDropdown>
             ) : (
               <NavDropdown
-                id="navbar-user"
+                id="navbar-dropdown"
                 align="end"
                 title={(
                   <Image
@@ -112,11 +95,7 @@ const NavBar = () => {
                   />
                 )}
               >
-                <NavDropdown.Item
-                  id="my-profile-nav"
-                  as={NavLink}
-                  to="/my-profile"
-                >
+                <NavDropdown.Item as={NavLink} to="/my-profile">
                   Profile
                 </NavDropdown.Item>
                 <NavDropdown.Item as={NavLink} to="/signout">

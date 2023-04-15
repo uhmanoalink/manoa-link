@@ -17,6 +17,11 @@ test('Test landing page', async (testController) => {
   await landingPage.test(testController, userCredentials);
 });
 
+test('Test navbar component unlogged user', async (tc:TestController) => {
+  await tc.navigateTo('/signin');
+  await navBar.checkUnloggedNavLinks(tc);
+});
+
 test('Test navbar component for students', async (tc: TestController) => {
   await landingPage.test(tc, userCredentials);
   await navBar.checkLoggedInAs(tc, userCredentials.username);
