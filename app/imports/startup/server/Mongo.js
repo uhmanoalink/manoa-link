@@ -24,11 +24,11 @@ if (Stuffs.collection.find().count() === 0) {
 // // Initialize the database with a default data document.
 // const addCompany = (data) => {
 //   console.log(`  Adding: ${data.name} (${data.owner})`);
-//   Companys.collection.insert(data);
+//   Companies.collection.insert(data);
 // };
 //
-// // Initialize the CompanysCollection if empty.
-// if (Companys.collection.find().count() === 0) {
+// // Initialize the CompaniesCollection if empty.
+// if (Companies.collection.find().count() === 0) {
 //   if (Meteor.settings.defaultData) {
 //     console.log('Creating default data.');
 //     Meteor.settings.defaultData.forEach(data => addData(data));
