@@ -11,7 +11,9 @@ import { Roles } from 'meteor/alanning:roles';
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
  */
+
 const SignUp = ({ location }) => {
+
   const [error, setError] = useState('');
   const [redirectToReferer, setRedirectToRef] = useState(false);
 
@@ -39,7 +41,8 @@ const SignUp = ({ location }) => {
       }
     });
     if (!error) {
-      console.log(`assigning ${role}`);
+      // Does not work, strangely. Needs to be fixed!!
+      // Fortunately, it does add the user, but fails to add any roles.
       Roles.createRole(role, { unlessExists: true });
       Roles.addUsersToRoles(userID, role);
     }
