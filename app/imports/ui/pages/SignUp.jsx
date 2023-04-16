@@ -46,8 +46,6 @@ const SignUp = ({ location }) => {
       Roles.createRole(role, { unlessExists: true });
       Roles.addUsersToRoles(userID, role);
     }
-    const userRoles = Roles.getRolesForUser(userID);
-    console.log(userRoles);
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
