@@ -5,6 +5,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import StuffItem from '../components/StuffItem';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Events } from '../../api/event/Event';
+import HelpButton from '../components/HelpButton';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ListEvents = () => {
@@ -45,6 +46,7 @@ const ListEvents = () => {
           </Table>
         </Col>
       </Row>
+      <HelpButton />
     </Container>
   ) : <LoadingSpinner />);
 };

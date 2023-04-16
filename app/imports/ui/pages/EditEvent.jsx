@@ -24,9 +24,9 @@ const EditEvent = () => {
     // Determine if the subscription is ready
     const rdy = subscription.ready() && subscription2.ready();
     // Get the document
-    const document = Events.collection.findOne(_id);
+    const event = Events.collection.findOne(_id);
     return {
-      doc: document,
+      doc: event,
       ready: rdy,
     };
   }, [_id]);

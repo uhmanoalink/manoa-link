@@ -7,6 +7,8 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Events } from '../../api/event/Event';
 import { Companies } from '../../api/company/Company';
+import helpButton from '../components/HelpButton';
+import HelpButton from '../components/HelpButton';
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
   eventName: String,
@@ -25,14 +27,8 @@ const formSchema = new SimpleSchema({
       'International Relations', 'Global Studies', 'Foreign Languages', 'Engineering'].sort(),
     defaultValue: 'Accounting',
   },
-  companyId: {
-    type: String,
-    defaultValue: Companies.companyPublicationName,
-  },
-  createdAt: {
-    type: Date,
-    defaultValue: new Date(),
-  },
+  companyId: String,
+  createdAt: Date
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -42,24 +38,19 @@ const AddEvent = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { eventName, address, description, tag, companyId, createdAt } = data;
+    const { eventName, address, image, description, tag, companyId = Companies.companyPublicationName, createdAt = new Date() } = data;
     const owner = Meteor.user().username;
-    const file = formRef.getModel().image;
-
-    if (file) {
-      const image = file.name;
-      Events.collection.insert(
-        { eventName, image, address, description, tag, companyId, createdAt, owner },
-        (error) => {
-          if (error) {
-            swal('Error', error.message, 'error');
-          } else {
-            swal('Success', 'Item added successfully', 'success');
-            formRef.reset();
-          }
-        },
-      );
-    }
+    Events.collection.insert(
+      { eventName, image, address, description, tag, companyId, createdAt, owner },
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'Item added successfully', 'success');
+          formRef.reset();
+        }
+      },
+    );
   };
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
@@ -88,6 +79,7 @@ const AddEvent = () => {
           </AutoForm>
         </Col>
       </Row>
+      <HelpButton />
     </Container>
   );
 };
