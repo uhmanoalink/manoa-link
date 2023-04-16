@@ -9,7 +9,7 @@ import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
 import MyProfile from '../pages/MyProfile';
-import AddEvents from '../pages/AddEvents';
+import AddEvents from '../pages/AddEvent';
 import ListEvents from '../pages/ListEvents';
 import CompanyListing from '../pages/CompanyListing';
 import NotFound from '../pages/NotFound';
