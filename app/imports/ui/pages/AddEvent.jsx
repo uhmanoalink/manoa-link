@@ -7,7 +7,6 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Events } from '../../api/event/Event';
 import { Companies } from '../../api/company/Company';
-import helpButton from '../components/HelpButton';
 import HelpButton from '../components/HelpButton';
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -28,7 +27,7 @@ const formSchema = new SimpleSchema({
     defaultValue: 'Accounting',
   },
   companyId: String,
-  createdAt: Date
+  createdAt: Date,
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
