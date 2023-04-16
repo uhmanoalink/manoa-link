@@ -29,7 +29,6 @@ const SignUp = ({ location }) => {
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
     const { email, password, role } = doc;
-    console.log(email + password + role);
 
     const userID = Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
@@ -39,16 +38,10 @@ const SignUp = ({ location }) => {
         setRedirectToRef(true);
       }
     });
-    if (!error){
-      if (role === 'student') {
-        console.log("assigning student");
-        Roles.createRole(role, { unlessExists: true });
-        Roles.addUsersToRoles(userID, 'student');
-      } else if (role === 'company') {
-        console.log("assigning company");
-        Roles.createRole(role, { unlessExists: true });
-        Roles.addUsersToRoles(userID, 'company');
-      }
+    if (!error) {
+      console.log(`assigning ${role}`);
+      Roles.createRole(role, { unlessExists: true });
+      Roles.addUsersToRoles(userID, role);
     }
     const userRoles = Roles.getRolesForUser(userID);
     console.log(userRoles);
