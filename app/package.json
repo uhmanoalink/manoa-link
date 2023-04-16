@@ -37,9 +37,9 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-utils": "^3.0.0",
     "prettier": "^2.8.7",
-    "testcafe": "^2.3.1",
-    "typescript": "^5.0.4",
-    "sass": "^1.61.0"
+    "sass": "^1.61.0",
+    "testcafe": "^2.5.0",
+    "typescript": "^5.0.4"
   },
   "scripts": {
     "build": "meteor reset && sass client/style.scss client/style.css",

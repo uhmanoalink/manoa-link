@@ -23,7 +23,6 @@ import ProtectedRoute from './ProtectedRoute';
 import AdminProtectedRoute from './AdminProtectedRoute';
 import StudentProtectedRoute from './StudentProtectedRoute';
 import Dashboard from '../pages/Dashboard';
-import CompanyDashboard from '../pages/CompanyDashboard';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -35,8 +34,8 @@ const App = () => {
   });
   return (
     <Router>
-      <div className="d-flex flex-column min-vh-100">
-        <NavBar />
+      <NavBar />
+      <div className="min-vh-100">
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route path="/signin" element={<SignIn />} />
@@ -54,8 +53,8 @@ const App = () => {
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
       </div>
+      <Footer />
     </Router>
   );
 };

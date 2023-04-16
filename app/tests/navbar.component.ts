@@ -2,66 +2,104 @@ import { Selector } from 'testcafe';
 
 class NavBar {
 
+  private pageId: string;
+
+  private pageSelector: SelectorAPI;
+
+  constructor() {
+    this.pageId = '#navbar';
+    this.pageSelector = Selector(this.pageId);
+  }
+
+  async isDisplayed(testController: TestController) {
+    await testController.expect(this.pageSelector.exists).ok();
+  }
+
   /** If someone is logged in, then log them out, otherwise do nothing. */
-  async ensureLogout(testController: TestController) {
-    const loggedInUser = await Selector('#navbar-current-user').exists;
+  private async ensureLogout(testController: TestController) {
+    const loggedInUser = await Selector('#navbar-dropdown').exists;
     if (loggedInUser) {
-      await testController.click('#navbar-current-user');
-      await testController.click('#navbar-sign-out');
+      await testController.click('#navbar-dropdown');
+      await testController.click(Selector('.dropdown-item').withText('Sign Out'));
     }
+  }
+
+  private async openNavDropdown(tc: TestController) {
+    const expanded = await Selector('#navbar-dropdown').getAttribute('aria-expanded') === 'true';
+    if (!expanded) {
+      await tc.click('#navbar-dropdown');
+    }
+  }
+
+  private async checkNavLinkExists(tc: TestController, linkText: string) {
+    await tc.expect(Selector('#navbar .nav-link').withText(linkText.toUpperCase()).visible).ok();
+  }
+
+  private async checkDropdownItemExists(tc: TestController, itemText: string) {
+    await this.openNavDropdown(tc);
+    await tc.expect(Selector('#navbar .dropdown-item').withText(itemText.toUpperCase()).visible).ok();
+  }
+
+  async clickNavLink(tc: TestController, linkText: string) {
+    await tc.click((Selector('#navbar .nav-link').withText(linkText.toUpperCase())));
   }
 
   async gotoSignInPage(testController: TestController) {
     await this.ensureLogout(testController);
-    const visible = await Selector('#basic-navbar-nav').visible;
-    if (!visible) {
-      await testController.click('button.navbar-toggler');
-    }
-    await testController.click('#login-dropdown');
-    await testController.click('#login-dropdown-sign-in');
+    await this.openNavDropdown(testController);
+    await testController.click(Selector('.dropdown-item').withText('Sign In'));
   }
 
-  async gotoNavLinkPages(testController: TestController) {
-    await testController.click('#my-profile-nav');
-    await testController.click('#list-events-nav');
-    await testController.click('#add-events-nav');
-    await testController.click('#company-listing-nav');
+  async gotoSignUpPage(testController: TestController) {
+    await this.ensureLogout(testController);
+    await this.openNavDropdown(testController);
+    await testController.click(Selector('.dropdown-item').withText('Sign Up'));
   }
 
-  async gotoDashboardPage(testController: TestController) {
-    await testController.click('#dashboard-nav');
+  async checkStudentNavLinks(tc: TestController) {
+    await this.checkNavLinkExists(tc, 'Dashboard');
+    await this.checkNavLinkExists(tc, 'Job Listings');
+    await this.checkNavLinkExists(tc, 'Events Board');
+    await this.openNavDropdown(tc);
+    await this.checkDropdownItemExists(tc, 'Profile');
+    await this.checkDropdownItemExists(tc, 'Sign Out');
+  }
+
+  async checkCompanyNavLinks(tc: TestController) {
+    await this.checkNavLinkExists(tc, 'Dashboard');
+    await this.checkNavLinkExists(tc, 'Manage Listings');
+    await this.checkNavLinkExists(tc, 'Manage Events');
+    await this.openNavDropdown(tc);
+    await this.checkDropdownItemExists(tc, 'Profile');
+    await this.checkDropdownItemExists(tc, 'Sign Out');
+  }
+
+  async checkAdminNavLinks(tc: TestController) {
+    await this.checkNavLinkExists(tc, 'Dashboard');
+    await this.checkNavLinkExists(tc, 'Admin');
+    await this.openNavDropdown(tc);
+    await this.checkDropdownItemExists(tc, 'Profile');
+    await this.checkDropdownItemExists(tc, 'Sign Out');
+  }
+
+  async checkUnloggedNavLinks(tc: TestController) {
+    const navLinkCount = await Selector('#navbar .nav-link').count;
+    await tc.expect(navLinkCount).eql(1);
+    await this.openNavDropdown(tc);
   }
 
   /** Check that the specified user is currently logged in. */
-  async isLoggedIn(testController: TestController, username: string) {
-    const visible = await Selector('#basic-navbar-nav').visible;
-    if (!visible) {
-      await testController.click('button.navbar-toggler');
-    }
-    const loggedInUser = Selector('#navbar-current-user').innerText;
+  async checkLoggedInAs(testController: TestController, username: string) {
+    const loggedInUser = await Selector('#navbar-dropdown img[alt="pfp"]').getAttribute('aria-details');
     await testController.expect(loggedInUser).eql(username);
   }
 
-  /** Check that someone is logged in, then click items to logout. */
+  /** Logout current user. */
   async logout(testController: TestController) {
-    const visible = await Selector('#basic-navbar-nav').visible;
-    if (!visible) {
-      await testController.click('button.navbar-toggler');
+    if (await Selector('#navbar-dropdown .img[alt="pfp"]').exists) {
+      await this.openNavDropdown(testController);
+      await testController.click(Selector('.dropdown-item').withText('Sign Out'));
     }
-    await testController.expect(Selector('#navbar-current-user').exists).ok();
-    await testController.click('#navbar-current-user');
-    await testController.click('#navbar-sign-out');
-  }
-
-  /** Pull down login menu, go to sign up page. */
-  async gotoSignUpPage(testController: TestController) {
-    await this.ensureLogout(testController);
-    const visible = await Selector('#basic-navbar-nav').visible;
-    if (!visible) {
-      await testController.click('button.navbar-toggler');
-    }
-    await testController.click('#login-dropdown');
-    await testController.click('#login-dropdown-sign-up');
   }
 }
 
