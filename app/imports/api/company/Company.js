@@ -32,4 +32,5 @@ class CompaniesCollection {
  * The singleton instance of the CompanysCollection.
  * @type {CompaniesCollection}
  */
+
 export const Companies = new CompaniesCollection();
