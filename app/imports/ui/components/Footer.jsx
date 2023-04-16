@@ -58,7 +58,7 @@ const Footer = () => (
             { name: '1680 East-West Road Honolulu, HI 96822' },
             { name: 'Office: 808.956.7420' },
             { name: 'Fax: 808.956.3548' },
-            { name: 'Fax: 808.956.3548' },
+            { name: 'Email: icsinfo@hawaii.edu' },
           ]}
         />
       </div>
@@ -66,7 +66,7 @@ const Footer = () => (
     <hr />
     <div className="footer-bottom">
       <div>
-        <a href="/">Copyright © 2023 ManoaLink</a>
+        <span>Copyright © 2023 ManoaLink</span>
         <a href="/">Privacy Policy</a>
         <a href="/">Terms of Service</a>
       </div>
