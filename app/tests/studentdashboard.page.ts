@@ -21,12 +21,12 @@ class StudentDashboardPage {
     await tc.click(Selector('.feed-button').withText('Upcoming Events'));
     await tc.expect(Selector('.events-feed').visible).ok();
     await tc.click(Selector('.feed-button').withText('Saved Jobs'));
-    await tc.expect(Selector('.jobs-button').visible).ok();
+    await tc.expect(Selector('.jobs-feed').visible).ok();
   }
 
   private async showsInterestingCompanies(tc: TestController) {
     await tc.expect(Selector('#interesting-companies').visible).ok();
-    await tc.expect(Selector('#interesting-companies companies').visible).ok();
+    await tc.expect(Selector('#interesting-companies .companies').visible).ok();
   }
 
   async test(tc: TestController) {
