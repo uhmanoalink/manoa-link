@@ -4,7 +4,7 @@ $landing-page-bg: #fff;
   --padding-sides: 4rem;
 
   .font-accent {
-    color: #1ce934;
+    color: $theme-accent;
     font-weight: 700;
     text-decoration: none;
   }
