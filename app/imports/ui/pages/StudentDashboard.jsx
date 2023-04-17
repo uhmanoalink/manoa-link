@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Button, Card, Dropdown } from 'react-bootstrap';
 import { Bookmark, BookmarkDash, Calendar, CalendarEvent, ThreeDots } from 'react-bootstrap-icons';
 import HelpButton from '../components/HelpButton';
+import Company from '../components/Company';
 
 const StudentDashboard = () => {
   const [activeFeed, setActiveFeed] = useState('events');
@@ -9,16 +10,16 @@ const StudentDashboard = () => {
   const sampleInterestingCompanies = [0, 1];
 
   const sampleEventData = [
-    // {
-    //   id: 0,
-    //   eventName: 'Tech Talk',
-    //   description: 'A talk with professionals.',
-    //   imagePath: '/images/sample-pfp.png',
-    //   startDateTime: new Date('2023-04-16T18:00:00'),
-    //   endDateTime: new Date('2023-04-16T20:00:00'),
-    //   location: 'Campus Ballroom',
-    //   hostedBy: 'ACM Club',
-    // },
+    {
+      id: 0,
+      eventName: 'Tech Talk',
+      description: 'A talk with professionals.',
+      imagePath: '/images/sample-pfp.png',
+      startDateTime: new Date('2023-04-16T18:00:00'),
+      endDateTime: new Date('2023-04-16T20:00:00'),
+      location: 'Campus Ballroom',
+      hostedBy: 'ACM Club',
+    },
   ];
 
   const sampleJobData = [
@@ -36,18 +37,33 @@ const StudentDashboard = () => {
   const sampleCompanyData = {
     0: {
       companyName: 'UH Manoa',
-      companyLogo: '/images/sample-pfp.png',
       companyPage: 'https://www.ics.hawaii.edu/',
+      address: '2500 Campus Rd, Honolulu, HI 96822',
+      description: 'The University of Hawaiʻi at Mānoa is a public land-grant research university in Mānoa, a neighborhood of Honolulu, Hawaii. It is the flagship campus of the University of Hawaiʻi system and houses the main offices of the system.',
+      image: '/images/sample-pfp.png',
+      tag: '',
+      owner: '',
+      _id: '0',
     },
     1: {
       companyName: 'UH Manoa 1',
-      companyLogo: '/images/sample-pfp.png',
       companyPage: 'https://www.ics.hawaii.edu/',
+      address: '2500 Campus Rd, Honolulu, HI 96822',
+      description: 'The University of Hawaiʻi at Mānoa is a public land-grant research university in Mānoa, a neighborhood of Honolulu, Hawaii. It is the flagship campus of the University of Hawaiʻi system and houses the main offices of the system.',
+      image: '/images/sample-pfp.png',
+      tag: '',
+      owner: '',
+      _id: '1',
     },
     2: {
       companyName: 'UH Manoa 2',
-      companyLogo: '/images/sample-pfp.png',
       companyPage: 'https://www.ics.hawaii.edu/',
+      address: '2500 Campus Rd, Honolulu, HI 96822',
+      description: 'The University of Hawaiʻi at Mānoa is a public land-grant research university in Mānoa, a neighborhood of Honolulu, Hawaii. It is the flagship campus of the University of Hawaiʻi system and houses the main offices of the system.',
+      image: '/images/sample-pfp.png',
+      tag: '',
+      owner: '',
+      _id: '2',
     },
   };
 
@@ -96,9 +112,9 @@ const StudentDashboard = () => {
             </button>
           </div>
           <div className="feed">
-            <div className="cards">
-              {(activeFeed === 'events') && (
-                sampleEventData.map(({ id, imagePath, eventName, description, startDateTime, endDateTime, location }) => (
+            {(activeFeed === 'events') && (
+              <div className="events-feed">
+                {sampleEventData.map(({ id, imagePath, eventName, description, startDateTime, endDateTime, location }) => (
                   <Card className="event-card" key={id}>
                     <Card.Img src={imagePath} alt="Event Image" />
                     <Card.Body>
@@ -140,24 +156,26 @@ const StudentDashboard = () => {
                       </Dropdown>
                     </Card.Footer>
                   </Card>
-                ))
-              )}
-              {(activeFeed === 'events') && (sampleEventData.length === 0) && (
-                <>
-                  <h1 className="section-title">
-                    😬 There&apos;s nothing to see...
-                  </h1>
-                  <h2 className="section-large-text">
-                    Follow a company to see their upcoming events!
-                  </h2>
-                </>
-              )}
-              {(activeFeed === 'jobs') && (
-                sampleJobData.map(({ id, companyId, jobTitle, description, employmentType, scheduleType }) => {
-                  const { companyName, companyLogo, companyPage } = sampleCompanyData[companyId];
+                ))}
+                {(sampleEventData.length === 0) && (
+                  <>
+                    <h1 className="section-title">
+                      😬 There&apos;s nothing to see...
+                    </h1>
+                    <h2 className="section-large-text">
+                      Follow a company to see their upcoming events!
+                    </h2>
+                  </>
+                )}
+              </div>
+            )}
+            {(activeFeed === 'jobs') && (
+              <div className="jobs-feed">
+                {sampleJobData.map(({ id, companyId, jobTitle, description, employmentType, scheduleType }) => {
+                  const { companyName, image, companyPage } = sampleCompanyData[companyId];
                   return (
                     <Card className="job-card" key={id}>
-                      <Card.Img src={companyLogo} alt="Company Logo" />
+                      <Card.Img src={image} alt="Company Logo" />
                       <Card.Body>
                         <Card.Title>{jobTitle}</Card.Title>
                         <Card.Subtitle>{companyName}</Card.Subtitle>
@@ -186,26 +204,28 @@ const StudentDashboard = () => {
                       </Card.Body>
                     </Card>
                   );
-                })
-              )}
-              {(activeFeed === 'jobs') && (sampleJobData.length === 0) && (
-                <>
-                  <h1 className="section-title">
-                    😬 There&apos;s nothing to see...
-                  </h1>
-                  <h2 className="section-large-text">
-                    Save a job listing and it will show up here!
-                  </h2>
-                </>
-              )}
-            </div>
+                })}
+                {(activeFeed === 'jobs') && (sampleJobData.length === 0) && (
+                  <>
+                    <h1 className="section-title">
+                      😬 There&apos;s nothing to see...
+                    </h1>
+                    <h2 className="section-large-text">
+                      Save a job listing and it will show up here!
+                    </h2>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </section>
-        <section id="people">
+        <section id="interesting-companies">
           <h1 className="section-title">Companies you might be interested in:</h1>
-          {sampleInterestingCompanies.map((id) => (
-            <h2 key={id} className="section-large-text">{sampleCompanyData[id].companyName}</h2>
-          ))}
+          <div className="companies">
+            {sampleInterestingCompanies.map((id) => (
+              <Company company={sampleCompanyData[id]} key={id} />
+            ))}
+          </div>
         </section>
       </main>
       <HelpButton />

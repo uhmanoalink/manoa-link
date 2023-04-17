@@ -1,13 +1,13 @@
 import { Selector } from 'testcafe';
 import { navBar } from './navbar.component';
 
-class DashboardPage {
+class CompanyDashboardPage {
   private pageId: string;
 
   private pageSelector: Selector;
 
   constructor() {
-    this.pageId = '#dashboard';
+    this.pageId = '#company-dashboard';
     this.pageSelector = Selector(this.pageId);
   }
 
@@ -32,4 +32,4 @@ class DashboardPage {
   }
 }
 
-export const dashboardPage = new DashboardPage();
+export const companyDashboardPage = new CompanyDashboardPage();
