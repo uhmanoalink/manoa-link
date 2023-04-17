@@ -35,7 +35,7 @@ const App = () => {
   return (
     <Router>
       <NavBar />
-      <div className="min-vh-100">
+      <div className="full-screen-page">
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route path="/signin" element={<SignIn />} />

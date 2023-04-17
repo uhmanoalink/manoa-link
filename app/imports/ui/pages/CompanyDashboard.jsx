@@ -25,7 +25,7 @@ const CompanyDashboard = () => {
   ];
 
   return (
-    <Container id="dashboard" className="py-3">
+    <Container id="company-dashboard" className="py-3">
       <Row className="justify-content-center">
         <Col xs={3}>
           <Sidebar />
