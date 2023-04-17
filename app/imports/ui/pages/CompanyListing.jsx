@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Card, Container, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import HelpButton from '../components/HelpButton';
 import Sidebar from '../components/Sidebar';
 
@@ -54,8 +53,7 @@ const CompanyListing = () => {
         <Col>
           <Row>
             { sampleCompanies.map(({ image, name, text, link }, index) => (
-
-              <Col xs={12} md={4}>
+              <Col xs={12} md={4} key={index}>
                 <Card id="company-card">
                   <Card.Img id="company-card-image" variant="top" src={image} />
                   <Card.Title id="company-card-title">{name}</Card.Title>

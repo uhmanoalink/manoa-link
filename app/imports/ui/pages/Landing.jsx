@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Container } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { useNavigate } from 'react-router';
 import SignIn from '../components/SignIn';

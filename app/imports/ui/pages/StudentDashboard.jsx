@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Col, Image, Row, Button, Card, DropdownButton, Dropdown, Form } from 'react-bootstrap';
+import { Container, Button, Card, Dropdown } from 'react-bootstrap';
 import { Bookmark, BookmarkDash, Calendar, CalendarEvent, ThreeDots } from 'react-bootstrap-icons';
-import DropdownItem from 'react-bootstrap/esm/DropdownItem';
-import Sidebar from '../components/Sidebar';
 import HelpButton from '../components/HelpButton';
 
 const StudentDashboard = () => {
   const [activeFeed, setActiveFeed] = useState('events');
 
-  const updates = ['Made texas holdem game', 'Redesigned personal site', 'Wrote basic compiler'];
-  const people = ['Winston Co', 'Prayag Das', 'Honggun Jeon', 'Jared Lo'];
   const sampleInterestingCompanies = [0, 1];
 
   const sampleEventData = [
@@ -26,15 +22,15 @@ const StudentDashboard = () => {
   ];
 
   const sampleJobData = [
-    // {
-    //   id: 0,
-    //   companyId: 0,
-    //   jobTitle: 'React Developer',
-    //   description: 'Work on the UH websites.',
-    //   employmentType: 1, // 0 = in-person, 1 = remote, 2 = hybrid
-    //   scheduleType: 0, // 0 = full-time, 1 = part-time, 2 = flexible
-    //   location: 'Campus Ballroom',
-    // },
+    {
+      id: 0,
+      companyId: 0,
+      jobTitle: 'React Developer',
+      description: 'Work on the UH websites.',
+      employmentType: 1, // 0 = in-person, 1 = remote, 2 = hybrid
+      scheduleType: 0, // 0 = full-time, 1 = part-time, 2 = flexible
+      location: 'Campus Ballroom',
+    },
   ];
 
   const sampleCompanyData = {
