@@ -9,7 +9,7 @@ import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
 import MyProfile from '../pages/MyProfile';
-import AddEvents from '../pages/AddEvent';
+import AddEvent from '../pages/AddEvent';
 import ListEvents from '../pages/ListEvents';
 import CompanyListing from '../pages/CompanyListing';
 import NotFound from '../pages/NotFound';
@@ -45,7 +45,7 @@ const App = () => {
           <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
           <Route path="/add" element={<ProtectedRoute><AddStuff /></ProtectedRoute>} />
           <Route path="/my-profile" element={<StudentProtectedRoute ready={ready}><MyProfile /></StudentProtectedRoute>} />
-          <Route path="/add-events" element={<ProtectedRoute><AddEvents /></ProtectedRoute>} />
+          <Route path="/add-event" element={<ProtectedRoute><AddEvent /></ProtectedRoute>} />
           <Route path="/list-events" element={<ProtectedRoute><ListEvents /></ProtectedRoute>} />
           <Route path="/company-listing" element={<ProtectedRoute><CompanyListing /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditEvent /></ProtectedRoute>} />

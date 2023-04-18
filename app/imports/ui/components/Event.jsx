@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Card } from 'react-bootstrap';
+import { Image, Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const Event = ({ event }) => (
-  <Card className="h-100">
-    <Card.Header>
-      <Image src={event.image} width={75} />
-      <Card.Title>{event.eventName}</Card.Title>
-      <Card.Subtitle>{event.address}</Card.Subtitle>
-    </Card.Header>
-    <Card.Body>
-      <Card.Text>{event.description}</Card.Text>
-      <Link to={`/edit/${event._id}`}>Edit</Link>
+  <Card className="shadow event-card h-100">
+    <Card.Img variant="top" src={event.image} className="event-image" />
+    <Card.Body className="event-body">
+      <Card.Title className="event-name">{event.eventName}</Card.Title>
+      <Card.Subtitle className="mb-2 text-muted event-address">{event.address}</Card.Subtitle>
+      <Card.Text className="event-description">{event.description}</Card.Text>
+      <div className="event-tags">
+        {event.tags.map((tag, index) => (
+          <Badge variant="primary" className="event-tag" key={index}>{tag}</Badge>
+        ))}
+      </div>
+      <Link to={`/edit/${event._id}`} className="event-edit-link">
+        <Button variant="primary" size="sm">Edit</Button>
+      </Link>
     </Card.Body>
   </Card>
 );
@@ -26,7 +31,7 @@ Event.propTypes = {
     address: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.string,
-    tag: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
     createdAt: Date,
     owner: PropTypes.string,
     _id: PropTypes.string,
