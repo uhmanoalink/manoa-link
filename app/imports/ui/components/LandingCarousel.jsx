@@ -44,24 +44,20 @@ LandingCarousel.defaultProps = {
       data: 'Manoa Link',
     },
     {
-      contentType: 'text',
-      data: 'Item 2',
+      contentType: 'image',
+      data: '/images/manoa.jpg',
     },
     {
       contentType: 'image',
-      data: '/images/sample-image-landscape.png',
+      data: '/images/honolulu.jpeg',
     },
     {
       contentType: 'image',
-      data: '/images/sample-image-landscape.png',
+      data: '/images/oahu.jpeg',
     },
     {
       contentType: 'image',
-      data: '/images/sample-image-landscape.png',
-    },
-    {
-      contentType: 'image',
-      data: '/images/sample-image-landscape.png',
+      data: '/images/seemooManoa.PNG',
     },
   ],
   reverse: false,
