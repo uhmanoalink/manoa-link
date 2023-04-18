@@ -40,8 +40,8 @@ LandingCarousel.propTypes = {
 LandingCarousel.defaultProps = {
   itemProps: [
     {
-      contentType: 'text',
-      data: 'Manoa Link',
+      contentType: 'image',
+      data: '/images/logo_black.PNG',
     },
     {
       contentType: 'image',
