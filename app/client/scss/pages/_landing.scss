@@ -21,6 +21,10 @@ $landing-page-bg: #fff;
   main {
     margin-top: 6rem;
   }
+  @font-face {
+    font-family: "Zero Hour";
+    src: url("../../../public/fonts/zero hour.otf");
+  }
 
   #landing-carousel {
     height: 100vh;
@@ -32,6 +36,9 @@ $landing-page-bg: #fff;
 
       .landing-carousel-item {
         padding-top: 3rem;
+        font-family: "Zero Hour", sans-serif;
+        font-size: large;
+        color: red;
       }
     }
 
