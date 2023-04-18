@@ -99,7 +99,7 @@ const ListEvents = () => {
               )}
             </Col>
           </Row>
-          <Row>
+          <Row xs={1} md={2} lg={3} className="g-4">
             {ready ? (events.map((event) => (<Col key={event._id}><Event event={event} /></Col>))
             ) : (
               <LoadingSpinner />

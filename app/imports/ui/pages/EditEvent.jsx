@@ -49,7 +49,7 @@ const EditEvent = () => {
               <Card.Body>
                 <Row>
                   <Col><TextField name="eventName" /></Col>
-                  <SelectField name="tag" />
+                  <SelectField name="tag" multiple/>
                 </Row>
                 <Row>
                   <Col><TextField name="address" /></Col>

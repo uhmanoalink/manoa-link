@@ -78,4 +78,8 @@
     text-align: center;
     display: block;
   }
+
+  .card:hover {
+    transform: scale(1.2);
+  }
 }
