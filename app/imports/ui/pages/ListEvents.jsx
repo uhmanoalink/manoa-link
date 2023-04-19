@@ -29,15 +29,6 @@ const ListEvents = () => {
     };
   }, [selectedTags]);
 
-  const handleTagChange = (event) => {
-    const tag = event.target.value;
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
-    } else {
-      setSelectedTags([...selectedTags, tag]);
-    }
-  };
-
   const handleTagClick = (tag) => {
     if (tag === 'All') {
       setSelectedTags([]);
@@ -71,7 +62,7 @@ const ListEvents = () => {
           <Row>
             <Col>
               <div className="d-flex align-items-center">
-                <Button className="btn btn-secondary mr-2" onClick={() => setShowFilter(!showFilter)}>
+                <Button className="btn btn-secondary mr-2 align-content-center mb-3" onClick={() => setShowFilter(!showFilter)}>
                   Filter by tags
                 </Button>
                 {selectedTags.length > 0 && (
@@ -101,9 +92,7 @@ const ListEvents = () => {
           </Row>
           <Row xs={1} md={2} lg={3} className="g-4">
             {ready ? (events.map((event) => (<Col key={event._id}><Event event={event} /></Col>))
-            ) : (
-              <LoadingSpinner />
-            )}
+            ) : (<LoadingSpinner />)}
           </Row>
         </Col>
       </Row>
