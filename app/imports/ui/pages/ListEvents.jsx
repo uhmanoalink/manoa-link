@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row, Form, Button } from 'react-bootstrap';
+import { Col, Container, Row, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Event from '../components/Event';
@@ -18,7 +18,7 @@ const ListEvents = () => {
     const subscription = Meteor.subscribe(Events.userPublicationName);
     const subscription2 = Meteor.subscribe(Events.adminPublicationName);
     // Determine if the subscription is ready
-    const rdy = subscription.ready();
+    const rdy = subscription.ready() && subscription2.ready();
     // Get the Event documents
     let eventItems = Events.collection.find({}).fetch();
     if (selectedTags.length > 0) {
