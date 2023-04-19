@@ -44,7 +44,7 @@ const SignIn = () => {
   // Otherwise return the Login form.
   return (
     <div className="signin-container">
-      <h2>Welcome Back!</h2>
+      <h2>Welcome!</h2>
       <div className="signin">
         <AutoForm schema={bridge} onSubmit={(data) => submit(data)}>
           <Card>
