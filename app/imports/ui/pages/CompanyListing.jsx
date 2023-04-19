@@ -42,13 +42,40 @@ const CompanyListing = () => {
       text: 'Sample-text-2',
       link: '#',
     },
+    {
+      image: 'images/sample-image-landscape.png',
+      name: 'Sample',
+      text: 'Sample-text',
+      link: '#',
+    },
+    {
+      image: 'images/sample-image-landscape.png',
+      name: 'Sample-2',
+      text: 'Sample-text-2',
+      link: '#',
+    },
+    {
+      image: 'images/sample-image-landscape.png',
+      name: 'Sample',
+      text: 'Sample-text',
+      link: '#',
+    },
+    {
+      image: 'images/sample-image-landscape.png',
+      name: 'Sample-2',
+      text: 'Sample-text-2',
+      link: '#',
+    },
   ];
 
   return (
     <Container id="company-listing" className="py-3">
       <Row className="justify-content-center">
         <Col xs={12} md={3}>
-          <Sidebar />
+          <Sidebar>
+            <h2>Welcome to your sidebar</h2>
+            <p>Bruh what do I even put here?</p>
+          </Sidebar>
         </Col>
         <Col>
           <Row>
