@@ -52,7 +52,6 @@ const AddEvent = () => {
     const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date() } = data;
     const tags = selectedTags.map(tag => tag.value);
     const owner = Meteor.user().username;
-
     Events.collection.insert(
       { eventName, image, address, description, tags, companyId, createdAt, owner },
       (error) => {

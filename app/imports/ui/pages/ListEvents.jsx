@@ -16,6 +16,7 @@ const ListEvents = () => {
     // when your component is unmounted or deps change.
     // Get access to Events documents.
     const subscription = Meteor.subscribe(Events.userPublicationName);
+    const subscription2 = Meteor.subscribe(Events.adminPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();
     // Get the Event documents
