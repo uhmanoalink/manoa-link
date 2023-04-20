@@ -17,10 +17,10 @@ class NavBar {
 
   /** If someone is logged in, then log them out, otherwise do nothing. */
   private async ensureLogout(testController: TestController) {
-    const loggedInUser = await Selector('#navbar-dropdown').exists;
+    const loggedInUser = await Selector('#navbar-dropdown img[alt="pfp"]').getAttribute('aria-details');
     if (loggedInUser) {
-      await testController.click('#navbar-dropdown');
-      await testController.click(Selector('.dropdown-item').withText('Sign Out'));
+      await this.openNavDropdown(testController);
+      await testController.click('a[href="/signout"]');
     }
   }
 
@@ -47,13 +47,13 @@ class NavBar {
   async gotoSignInPage(testController: TestController) {
     await this.ensureLogout(testController);
     await this.openNavDropdown(testController);
-    await testController.click(Selector('.dropdown-item').withText('Sign In'));
+    await testController.click('a[href="/signin"]');
   }
 
   async gotoSignUpPage(testController: TestController) {
     await this.ensureLogout(testController);
     await this.openNavDropdown(testController);
-    await testController.click(Selector('.dropdown-item').withText('Sign Up'));
+    await testController.click('a[href="/signup"]');
   }
 
   async checkStudentNavLinks(tc: TestController) {
