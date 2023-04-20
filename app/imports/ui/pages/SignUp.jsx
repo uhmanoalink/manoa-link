@@ -6,7 +6,7 @@ import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
-import { Roles } from 'meteor/alanning:roles';
+import { Meteor } from 'meteor/meteor';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -32,20 +32,27 @@ const SignUp = ({ location }) => {
   const submit = (doc) => {
     const { email, password, role } = doc;
 
-    const userID = Accounts.createUser({ email, username: email, password }, (err) => {
-      if (err) {
-        setError(err.reason);
+    Accounts.createUser({ email, username: email, password }, (createUserError) => {
+      let errorMsg = '';
+      if (createUserError) {
+        errorMsg = createUserError.reason;
       } else {
-        setError('');
-        setRedirectToRef(true);
+        const userId = Meteor.userId();
+        Meteor.call('initUser', { userId, role }, (initUserError) => {
+          if (initUserError) {
+            errorMsg = 'There was a problem creating the user';
+            Meteor.call('deleteUser', { userId }, (deleteUserError) => {
+              if (deleteUserError) {
+                errorMsg += ", but it couldn't be removed!";
+              }
+            });
+          } else {
+            setRedirectToRef(true);
+          }
+        });
       }
+      setError(errorMsg);
     });
-    if (!error) {
-      // Does not work, strangely. Needs to be fixed!!
-      // Fortunately, it does add the user, but fails to add any roles.
-      Roles.createRole(role, { unlessExists: true });
-      Roles.addUsersToRoles(userID, role);
-    }
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
