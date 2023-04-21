@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../../api/stuff/Stuff.js';
 // import { Companies } from '../../api/company/Company';
-// import { Events } from '../../api/event/Event';
+import { Events } from '../../api/event/Event';
 // import { Positions } from '../../api/position/Position';
 // import { Users } from '../../api/user/User';
 
@@ -35,19 +35,19 @@ if (Stuffs.collection.find().count() === 0) {
 //   }
 // }
 //
-// // Initialize the database with a default data document.
-// const addEvent = (data) => {
-//   console.log(`  Adding: ${data.name} (${data.owner})`);
-//   Events.collection.insert(data);
-// };
-//
-// // Initialize the EventsCollection if empty.
-// if (Events.collection.find().count() === 0) {
-//   if (Meteor.settings.defaultData) {
-//     console.log('Creating default data.');
-//     Meteor.settings.defaultData.forEach(data => addData(data));
-//   }
-// }
+// Initialize the database with a default data document.
+const addEvent = (data) => {
+  console.log(`  Adding: ${data.eventName} (${data.owner})`);
+  Events.collection.insert(data);
+};
+
+// Initialize the EventsCollection if empty.
+if (Events.collection.find().count() === 0) {
+  if (Meteor.settings.defaultEvents) {
+    console.log('Creating default data.');
+    Meteor.settings.defaultEvents.forEach(data => addEvent(data));
+  }
+}
 //
 // // Initialize the database with a default data document.
 // const addPosition = (data) => {
