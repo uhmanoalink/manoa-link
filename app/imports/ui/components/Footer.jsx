@@ -37,9 +37,9 @@ const Footer = () => (
       <FooterCol
         title="Manoa Link"
         items={[
-          { name: 'About Us', to: '/about' },
-          { name: 'Blog', to: '/blog' },
-          { name: 'FAQ', to: '/faq' },
+          { name: 'Blog', to: 'https://uhmanoalink.github.io' },
+          { name: 'About Us', to: 'https://uhmanoalink.github.io/about-us' },
+          { name: 'FAQ', to: 'https://uhmanoalink.github.io/faq' },
         ]}
       />
       <FooterCol
