@@ -6,6 +6,7 @@ import { navBar } from './navbar.component';
 import { companyDashboardPage } from './companydashboard.page';
 import { studentDashboardPage } from './studentdashboard.page';
 import { footerComponent } from './footer.component';
+import { signupPage } from './signup.page';
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const studentCredentials: Credentials = { username: 'john@foo.com', password: 'changeme' };
@@ -53,4 +54,8 @@ test('Test student dashboard page', async (tc) => {
 
 test('Test footer component', async (testController) => {
   await footerComponent.test(testController);
+});
+
+test('Test sign up page', async (tc) => {
+  await signupPage.test(tc);
 });
