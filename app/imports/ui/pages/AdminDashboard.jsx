@@ -4,7 +4,6 @@ import { Col, Container, Row, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { ArrowsCollapse, ArrowsExpand, FilterLeft } from 'react-bootstrap-icons';
 import LoadingSpinner from '../components/LoadingSpinner';
-import Event from '../components/Event';
 import { Events } from '../../api/event/Event';
 import User from '../components/User';
 import { Users } from '../../api/user/User';
@@ -12,6 +11,7 @@ import Company from '../components/Company';
 import { Companies } from '../../api/company/Company';
 import Position from '../components/Position';
 import { Positions } from '../../api/position/Position';
+import EventAdmin from '../components/EventAdmin';
 
 const AdminDashboard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -149,7 +149,7 @@ const AdminDashboard = () => {
                 )}
 
                 <div className="cards">
-                  {filteredEvents.map((event) => (<Event key={event.id} event={event} />))}
+                  {filteredEvents.map((event) => (<EventAdmin key={event._id} event={event} />))}
                 </div>
               </>
             ) : <LoadingSpinner />}
