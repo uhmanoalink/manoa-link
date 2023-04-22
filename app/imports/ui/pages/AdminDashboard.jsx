@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row, Button } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { ArrowsCollapse, ArrowsExpand, FilterLeft } from 'react-bootstrap-icons';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -89,8 +89,8 @@ const AdminDashboard = () => {
 
   return (
     <Container id="admin-dashboard" fluid>
-      <Row>
-        <Col>
+      <main>
+        <section id="students">
           {genCollapseButton(0)}
           <h2>Students</h2>
           <div className={`collapsible ${minimizedTabs[0] ? 'collapsed' : ''}`}>
@@ -100,8 +100,8 @@ const AdminDashboard = () => {
               </div>
             ) : <LoadingSpinner />}
           </div>
-        </Col>
-        <Col>
+        </section>
+        <section id="companies">
           {genCollapseButton(1)}
           <h2>Companies</h2>
           <div className={`collapsible ${minimizedTabs[1] ? 'collapsed' : ''}`}>
@@ -111,8 +111,8 @@ const AdminDashboard = () => {
               </div>
             ) : <LoadingSpinner />}
           </div>
-        </Col>
-        <Col>
+        </section>
+        <section id="events">
           {genCollapseButton(2)}
           <h2>Events</h2>
           <div className={`collapsible ${minimizedTabs[2] ? 'collapsed' : ''}`}>
@@ -154,8 +154,8 @@ const AdminDashboard = () => {
               </>
             ) : <LoadingSpinner />}
           </div>
-        </Col>
-        <Col>
+        </section>
+        <section id="listings">
           {genCollapseButton(3)}
           <h2>Listings</h2>
           <div className={`collapsible ${minimizedTabs[3] ? 'collapsed' : ''}`}>
@@ -165,8 +165,8 @@ const AdminDashboard = () => {
               </div>
             ) : <LoadingSpinner />}
           </div>
-        </Col>
-      </Row>
+        </section>
+      </main>
     </Container>
   );
 };
