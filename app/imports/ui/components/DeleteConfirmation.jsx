@@ -37,7 +37,7 @@ const DeleteConfirmation = ({ collection, document }) => {
         </Modal.Header>
         <Modal.Body>
           <p>This is a permanent action.</p>
-          <p>Hold <code>ctrl</code>/<code>control</code> to ignore this warning.</p>
+          <p>Hold <code>ctrl</code>/<code>control</code> when you delete to not show this warning.</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
