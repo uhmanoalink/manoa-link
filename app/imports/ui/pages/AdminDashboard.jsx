@@ -2,33 +2,50 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
+import { ArrowsCollapse, ArrowsExpand, FilterLeft } from 'react-bootstrap-icons';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Event from '../components/Event';
 import { Events } from '../../api/event/Event';
+import User from '../components/User';
+import { Users } from '../../api/user/User';
+import Company from '../components/Company';
+import { Companies } from '../../api/company/Company';
+import Position from '../components/Position';
+import { Positions } from '../../api/position/Position';
 
-/* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const AdminDashboard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, events } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Events documents.
-    const subscription = Meteor.subscribe(Events.userPublicationName);
-    const subscription2 = Meteor.subscribe(Events.adminPublicationName);
+  // students, companies, events, listings
+  const [minimizedTabs, setMinimizedTabs] = useState([false, false, false, false]);
+
+  const { ready, students, companies, events, listings } = useTracker(() => {
+    const eventsSub = Meteor.subscribe(Events.adminPublicationName);
+    const studentsSub = Meteor.subscribe(Users.adminPublicationName);
+    const companiesSub = Meteor.subscribe(Companies.adminPublicationName);
+    const listingsSub = Meteor.subscribe(Positions.adminPublicationName);
     // Determine if the subscription is ready
-    const rdy = subscription.ready() && subscription2.ready();
-    // Get the Event documents
-    let eventItems = Events.collection.find({}).fetch();
-    if (selectedTags.length > 0) {
-      eventItems = eventItems.filter(event => selectedTags.some(tag => event.tags.includes(tag)));
-    }
+    const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready();
+
+    const studentItems = Users.collection.find({}).fetch();
+    const companyItems = Companies.collection.find({}).fetch();
+    const eventItems = Events.collection.find({}).fetch();
+    const listingItems = Positions.collection.find({}).fetch();
+
+    setMinimizedTabs([
+      Users.collection.find({}).count() === 0,
+      Companies.collection.find({}).count() === 0,
+      Events.collection.find({}).count() === 0,
+      Positions.collection.find({}).count() === 0,
+    ]);
     return {
       events: eventItems,
+      students: studentItems,
+      companies: companyItems,
+      listings: listingItems,
       ready: rdy,
     };
-  }, [selectedTags]);
+  }, []);
 
   const handleTagClick = (tag) => {
     if (tag === 'All') {
@@ -44,61 +61,110 @@ const AdminDashboard = () => {
     setSelectedTags([]);
   };
 
+  const genCollapseButton = (index) => (
+    <button
+      type="button"
+      className="min-max-button"
+      onClick={() => setMinimizedTabs(minimizedTabs.map((_, i) => ((i === index) ?
+        !minimizedTabs[i] : minimizedTabs[i])))}
+    >
+      {minimizedTabs[index]
+        ? <ArrowsExpand />
+        : <ArrowsCollapse /> }
+    </button>
+  );
+
+  let filteredEvents = events;
+  if (selectedTags.length > 0) {
+    filteredEvents = events.filter(event => selectedTags.some(tag => event.tags.includes(tag)));
+  }
+
   const tags = ['Computer Science', 'Cyber security', 'Web Development', 'Data Science', 'Business Administration',
-    'Marketing', 'Accounting', 'Finance', 'Entrepreneurship', 'Biology', 'Chemistry',
-    'Physics', 'Environmental Science', 'Geology', 'Psychology', 'Sociology', 'Political Science',
-    'Economics', 'Anthropology', 'English', 'History', 'Philosophy', 'Religious Studies', 'Classics',
-    'Fine Arts', 'Music', 'Theater', 'Film', 'Creative Writing', 'Nursing', 'Pre-Med', 'Public Health',
-    'Health Sciences', 'Physical Therapy', 'Linguistics', 'Journalism', 'Advertising', 'Public Relations',
-    'Communication Studies', 'Law', 'Criminal Justice', 'Paralegal Studies', 'Political Science', 'Sociology',
-    'International Relations', 'Global Studies', 'Foreign Languages', 'Engineering'];
+    'Marketing', 'Accounting', 'Finance', 'Entrepreneurship', 'Biology', 'Chemistry', 'Physics',
+    'Environmental Science', 'Geology', 'Psychology', 'Economics', 'Anthropology', 'English', 'History',
+    'Philosophy', 'Religious Studies', 'Classics', 'Fine Arts', 'Music', 'Theater', 'Film', 'Creative Writing',
+    'Nursing', 'Pre-Med', 'Public Health', 'Health Sciences', 'Physical Therapy', 'Linguistics', 'Journalism',
+    'Advertising', 'Public Relations', 'Communication Studies', 'Law', 'Criminal Justice', 'Paralegal Studies',
+    'Political Science', 'Sociology', 'International Relations', 'Global Studies', 'Foreign Languages', 'Engineering'].sort();
 
   return (
-    <Container className="py-3">
-      <Row className="justify-content-center">
+    <Container id="admin-dashboard" fluid>
+      <Row>
         <Col>
-          <h2>Users</h2>
-        </Col>
-        <Col>
-          <h2>Events</h2>
-          <Row>
-            <Col>
-              <div className="d-flex align-items-center">
-                <Button className="btn btn-secondary mr-2 align-content-center mb-3" onClick={() => setShowFilter(!showFilter)}>
-                  Filter by tags
-                </Button>
-                {selectedTags.length > 0 && (
-                  <Button className="btn btn-outline-secondary" onClick={handleClearFilter}>
-                    Clear filter
-                  </Button>
-                )}
+          {genCollapseButton(0)}
+          <h2>Students</h2>
+          <div className={`collapsible ${minimizedTabs[0] ? 'collapsed' : ''}`}>
+            {ready ? (
+              <div className="cards">
+                {students.map((user) => <User user={user} />)}
               </div>
-              {showFilter && (
-                <div className="mt-2" style={{ height: '250px', overflow: 'scroll' }}>
-                  {tags.map(tag => (
-                    <div key={tag} className={`form-check ${selectedTags.includes(tag) ? 'active' : ''}`}>
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={tag}
-                        checked={selectedTags.includes(tag)}
-                        onChange={() => handleTagClick(tag)}
-                      />
-                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label className="form-check-label">{tag}</label>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Col>
-          </Row>
-          <Row xs={1} md={2} lg={3} className="g-4">
-            {ready ? (events.map((event) => (<Col key={event._id}><Event event={event} /></Col>))
-            ) : (<LoadingSpinner />)}
-          </Row>
+            ) : <LoadingSpinner />}
+          </div>
         </Col>
         <Col>
+          {genCollapseButton(1)}
+          <h2>Companies</h2>
+          <div className={`collapsible ${minimizedTabs[1] ? 'collapsed' : ''}`}>
+            {ready ? (
+              <div className="cards">
+                {companies.map((company) => <Company company={company} />)}
+              </div>
+            ) : <LoadingSpinner />}
+          </div>
+        </Col>
+        <Col>
+          {genCollapseButton(2)}
+          <h2>Events</h2>
+          <div className={`collapsible ${minimizedTabs[2] ? 'collapsed' : ''}`}>
+            {ready ? (
+              <>
+                {!minimizedTabs[2] && (
+                  <>
+                    <Button variant="secondary" onClick={() => setShowFilter(!showFilter)}>
+                      <FilterLeft /> Filter by tags
+                    </Button>
+                    {selectedTags.length > 0 && (
+                      <Button variant="outline-secondary" className="ms-2" onClick={handleClearFilter}>
+                        Clear filter
+                      </Button>
+                    )}
+                    {showFilter && (
+                      <div className="taglist mt-1">
+                        {tags.map(tag => (
+                          <div key={tag} className={`tag form-check ${selectedTags.includes(tag) ? 'active' : ''}`}>
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value={tag}
+                              checked={selectedTags.includes(tag)}
+                              onChange={() => handleTagClick(tag)}
+                            />
+                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                            <label className="form-check-label">{tag}</label>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
+
+                <div className="cards">
+                  {filteredEvents.map((event) => (<Event key={event.id} event={event} />))}
+                </div>
+              </>
+            ) : <LoadingSpinner />}
+          </div>
+        </Col>
+        <Col>
+          {genCollapseButton(3)}
           <h2>Listings</h2>
+          <div className={`collapsible ${minimizedTabs[3] ? 'collapsed' : ''}`}>
+            {ready ? (
+              <div className="cards">
+                {listings.map((listing) => <Position position={listing} />)}
+              </div>
+            ) : <LoadingSpinner />}
+          </div>
         </Col>
       </Row>
     </Container>
