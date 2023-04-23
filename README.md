@@ -21,7 +21,7 @@ If working with Sass, it is advised to run `meteor npm run dev` instead of `mete
 
 ## Deployment
 
-Sinec the files required for MeteorUp (`mup.js` and `settings.json`) contain sensitive information, they are stored in GitHub as environment secrets. A deployment action is triggered on pushes to the main branch to automatically deploy the app to DigitalOcean.
+The app is deployed using MeteorUp (mup). Since the files required, `mup.js` and `settings.json`, contain sensitive information, they are stored in GitHub as environment secrets. A deployment action is triggered on pushes to the main branch to automatically deploy the app to DigitalOcean.
 
 ## License
 
