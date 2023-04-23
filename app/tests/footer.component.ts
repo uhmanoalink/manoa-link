@@ -16,9 +16,9 @@ class FooterComponent {
   }
 
   private async testLinks(testController: TestController) {
-    await this.checkUrl(testController, 'About Us', 'http://localhost:3000/about');
-    await this.checkUrl(testController, 'Blog', 'http://localhost:3000/blog');
-    await this.checkUrl(testController, 'FAQ', 'http://localhost:3000/faq');
+    await this.checkUrl(testController, 'Blog', 'https://uhmanoalink.github.io');
+    await this.checkUrl(testController, 'About Us', 'https://uhmanoalink.github.io/about-us');
+    await this.checkUrl(testController, 'FAQ', 'https://uhmanoalink.github.io/faq');
 
     await this.checkUrl(testController, 'Register Now', 'http://localhost:3000/register');
     await this.checkUrl(testController, 'Dashboard', 'http://localhost:3000/dashboard');
