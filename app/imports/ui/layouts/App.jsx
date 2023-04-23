@@ -23,6 +23,8 @@ import AdminProtectedRoute from './AdminProtectedRoute';
 import EditEvent from '../pages/EditEvent';
 import StudentProtectedRoute from './StudentProtectedRoute';
 import Dashboard from '../pages/Dashboard';
+import MainEventsList from '../pages/MainEventsList';
+import EventPage from '../pages/EventPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -45,8 +47,10 @@ const App = () => {
           <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
           <Route path="/add" element={<ProtectedRoute><AddStuff /></ProtectedRoute>} />
           <Route path="/my-profile" element={<StudentProtectedRoute ready={ready}><MyProfile /></StudentProtectedRoute>} />
+          <Route path="/event/:_id" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
           <Route path="/add-event" element={<ProtectedRoute><AddEvent /></ProtectedRoute>} />
           <Route path="/list-events" element={<ProtectedRoute><ListEvents /></ProtectedRoute>} />
+          <Route path="/main-events" element={<ProtectedRoute><MainEventsList /></ProtectedRoute>} />
           <Route path="/company-listing" element={<ProtectedRoute><CompanyListing /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditEvent /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListStuffAdmin /></AdminProtectedRoute>} />

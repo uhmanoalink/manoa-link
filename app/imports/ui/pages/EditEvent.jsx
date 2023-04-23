@@ -56,11 +56,19 @@ const EditEvent = () => {
   // console.log('EditEvent', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
-    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date() } = data;
+    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date(), eventAt, isPast } = data;
     const tags = selectedTags.map(tag => tag.value);
-    Events.collection.update(_id, { $set: { eventName, address, image, description, tags, companyId, createdAt } }, (error) => (error ?
-      swal('Error', error.message, 'error') :
-      swal('Success', 'Item updated successfully', 'success')));
+    Events.collection.update(_id, { $set: { eventName, address, image, description, tags, companyId, createdAt, eventAt, isPast } }, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Item updated successfully', 'success').then(() => {
+          // Navigate to /main-events after the user clicks "OK" on the success message
+          // eslint-disable-next-line no-restricted-globals
+          history.push('/main-events');
+        });
+      }
+    });
   };
 
   return ready ? (

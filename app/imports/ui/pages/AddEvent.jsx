@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, TextField, LongTextField, SubmitField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, TextField, LongTextField, SubmitField, DateField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -30,6 +30,11 @@ const formSchema = new SimpleSchema({
     type: Date,
     defaultValue: new Date(),
   },
+  eventAt: Date,
+  isPast: {
+    type: Boolean,
+    defaultValue: false,
+  },
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -49,11 +54,11 @@ const AddEvent = () => {
   const [selectedTags, setSelectedTags] = React.useState([]);
 
   const submit = (data, formRef) => {
-    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date() } = data;
+    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date(), eventAt, isPast } = data;
     const tags = selectedTags.map(tag => tag.value);
     const owner = Meteor.user().username;
     Events.collection.insert(
-      { eventName, image, address, description, tags, companyId, createdAt, owner },
+      { eventName, image, address, description, tags, companyId, createdAt, eventAt, isPast, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -69,18 +74,19 @@ const AddEvent = () => {
   let fRef = null;
 
   return (
-    <Container className="py-3">
+    <Container className="py-3 add-event">
       <Row className="justify-content-center">
-        <Col xs={10}>
-          <Col className="text-center"><h2>Add Event</h2></Col>
+        <Col xs={12} lg={10}>
+          <Col className="text-center mb-4"><h2>Add Event</h2></Col>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
-            <Card>
+            <Card className="event-card">
               <Card.Body>
                 <Row>
-                  <Col><TextField name="eventName" /></Col>
+                  <Col><TextField className="mb-3" name="eventName" placeholder="Event Name" /></Col>
                   <Col>
                     Tags
                     <Select
+                      className="mb-3"
                       isMulti
                       options={tagOptions}
                       value={selectedTags}
@@ -89,12 +95,13 @@ const AddEvent = () => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col><TextField name="address" /></Col>
-                  <Col><TextField name="image" /></Col>
+                  <Col><TextField className="mb-3" name="address" placeholder="Address" /></Col>
+                  <Col><TextField className="mb-3" name="image" placeholder="Image URL" /></Col>
                 </Row>
-                <LongTextField name="description" />
+                <LongTextField className="mb-3" name="description" placeholder="Description" />
+                <DateField className="mb-3" name="eventAt" placeholder="Event Date" />
                 <ErrorsField />
-                <SubmitField />
+                <SubmitField className="submit-btn" value="Add Event" />
               </Card.Body>
             </Card>
           </AutoForm>

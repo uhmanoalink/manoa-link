@@ -3,9 +3,18 @@ import PropTypes from 'prop-types';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+const formatDate = (date) => {
+  if (date) {
+    const parsedDate = new Date(date);
+    if (!Number.isNaN(parsedDate.getTime())) {
+      return parsedDate.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+  }
+  return 'Invalid Date';
+};
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const Event = ({ event }) => (
-  <Card className="shadow event-card h-100">
+  <Card className={`shadow event-card h-100 ${event.isPast ? 'bg-dark past-event' : ''}`}>
     <Card.Img variant="top" src={event.image} className="event-image" />
     <Card.Body className="event-body">
       <Card.Title className="event-name">{event.eventName}</Card.Title>
@@ -13,11 +22,17 @@ const Event = ({ event }) => (
       <Card.Text className="event-description">{event.description}</Card.Text>
       <div className="event-tags">
         {event.tags.map((tag, index) => (
-          <Badge variant="primary" className="event-tag" key={index}>{tag}</Badge>
+          <Badge variant="light" className="event-tag" key={index}>{tag}</Badge>
         ))}
       </div>
-      <Link to={`/edit/${event._id}`} className="event-edit-link">
-        <Button variant="primary" size="sm">Edit</Button>
+      <Card.Text className="event-date">
+        {formatDate(event.eventAt)}
+      </Card.Text>
+      <Link to={`/edit/${event._id}`} className="event-edit-link mx-1">
+        <Button variant="dark" size="sm">Edit</Button>
+      </Link>
+      <Link to={`/event/${event._id}`} className="event-edit-link">
+        <Button variant="secondary" size="sm">View</Button>
       </Link>
     </Card.Body>
   </Card>
@@ -33,7 +48,9 @@ Event.propTypes = {
     image: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     createdAt: Date,
+    eventAt: Date,
     owner: PropTypes.string,
+    isPast: PropTypes.bool,
     _id: PropTypes.string,
   }).isRequired,
 };
