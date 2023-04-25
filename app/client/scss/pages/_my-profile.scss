@@ -1,15 +1,11 @@
 $manoa-green: #024731;
 
-#profile-main {
+#student-profile, #company-profile {
   align-self: center;
   align-items: center;
   width: 800px;
-}
 
-#manoa-green {
-  color: $manoa-green;
-}
-
-#pfp {
-  width: 200px;
+  #pfp {
+    width: 200px;
+  }
 }
