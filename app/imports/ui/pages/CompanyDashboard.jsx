@@ -44,18 +44,6 @@ const CompanyDashboard = () => {
     },
   ];
 
-  /*
-  eventName: String,
-  companyId: String,
-  address: String,
-  description: String,
-  image: String,
-  tags: Array,
-  'tags.$': String,
-  createdAt: Date,
-  owner: String,
-  */
-
   return (
     <Container id="company-dashboard" className="py-3">
       <Row className="justify-content-center">
