@@ -37,11 +37,11 @@ LandingCarousel.propTypes = {
   reverse: PropTypes.bool,
 };
 
-LandingCarousel.defaultProps = {
+LandingCarousel.Props = {
   itemProps: [
     {
       contentType: 'image',
-      data: '/images/logo_black.PNG',
+      data: '/images/logo-black.PNG',
     },
     {
       contentType: 'image',
@@ -57,7 +57,33 @@ LandingCarousel.defaultProps = {
     },
     {
       contentType: 'image',
-      data: '/images/seemooManoa.PNG',
+      data: '/images/seemoo-Manoa.PNG',
+    },
+  ],
+  reverse: false,
+};
+
+LandingCarousel.defaultProps = {
+  itemProps: [
+    {
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
+    },
+    {
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
+    },
+    {
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
+    },
+    {
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
+    },
+    {
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
     },
   ],
   reverse: false,
