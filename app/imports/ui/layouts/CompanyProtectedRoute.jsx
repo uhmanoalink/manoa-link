@@ -22,7 +22,7 @@ const CompanyProtectedRoute = ({ ready, children }) => {
     return <LoadingSpinner />;
   }
   const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
-  const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
+  const isCompany = Roles.userIsInRole(Meteor.userId, 'company');
   return (isLogged && (isCompany || isAdmin)) ? children : <Navigate to="/notauthorized" />;
 };
 

@@ -24,6 +24,7 @@ const ListEvents = () => {
     if (selectedTags.length > 0) {
       eventItems = eventItems.filter(event => selectedTags.some(tag => event.tags.includes(tag)));
     }
+    eventItems.sort((a, b) => b.eventAt - a.eventAt);
     return {
       events: eventItems,
       ready: rdy,

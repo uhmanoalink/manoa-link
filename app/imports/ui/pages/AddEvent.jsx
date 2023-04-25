@@ -31,6 +31,7 @@ const formSchema = new SimpleSchema({
     defaultValue: new Date(),
   },
   eventAt: Date,
+  eventDoneAt: Date,
   isPast: {
     type: Boolean,
     defaultValue: false,
@@ -54,11 +55,11 @@ const AddEvent = () => {
   const [selectedTags, setSelectedTags] = React.useState([]);
 
   const submit = (data, formRef) => {
-    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date(), eventAt, isPast } = data;
+    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date(), eventAt, eventDoneAt } = data;
     const tags = selectedTags.map(tag => tag.value);
     const owner = Meteor.user().username;
     Events.collection.insert(
-      { eventName, image, address, description, tags, companyId, createdAt, eventAt, isPast, owner },
+      { eventName, image, address, description, tags, companyId, createdAt, eventAt, eventDoneAt, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -99,7 +100,8 @@ const AddEvent = () => {
                   <Col><TextField className="mb-3" name="image" placeholder="Image URL" /></Col>
                 </Row>
                 <LongTextField className="mb-3" name="description" placeholder="Description" />
-                <DateField className="mb-3" name="eventAt" placeholder="Event Date" />
+                <DateField className="mb-3" name="eventAt" placeholder="Time to start the event" />
+                <DateField className="mb-3" name="eventDoneAt" placeholder="Time to end the event" />
                 <ErrorsField />
                 <SubmitField className="submit-btn" value="Add Event" />
               </Card.Body>

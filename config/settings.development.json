@@ -28,8 +28,8 @@
       "tags": ["Computer Science", "Web Development", "Data Science", "Business Administration"],
       "createdAt": "2023-10-01T10:00:00.000Z",
       "eventAt": "2023-10-05T12:00:00.000Z",
-      "owner": "john@foo.com",
-      "isPast": false
+      "eventDoneAt": "2023-10-06T12:00:00.000Z",
+      "owner": "john@foo.com"
     },
     {
       "eventName": "Science Conference",
@@ -40,8 +40,8 @@
       "tags": ["Biology", "Chemistry", "Physics", "Environmental Science"],
       "createdAt": "2023-08-15T09:00:00.000Z",
       "eventAt": "2023-08-18T10:30:00.000Z",
-      "owner": "admin@foo.com",
-      "isPast": false
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "Art Show",
@@ -52,8 +52,8 @@
       "tags": ["Fine Arts", "Music", "Theater", "Film", "Creative Writing"],
       "createdAt": "2023-11-05T18:00:00.000Z",
       "eventAt": "2023-11-10T19:00:00.000Z",
-      "owner": "admin@foo.com",
-      "isPast": false
+      "eventDoneAt": "2023-11-11T19:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "Tech Talk: Introduction to Machine Learning",
@@ -64,8 +64,8 @@
       "tags": ["Computer Science", "Data Science"],
       "createdAt": "2023-04-19T10:30:00.000Z",
       "eventAt": "2023-04-22T14:00:00.000Z",
-      "owner": "admin@foo.com",
-      "isPast": true
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "Finance Workshop: Investing 101",
@@ -76,8 +76,8 @@
       "tags": ["Finance"],
       "createdAt": "2023-04-21T18:00:00.000Z",
       "eventAt": "2023-04-25T16:00:00.000Z",
-      "owner": "admin@foo.com",
-      "isPast": false
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "Art Exhibit: Contemporary Paintings",
@@ -88,8 +88,8 @@
       "tags": ["Fine Arts"],
       "createdAt": "2023-04-23T14:00:00.000Z",
       "eventAt": "2023-04-27T16:00:00.000Z",
-      "owner": "admin@foo.com",
-      "isPast": false
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "Environmental Film Festival",
@@ -100,8 +100,8 @@
       "tags": ["Environmental Science", "Film"],
       "createdAt": "2023-04-25T09:00:00.000Z",
       "eventAt": "2023-04-29T10:00:00.000Z",
-      "owner": "admin@foo.com",
-      "isPast": false
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "Hackathon 2022",
@@ -112,8 +112,8 @@
       "tags": ["Computer Science", "Web Development", "Data Science"],
       "createdAt": "2022-06-01T09:00:00Z",
       "eventAt": "2022-06-03T12:00:00Z",
-      "owner": "admin@foo.com",
-      "isPast": true
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "International Business Conference",
@@ -124,56 +124,44 @@
       "tags": ["Business Administration", "Marketing", "Finance"],
       "createdAt": "2022-07-15T10:00:00Z",
       "eventAt": "2022-07-18T14:00:00Z",
-      "owner": "admin@foo.com",
-      "isPast": true
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "Environmental Science Symposium",
       "companyId": "pqr-company",
       "address": "789 Oak St, Anytown USA",
       "description": "Explore cutting-edge research in environmental science and policy.",
-      "image": "https://example.com/environmental-science-image.jpg",
+      "image": "https://espp.msu.edu/_assets/images/news-images/espp.researchsyposium.abstracts-1.jpg",
       "tags": ["Environmental Science", "Geology", "Biology"],
       "createdAt": "2022-08-20T11:00:00Z",
       "eventAt": "2022-08-23T09:30:00Z",
-      "owner": "admin@foo.com",
-      "isPast": true
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "Music Festival",
       "companyId": "efg-company",
       "address": "321 Elm St, Anytown USA",
       "description": "Enjoy live music performances by some of today's hottest artists.",
-      "image": "https://example.com/music-festival-image.jpg",
+      "image": "https://www.visitphilly.com/wp-content/uploads/2018/02/crtsy-xponential-music-fest-stage-crowd-2200VP.jpg",
       "tags": ["Music", "Fine Arts"],
       "createdAt": "2022-09-05T12:00:00Z",
       "eventAt": "2022-08-23T09:30:00Z",
-      "owner": "admin@foo.com",
-      "isPast": true
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     },
     {
       "eventName": "Language Exchange Meetup",
       "companyId": "lmn-company",
       "address": "654 Pine St, Anytown USA",
       "description": "Practice your language skills and meet new friends from around the world.",
-      "image": "https://example.com/language-exchange-image.jpg",
+      "image": "https://www.fluentin3months.com/wp-content/uploads/2021/09/language-meetup.jpg",
       "tags": ["Foreign Languages", "Linguistics", "Global Studies"],
       "createdAt": "2022-10-10T13:00:00Z",
       "eventAt": "2022-08-23T09:30:00Z",
-      "owner": "admin@foo.com",
-      "isPast": true
-    },
-    {
-      "eventName": "Art Exhibition",
-      "companyId": "hij-company",
-      "address": "987 Maple St, Anytown USA",
-      "description": "View stunning works of art by local and international artists.",
-      "image": "data:image/jpeg;base64,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",
-      "tags": ["Fine Arts", "Creative Writing"],
-      "createdAt": "2022-11-15T14:00:00Z",
-      "eventAt": "2022-08-23T09:30:00Z",
-      "owner": "admin@foo.com",
-      "isPast": true
+      "eventDoneAt": "2023-10-05T12:00:00.000Z",
+      "owner": "admin@foo.com"
     }
   ]
 }

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import moment from 'moment';
 import Select from 'react-select';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Event from '../components/Event';
 import { Events } from '../../api/event/Event';
+import PastEvent from '../components/PastEvent';
 
 const MainEventsPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -28,7 +28,7 @@ const MainEventsPage = () => {
         past.push(event);
       }
     });
-    upcoming.sort();
+    upcoming.sort((a, b) => a.eventAt - b.eventAt);
     past.sort();
     return {
       upcomingEvents: upcoming,
@@ -50,24 +50,6 @@ const MainEventsPage = () => {
     'Communication Studies', 'Law', 'Criminal Justice', 'Paralegal Studies', 'Political Science', 'Sociology',
     'International Relations', 'Global Studies', 'Foreign Languages', 'Engineering',
   ].sort().map(tag => ({ label: tag, value: tag }));
-
-  useEffect(() => {
-    if (ready) {
-      const allEvents = [...upcomingEvents, ...pastEvents];
-      allEvents.forEach((event) => {
-        const isPast = moment(event.eventAt).isBefore(moment());
-        if (event.isPast !== isPast) {
-          Meteor.call('event.updateIsPast', event._id, isPast, (error) => {
-            if (error) {
-              console.error('Error updating isPast:', error);
-            } else {
-              console.log('isPast updated successfully');
-            }
-          });
-        }
-      });
-    }
-  }, [ready, upcomingEvents, pastEvents]);
 
   return (
     <Container className="py-3">
@@ -109,7 +91,7 @@ const MainEventsPage = () => {
               <h3 className="text-center">Past Events</h3>
               <div className="custom-scroll mt-2" style={{ height: '1000px', paddingLeft: '30px', paddingRight: '30px' }}>
                 <Row xs={1} md={1} lg={1} className="g-4">
-                  {ready ? (pastEvents.map((event) => (<Col key={event._id}><Event event={event} /></Col>))) : (
+                  {ready ? (pastEvents.map((event) => (<Col key={event._id}><PastEvent event={event} /></Col>))) : (
                     <LoadingSpinner />
                   )}
                 </Row>

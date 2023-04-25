@@ -21,7 +21,7 @@ class EventsCollection {
       'tags.$': String,
       createdAt: Date,
       eventAt: Date,
-      isPast: Boolean,
+      eventDoneAt: Date,
       owner: String,
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.

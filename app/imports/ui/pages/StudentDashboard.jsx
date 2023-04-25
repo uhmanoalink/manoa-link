@@ -88,7 +88,6 @@ const StudentDashboard = () => {
   /** @type {(event: React.MouseEvent<HTMLButtonElement>) => void} */
   const handleRemoveJob = (e) => {
     e.preventDefault();
-    console.log('Clicked remove job');
   };
 
   return (

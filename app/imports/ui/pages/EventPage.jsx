@@ -11,7 +11,8 @@ const EventPage = () => {
   const { doc, ready } = useTracker(() => {
     const subscription = Meteor.subscribe(Events.adminPublicationName);
     const subscription2 = Meteor.subscribe(Events.companyPublicationName);
-    const rdy = subscription.ready() && subscription2.ready();
+    const subscription3 = Meteor.subscribe(Events.userPublicationName);
+    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
     const event = Events.collection.findOne(_id);
     return {
       doc: event,

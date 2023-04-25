@@ -48,11 +48,11 @@ const App = () => {
           <Route path="/add" element={<ProtectedRoute><AddStuff /></ProtectedRoute>} />
           <Route path="/my-profile" element={<StudentProtectedRoute ready={ready}><MyProfile /></StudentProtectedRoute>} />
           <Route path="/event/:_id" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
-          <Route path="/add-event" element={<ProtectedRoute><AddEvent /></ProtectedRoute>} />
+          <Route path="/add-event" element={<AdminProtectedRoute ready={ready}><AddEvent /></AdminProtectedRoute>} />
           <Route path="/list-events" element={<ProtectedRoute><ListEvents /></ProtectedRoute>} />
-          <Route path="/main-events" element={<ProtectedRoute><MainEventsList /></ProtectedRoute>} />
+          <Route path="/events" element={<ProtectedRoute><MainEventsList /></ProtectedRoute>} />
           <Route path="/company-listing" element={<ProtectedRoute><CompanyListing /></ProtectedRoute>} />
-          <Route path="/edit/:_id" element={<ProtectedRoute><EditEvent /></ProtectedRoute>} />
+          <Route path="/edit/:_id" element={<AdminProtectedRoute ready={ready}><EditEvent /></AdminProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListStuffAdmin /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />

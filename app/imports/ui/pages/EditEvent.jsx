@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import swal from 'sweetalert';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, HiddenField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, DateField, ErrorsField, HiddenField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -56,9 +56,9 @@ const EditEvent = () => {
   // console.log('EditEvent', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
-    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date(), eventAt, isPast } = data;
+    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date(), eventAt, eventDoneAt } = data;
     const tags = selectedTags.map(tag => tag.value);
-    Events.collection.update(_id, { $set: { eventName, address, image, description, tags, companyId, createdAt, eventAt, isPast } }, (error) => {
+    Events.collection.update(_id, { $set: { eventName, address, image, description, tags, companyId, createdAt, eventAt, eventDoneAt } }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -96,6 +96,8 @@ const EditEvent = () => {
                   <Col><TextField name="address" /></Col>
                 </Row>
                 <LongTextField name="description" />
+                <DateField className="mb-3" name="eventAt" placeholder="Time to start the event" />
+                <DateField className="mb-3" name="eventDoneAt" placeholder="Time to end the event" />
                 <SubmitField />
                 <ErrorsField />
                 <HiddenField name="owner" />
