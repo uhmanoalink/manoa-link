@@ -1,16 +1,16 @@
 import React from 'react';
 import { Container, Image, Row } from 'react-bootstrap';
-// import { Meteor } from 'meteor/meteor';
-// import { useTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 import HelpButton from '../components/HelpButton';
 
 const CompanyProfile = () => {
-  // const { currentUser } = useTracker(
-  //   () => ({
-  //     currentUser: Meteor.user() ? Meteor.user().username : '',
-  //   }),
-  //   [],
-  // );
+  const { currentUser } = useTracker(
+    () => ({
+      currentUser: Meteor.user() ? Meteor.user().username : '',
+    }),
+    [],
+  );
 
   const sampleProfile = {
     companyName: 'UH Manoa',
