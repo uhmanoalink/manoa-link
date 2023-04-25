@@ -33,4 +33,6 @@ To view the full project page, containing the full-length overview and progress 
 
 For more details regarding the template used, please see http://ics-software-engineering.github.io/meteor-application-template-react/
 
-[![ci-meteor-application-template-react](https://github.com/ics-software-engineering/meteor-application-template-react/actions/workflows/ci.yml/badge.svg)](https://github.com/ics-software-engineering/meteor-application-template-react/actions/workflows/ci.yml)
+[![Tests Passing](https://github.com/uhmanoalink/manoa-link/actions/workflows/testcafe.yml/badge.svg?event=push)](https://github.com/uhmanoalink/manoa-link/actions/workflows/testcafe.yml)
+[![Lint Checks Passing](https://github.com/uhmanoalink/manoa-link/actions/workflows/eslint.yml/badge.svg?event=push)](https://github.com/uhmanoalink/manoa-link/actions/workflows/eslint.yml)
+[![Deployment Successful](https://github.com/uhmanoalink/manoa-link/actions/workflows/deploy.yml/badge.svg?event=push)](https://github.com/uhmanoalink/manoa-link/actions/workflows/deploy.yml)
