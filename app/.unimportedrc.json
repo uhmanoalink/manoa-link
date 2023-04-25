@@ -41,7 +41,10 @@
     "tests/**"
   ],
   "ignoreUnimported": [
-    "imports/api/base/BaseUtilities.js",
-    "imports/test-utilities/test-utilities.js"
+    "imports/ui/components/Event.jsx",
+    "imports/ui/components/Position.jsx",
+    "imports/ui/components/User.jsx",
+    "imports/ui/layouts/CompanyProtectedRoute.jsx",
+    "imports/ui/pages/EditStuff.jsx"
   ]
 }

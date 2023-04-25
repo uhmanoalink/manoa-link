@@ -12,6 +12,11 @@
 }
 
 @mixin text-title {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Zero Hour', sans-serif;
   font-weight: 700;
+}
+
+@font-face {
+  font-family: "Zero Hour";
+  src: url("../../../public/fonts/zero-hour.otf");
 }
