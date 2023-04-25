@@ -27,8 +27,7 @@ const CompanyProfile = () => {
     <Container id="company-profile" className="py-3 justify-content-center">
       <Row className="justify-content-center align-items-center">
         <Image src={sampleProfile.image} id="pfp" />
-        <h1 id="manoa-green">{ sampleProfile.name }</h1>
-        <h2>{sampleProfile.companyName}</h2>
+        <h1 className="text-manoa-green">{ sampleProfile.companyName }</h1>
         <p>{sampleProfile.description}</p>
       </Row>
       <HelpButton />

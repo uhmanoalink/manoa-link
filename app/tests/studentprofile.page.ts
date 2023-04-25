@@ -1,14 +1,13 @@
 import { Selector } from 'testcafe';
-import { signinComponent } from './signin.component';
 import Credentials from './types/CredentialsType';
 
-class MyProfilePage {
+class StudentProfilePage {
   private pageId: string;
 
   private pageSelector: Selector;
 
   constructor() {
-    this.pageId = '#my-profile-page';
+    this.pageId = '#student-profile';
     this.pageSelector = Selector(this.pageId);
   }
 
@@ -19,15 +18,9 @@ class MyProfilePage {
     await testController.expect(this.pageSelector.visible).ok();
   }
 
-  private async hasSignIn(testController: TestController, credentials: Credentials) {
-    await signinComponent.isDisplayed(testController);
-    await signinComponent.signin(testController, credentials.username, credentials.password);
-  }
-
-  async test(testController: TestController, credentials: Credentials) {
+  async test(testController: TestController) {
     await this.isDisplayed(testController);
-    await this.hasSignIn(testController, credentials);
   }
 }
 
-export const myProfilePage = new MyProfilePage();
+export const studentProfilePage = new StudentProfilePage();
