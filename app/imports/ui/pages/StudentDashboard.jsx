@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Button, Card, Dropdown } from 'react-bootstrap';
-import { Bookmark, BookmarkDash, Calendar, CalendarEvent, ThreeDots } from 'react-bootstrap-icons';
+import { Bookmark, BookmarkDash, Calendar, ThreeDots } from 'react-bootstrap-icons';
 import HelpButton from '../components/HelpButton';
 import Company from '../components/Company';
 import AddToCalendarDropdown from '../components/AddToCalendarDropdown';
