@@ -133,14 +133,14 @@ const AdminDashboard = () => {
                         {tags.map(tag => (
                           <div key={tag} className={`tag form-check ${selectedTags.includes(tag) ? 'active' : ''}`}>
                             <input
+                              id={`events-tag-input-${tag.toLowerCase().replace(/ /g, '-')}`}
                               className="form-check-input"
                               type="checkbox"
                               value={tag}
                               checked={selectedTags.includes(tag)}
                               onChange={() => handleTagClick(tag)}
                             />
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                            <label className="form-check-label">{tag}</label>
+                            <label htmlFor={`events-tag-input-${tag.toLowerCase().replace(/ /g, '-')}`} className="form-check-label">{tag}</label>
                           </div>
                         ))}
                       </div>
