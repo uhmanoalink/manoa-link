@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Alert, Card } from 'react-bootstrap';
@@ -12,10 +13,24 @@ import {
 } from 'uniforms-bootstrap5';
 
 /**
- * Signin page overrides the form’s submit event and call Meteor’s loginWithPassword().
- * Authentication errors modify the component’s state to be displayed
+ * ## SignIn component
+ *
+ * The `SignIn` component provides a form for users to sign in with their email and password.
+ * The actual login is handled by `Meteor.loginWithPassword`
+ *
+ * ### Props
+ *
+ * - `title` (optional, default = 'Welcome Back!'):
+ * A string used to set a custom title.
+ *
+ * - `width` (optional, default = 350):
+ * A number used to set a custom width.
+ *
+ * ---
+ *
+ * @type { React.FC<{ title: string, width: number } &  { title: 'Welcome Back!', width: 350 }> }
  */
-const SignIn = () => {
+const SignIn = ({ title, width }) => {
   const [error, setError] = useState('');
   const schema = new SimpleSchema({
     email: String,
@@ -24,9 +39,7 @@ const SignIn = () => {
   const bridge = new SimpleSchema2Bridge(schema);
   const navigate = useNavigate();
 
-  // Handle Signin submission using Meteor's account mechanism.
   const submit = (doc) => {
-    // console.log('submit', doc, redirect);
     const { email, password } = doc;
     Meteor.loginWithPassword(email, password, (err) => {
       if (err) {
@@ -35,16 +48,11 @@ const SignIn = () => {
         navigate('/dashboard');
       }
     });
-    // console.log('submit2', email, password, error, redirect);
   };
 
-  // Render the signin form.
-  // console.log('render', error, redirect);
-  // if correct authentication, redirect to page instead of login screen
-  // Otherwise return the Login form.
   return (
-    <div className="signin-container">
-      <h2>Welcome!</h2>
+    <div className="signin-container" style={{ width: `clamp(200px, 85vw, ${width}px)` }}>
+      <h2>{title}</h2>
       <div className="signin">
         <AutoForm schema={bridge} onSubmit={(data) => submit(data)}>
           <Card>
@@ -82,6 +90,16 @@ const SignIn = () => {
       </div>
     </div>
   );
+};
+
+SignIn.propTypes = {
+  title: PropTypes.string,
+  width: PropTypes.number,
+};
+
+SignIn.defaultProps = {
+  title: 'Welcome Back!',
+  width: 350,
 };
 
 export default SignIn;

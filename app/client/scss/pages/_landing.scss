@@ -95,6 +95,7 @@ $landing-page-bg: #fff;
       border-radius: 320px 0 0 320px;
       background: $landing-page-bg;
       position: relative;
+      overflow: hidden;
 
       img {
         width: 80%;

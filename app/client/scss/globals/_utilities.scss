@@ -2,6 +2,12 @@
   min-height: calc(100vh - $navbar-height);
 }
 
+.icon-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .text-manoa-green {
   color: $manoa-green;
 }

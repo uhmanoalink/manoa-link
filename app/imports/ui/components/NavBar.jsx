@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { BoxArrowRight, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import { BoxArrowRight, PersonCircle, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
 import ProtectedRender from './ProtectedRender';
 
@@ -73,12 +73,14 @@ const NavBar = () => {
                 title="Login"
               >
                 <NavDropdown.Item as={NavLink} to="/signin">
-                  <PersonFill />
-                  Sign in
+                  <div className="icon-button">
+                    <PersonFill /> Sign in
+                  </div>
                 </NavDropdown.Item>
                 <NavDropdown.Item as={NavLink} to="/signup">
-                  <PersonPlusFill />
-                  Sign up
+                  <div className="icon-button">
+                    <PersonPlusFill /> Sign up
+                  </div>
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
@@ -96,10 +98,14 @@ const NavBar = () => {
                 )}
               >
                 <NavDropdown.Item as={NavLink} to="/my-profile">
-                  Profile
+                  <div className="icon-button">
+                    <PersonCircle /> Profile
+                  </div>
                 </NavDropdown.Item>
                 <NavDropdown.Item as={NavLink} to="/signout">
-                  <BoxArrowRight /> Sign out
+                  <div className="icon-button">
+                    <BoxArrowRight /> Sign out
+                  </div>
                 </NavDropdown.Item>
               </NavDropdown>
             )}
