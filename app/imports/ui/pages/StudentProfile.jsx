@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import HelpButton from '../components/HelpButton';
 
-const MyProfile = () => {
+const StudentProfile = () => {
   const { currentUser } = useTracker(
     () => ({
       currentUser: Meteor.user() ? Meteor.user().username : '',
@@ -39,7 +39,7 @@ const MyProfile = () => {
     ],
   };
   return (
-    <Container id="profile-main" className="py-3 justify-content-center">
+    <Container id="student-profile" className="py-3 justify-content-center">
       <Row className="justify-content-center align-items-center">
         <Image src="images/sample-pfp.png" id="pfp" />
         <h1 id="manoa-green">{ sampleProfile.name }</h1>
@@ -66,4 +66,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default StudentProfile;
