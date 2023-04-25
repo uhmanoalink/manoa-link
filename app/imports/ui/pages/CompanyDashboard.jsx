@@ -1,45 +1,77 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 import { Col, Container, Row, Badge } from 'react-bootstrap';
-import Sidebar from '../components/Sidebar';
+// import Sidebar from '../components/Sidebar';
 import HelpButton from '../components/HelpButton';
+import { Events } from '../../api/event/Event';
+import { Positions } from '../../api/position/Position';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const CompanyDashboard = () => {
 
-  const sampleEvents = [
+  const { events, listings } = useTracker(() => {
+    const eventsSub = Meteor.subscribe(Events.companyPublicationName);
+    const listingsSub = Meteor.subscribe(Positions.companyPublicationName);
+    // Determine if the subscription is ready
+    const rdy = eventsSub.ready() && listingsSub.ready();
+
+    const eventItems = Events.collection.find({}).fetch();
+    const listingItems = Positions.collection.find({}).fetch();
+
+    return {
+      events: eventItems,
+      listings: listingItems,
+      ready: rdy,
+    };
+  }, []);
+
+  const sampleEvents = (events.length > 0) ? events : [
     {
-      name: 'This is a sample event',
+      eventName: 'This is a sample event',
       image: '/images/sample-image-landscape.png',
-      date: 'April 13, 2023',
+      createdAt: 'April 13, 2023',
     },
     {
       name: 'This is another sample event',
       image: '/images/sample-image-landscape.png',
-      date: 'April 15, 2023',
+      createdAt: 'April 15, 2023',
     },
     {
       name: 'This is a final sample event',
       image: '/images/sample-image-landscape.png',
-      date: 'April 17, 2023',
+      createdAt: 'April 17, 2023',
     },
   ];
+
+  /*
+  eventName: String,
+  companyId: String,
+  address: String,
+  description: String,
+  image: String,
+  tags: Array,
+  'tags.$': String,
+  createdAt: Date,
+  owner: String,
+  */
 
   return (
     <Container id="company-dashboard" className="py-3">
       <Row className="justify-content-center">
-        <Col xs={3}>
+        {/* <Col xs={3}>
           <Sidebar />
-        </Col>
+        </Col> */}
         <Col>
           <main>
             <section id="upcoming-events">
               <h2>Upcoming Events</h2>
               <div className="events">
-                {sampleEvents.map(({ name, image, date }, index) => (
+                {sampleEvents.map(({ eventName, image, createdAt }, index) => (
                   <div key={index} className="event">
-                    <h3 className="event-name">{name}</h3>
+                    <h3 className="event-name">{eventName}</h3>
                     <img src={image} alt="sample" />
-                    <h4 className="event-date">{date}</h4>
+                    <h4 className="event-date">{createdAt}</h4>
                   </div>
                 ))}
               </div>
