@@ -62,8 +62,7 @@ const EditEvent = () => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
-        swal('Success', 'Item updated successfully', 'success').then(() => {
-        });
+        swal('Success', 'Item updated successfully', 'success');
       }
     });
   };
