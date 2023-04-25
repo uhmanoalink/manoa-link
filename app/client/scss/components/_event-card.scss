@@ -3,83 +3,78 @@
   border-radius: 15px;
   transition: all 0.3s ease-in-out;
   overflow: hidden;
-}
 
-.event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
+  &:hover {
+    transform: scale(1.05);
+  }
 
-.event-image {
-  height: 200px;
-  object-fit: cover;
-}
-
-.event-name {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.event-address {
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-.event-description {
-  margin-bottom: 15px;
-}
-
-.event-tags {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 15px;
-}
-
-.event-tag {
-  margin-right: 10px;
-  margin-bottom: 10px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-
-.event-footer {
-  background-color: #f5f5f5;
-  border-top: 1px solid #e5e5e5;
-  padding: 10px;
-  margin-top: auto;
-}
-
-.event-edit-link {
-  float: right;
-}
-
-@media (max-width: 576px) {
   .event-image {
-    height: 150px;
+    height: 200px;
+    object-fit: cover;
   }
 
   .event-name {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .event-address {
+    font-size: 1rem;
+    font-weight: 400;
   }
 
   .event-description {
-    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .event-tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
   }
 
   .event-tag {
-    font-size: 0.7rem;
-    padding: 3px 8px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 20px;
+  }
+
+  .event-footer {
+    background-color: #f5f5f5;
+    border-top: 1px solid #e5e5e5;
+    padding: 10px;
+    margin-top: auto;
   }
 
   .event-edit-link {
-    text-align: center;
-    display: block;
+    float: right;
   }
 
-  .card:hover {
-    transform: scale(1.2);
+  @media (max-width: 576px) {
+    .event-image {
+      height: 150px;
+    }
+
+    .event-name {
+      font-size: 1.2rem;
+    }
+
+    .event-description {
+      font-size: 0.9rem;
+    }
+
+    .event-tag {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+    }
+
+    .event-edit-link {
+      text-align: center;
+      display: block;
+    }
   }
 }
