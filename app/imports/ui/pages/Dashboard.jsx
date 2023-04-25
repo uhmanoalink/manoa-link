@@ -5,6 +5,7 @@ import { Navigate } from 'react-router';
 import { Container } from 'react-bootstrap';
 import CompanyDashboard from './CompanyDashboard';
 import StudentDashboard from './StudentDashboard';
+import AdminDashboard from './AdminDashboard';
 
 const Dashboard = () => {
   const isLogged = Meteor.userId() !== null;
@@ -21,12 +22,7 @@ const Dashboard = () => {
   }
   const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
   if (isAdmin) {
-    return (
-      <Container>
-        <StudentDashboard />
-        <CompanyDashboard />
-      </Container>
-    );
+    return <AdminDashboard />;
   }
   return <Container />;
 };

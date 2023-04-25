@@ -7,6 +7,7 @@ import { companyDashboardPage } from './companydashboard.page';
 import { studentDashboardPage } from './studentdashboard.page';
 import { footerComponent } from './footer.component';
 import { signupPage } from './signup.page';
+import { adminDashboardPage } from './admindashboard.page';
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const studentCredentials: Credentials = { username: 'john@foo.com', password: 'changeme' };
@@ -58,4 +59,9 @@ test('Test footer component', async (testController) => {
 
 test('Test sign up page', async (tc) => {
   await signupPage.test(tc);
+});
+
+test('Test admin dashboard', async (tc) => {
+  await landingPage.test(tc, adminCredentials);
+  await adminDashboardPage.test(tc);
 });
