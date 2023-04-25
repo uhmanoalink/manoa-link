@@ -63,9 +63,6 @@ const EditEvent = () => {
         swal('Error', error.message, 'error');
       } else {
         swal('Success', 'Item updated successfully', 'success').then(() => {
-          // Navigate to /main-events after the user clicks "OK" on the success message
-          // eslint-disable-next-line no-restricted-globals
-          history.push('/main-events');
         });
       }
     });
