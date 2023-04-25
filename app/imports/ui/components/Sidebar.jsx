@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LoadingSpinner from './LoadingSpinner';
-import Landing from '../pages/Landing';
 
 const Sidebar = ({ children }) => (
   <div id="sidebar">
