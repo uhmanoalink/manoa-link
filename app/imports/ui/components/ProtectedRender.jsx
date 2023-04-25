@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
  * The `ProtectedRender` component is a React functional component that takes in a list of
  * allowed roles and a child element, and conditionally renders the child element based on
  * whether the current user is in one of the allowed roles.
+ *
  * ### Props
  *
  * - `allowedRoles` (optional):
