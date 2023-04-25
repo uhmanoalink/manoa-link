@@ -37,15 +37,15 @@ LandingCarousel.propTypes = {
   reverse: PropTypes.bool,
 };
 
+/*
+
+Will restore this after issues have been resolved
+
 LandingCarousel.defaultProps = {
   itemProps: [
     {
-      contentType: 'text',
-      data: 'Manoa Link',
-    },
-    {
-      contentType: 'text',
-      data: 'Item 2',
+      contentType: 'image',
+      data: '/images/sample-image-landscape.png',
     },
     {
       contentType: 'image',
@@ -62,6 +62,34 @@ LandingCarousel.defaultProps = {
     {
       contentType: 'image',
       data: '/images/sample-image-landscape.png',
+    },
+  ],
+  reverse: false,
+};
+*/
+
+LandingCarousel.defaultProps = {
+  // will change this eventually, but for now, temporary fix
+  itemProps: [
+    {
+      contentType: 'image',
+      data: '/images/logo-black.PNG',
+    },
+    {
+      contentType: 'image',
+      data: '/images/manoa.jpg',
+    },
+    {
+      contentType: 'image',
+      data: '/images/honolulu.jpeg',
+    },
+    {
+      contentType: 'image',
+      data: '/images/oahu.jpeg',
+    },
+    {
+      contentType: 'image',
+      data: '/images/seemoo-Manoa.PNG',
     },
   ],
   reverse: false,

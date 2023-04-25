@@ -8,6 +8,8 @@ import { studentDashboardPage } from './studentdashboard.page';
 import { footerComponent } from './footer.component';
 import { signupPage } from './signup.page';
 import { adminDashboardPage } from './admindashboard.page';
+import { companyProfilePage } from './companyprofile.page';
+import { studentProfilePage } from './studentprofile.page';
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const studentCredentials: Credentials = { username: 'john@foo.com', password: 'changeme' };
@@ -48,9 +50,21 @@ test('Test company dashboard page', async (tc) => {
   await companyDashboardPage.test(tc);
 });
 
+test('Test company profile page', async (tc) => {
+  await landingPage.test(tc, companyCredentials);
+  await tc.navigateTo('/my-profile');
+  await companyProfilePage.test(tc);
+});
+
 test('Test student dashboard page', async (tc) => {
   await landingPage.test(tc, studentCredentials);
   await studentDashboardPage.test(tc);
+});
+
+test('Test student profile page', async (tc) => {
+  await landingPage.test(tc, studentCredentials);
+  await tc.navigateTo('/my-profile');
+  await studentProfilePage.test(tc);
 });
 
 test('Test footer component', async (testController) => {
@@ -61,7 +75,7 @@ test('Test sign up page', async (tc) => {
   await signupPage.test(tc);
 });
 
-test('Test admin dashboard', async (tc) => {
+test('Test admin dashboard page', async (tc) => {
   await landingPage.test(tc, adminCredentials);
   await adminDashboardPage.test(tc);
 });
