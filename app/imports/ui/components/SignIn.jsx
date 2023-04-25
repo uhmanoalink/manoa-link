@@ -21,10 +21,10 @@ import {
  * ### Props
  *
  * - `title` (optional, default = 'Welcome Back!'):
- * Used to set a custom title
+ * A string used to set a custom title.
  *
  * - `width` (optional, default = 350):
- * Used to set a custom width
+ * A number used to set a custom width.
  *
  * ---
  *

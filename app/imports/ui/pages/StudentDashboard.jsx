@@ -3,6 +3,7 @@ import { Container, Button, Card, Dropdown } from 'react-bootstrap';
 import { Bookmark, BookmarkDash, Calendar, CalendarEvent, ThreeDots } from 'react-bootstrap-icons';
 import HelpButton from '../components/HelpButton';
 import Company from '../components/Company';
+import AddToCalendarDropdown from '../components/AddToCalendarDropdown';
 
 const StudentDashboard = () => {
   const [activeFeed, setActiveFeed] = useState('events');
@@ -125,35 +126,13 @@ const StudentDashboard = () => {
                       <Card.Text>{location}</Card.Text>
                     </Card.Body>
                     <Card.Footer>
-                      <Dropdown className="btn-add-to-cal">
-                        <Dropdown.Toggle className="icon-button">
-                          <CalendarEvent /> Add to Calendar
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                          <Dropdown.Item
-                            target="_blank"
-                            href={'https://www.google.com/calendar/render?action=TEMPLATE&' +
-                              `text=${eventName}&` +
-                              `details=${description}&` +
-                              `location=${location}&` +
-                              `dates=${startDateTime.toISOString().replaceAll(/[-,:]/g, '').split('.')[0]}Z` +
-                              `%2F${endDateTime.toISOString().replaceAll(/[-,:]/g, '').split('.')[0]}Z`}
-                          >
-                            <img width={18} src="/assets/google-calendar-icon.svg" alt="Google Calendar Icon" /> Google Calendar
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            target="_blank"
-                            href={'https://outlook.live.com/calendar/0/deeplink/compose?allday=false&path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&' +
-                              `subject=${eventName}&` +
-                              `body=${description}&` +
-                              `location=${location}&` +
-                              `startdt=${startDateTime.toISOString()}&` +
-                              `enddt=${endDateTime.toISOString()}&`}
-                          >
-                            <img width={18} src="/assets/microsoft-office-outlook-icon.svg" alt="Microsoft Outlook Icon" /> Microsoft Outlook
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
+                      <AddToCalendarDropdown
+                        eventName={eventName}
+                        description={description}
+                        location={location}
+                        startDateTime={startDateTime}
+                        endDateTime={endDateTime}
+                      />
                     </Card.Footer>
                   </Card>
                 ))}
