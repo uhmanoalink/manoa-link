@@ -8,7 +8,6 @@ import Landing from '../pages/Landing';
 import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
-import MyProfile from '../pages/MyProfile';
 import AddEvent from '../pages/AddEvent';
 import ListEvents from '../pages/ListEvents';
 import CompanyListing from '../pages/CompanyListing';
@@ -26,6 +25,7 @@ import Dashboard from '../pages/Dashboard';
 import MainEventsList from '../pages/MainEventsList';
 import EventPage from '../pages/EventPage';
 import CompanyProtectedRoute from './CompanyProtectedRoute';
+import StudentProfile from '../pages/Profile';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
