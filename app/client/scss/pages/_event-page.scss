@@ -1,0 +1,51 @@
+.event-page {
+  background-image: url(https://example.com/images/event-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.event-page {
+  h1 {
+    font-family: sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+  }
+}
+
+.event-page .event-page-image {
+  margin-bottom: 20px;
+}
+
+.event-page .event-page-info {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.event-page .event-page-address {
+  font-size: 1em;
+  color: #333;
+}
+
+.event-page .event-page-date {
+  font-size: 1em;
+  color: #333;
+}
+
+.event-page .event-page-tags {
+  margin-bottom: 10px;
+}
+
+.event-page .event-page-tag {
+  background-color: #ccc;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.event-page .event-page-description {
+  font-size: 1em;
+  color: #333;
+  line-height: 1.5em;
+}

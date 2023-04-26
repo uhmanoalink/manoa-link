@@ -7,14 +7,14 @@ const formatDate = (date) => {
   if (date) {
     const parsedDate = new Date(date);
     if (!Number.isNaN(parsedDate.getTime())) {
-      return parsedDate.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric' });
+      return parsedDate.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
     }
   }
   return 'Invalid Date';
 };
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const Event = ({ event }) => (
-  <Card className="shadow event-card">
+  <Card className="shadow event-card h-100 bg-dark past-event">
     <Card.Img variant="top" src={event.image} className="event-image" />
     <Card.Body className="event-body">
       <Card.Title className="event-name">{event.eventName}</Card.Title>
@@ -26,16 +26,9 @@ const Event = ({ event }) => (
         ))}
       </div>
       <Card.Text className="event-date">
-        <h6>Event starts at</h6>
-        {formatDate(event.eventAt)}
-      </Card.Text>
-      <Card.Text className="event-date">
         <h6>Event ends at</h6>
         {formatDate(event.eventDoneAt)}
       </Card.Text>
-      <Link to={`/edit/${event._id}`} className="event-edit-link mx-1">
-        <Button variant="dark" size="sm">Edit</Button>
-      </Link>
       <Link to={`/event/${event._id}`} className="event-edit-link">
         <Button variant="secondary" size="sm">View</Button>
       </Link>
@@ -47,7 +40,7 @@ const Event = ({ event }) => (
 Event.propTypes = {
   event: PropTypes.shape({
     eventName: PropTypes.string,
-    companyId: PropTypes.string,
+    companyId: String,
     address: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.string,
