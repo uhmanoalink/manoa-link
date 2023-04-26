@@ -24,11 +24,21 @@ class CompanyDashboardPage {
     await tc.expect(Selector('#listings').exists).ok();
   }
 
+  private async showsCalendar(tc: TestController) {
+    await tc.expect(Selector('#calendar').exists).ok();
+  }
+
+  private async showsAbout(tc: TestController) {
+    await tc.expect(Selector('#about').exists).ok();
+  }
+
   async test(tc: TestController) {
     await navBar.clickNavLink(tc, 'Dashboard');
     await this.isDisplayed(tc);
     await this.showsEvents(tc);
     await this.showsListings(tc);
+    await this.showsCalendar(tc);
+    await this.showsAbout(tc);
   }
 }
 
