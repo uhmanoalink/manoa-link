@@ -10,6 +10,7 @@ import { signupPage } from './signup.page';
 import { adminDashboardPage } from './admindashboard.page';
 import { companyProfilePage } from './companyprofile.page';
 import { studentProfilePage } from './studentprofile.page';
+import { eventsPage } from './eventspage';
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const studentCredentials: Credentials = { username: 'john@foo.com', password: 'changeme' };
@@ -54,6 +55,13 @@ test('Test company profile page', async (tc) => {
   await landingPage.test(tc, companyCredentials);
   await tc.navigateTo('/my-profile');
   await companyProfilePage.test(tc);
+});
+
+test('Test events page', async (tc) => {
+  await landingPage.test(tc, studentCredentials);
+  await tc.navigateTo('/events');
+  await tc.wait(500);
+  await eventsPage.test(tc, studentCredentials);
 });
 
 test('Test student dashboard page', async (tc) => {

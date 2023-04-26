@@ -68,6 +68,7 @@ const MainEventsPage = () => {
                   onChange={(selected) => setSelectedTags(selected)}
                   isMulti
                   placeholder="Filter by tags..."
+                  id="filter-button"
                 />
                 {selectedTags.length > 0 && (
                   <Button className="btn btn-clear-filter" onClick={handleClearFilter}>
@@ -81,7 +82,7 @@ const MainEventsPage = () => {
             <Col xs={12} md={8}>
               <h3 className="text-center">Upcoming Events</h3>
               <Row xs={1} md={2} lg={2} className="g-4">
-                {ready ? (upcomingEvents.map((event) => (<Col key={event._id}><Event event={event} isPast={false} /></Col>))
+                {ready ? (upcomingEvents.map((event) => (<Col id="upcoming-event" key={event._id}><Event event={event} /></Col>))
                 ) : (
                   <LoadingSpinner />
                 )}
@@ -91,7 +92,7 @@ const MainEventsPage = () => {
               <h3 className="text-center">Past Events</h3>
               <div className="custom-scroll mt-2" style={{ height: '1000px', paddingLeft: '30px', paddingRight: '30px' }}>
                 <Row xs={1} md={1} lg={1} className="g-4">
-                  {ready ? (pastEvents.map((event) => (<Col key={event._id}><PastEvent event={event} /></Col>))) : (
+                  {ready ? (pastEvents.map((event) => (<Col id="past-event" key={event._id}><PastEvent event={event} /></Col>))) : (
                     <LoadingSpinner />
                   )}
                 </Row>
