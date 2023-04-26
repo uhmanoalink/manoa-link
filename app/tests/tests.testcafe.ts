@@ -61,7 +61,7 @@ test('Test events page', async (tc) => {
   await landingPage.test(tc, studentCredentials);
   await tc.navigateTo('/events');
   await tc.wait(500);
-  await eventsPage.test(tc, studentCredentials);
+  await eventsPage.test(tc);
 });
 
 test('Test student dashboard page', async (tc) => {
