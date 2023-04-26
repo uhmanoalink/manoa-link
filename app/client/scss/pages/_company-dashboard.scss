@@ -1,27 +1,44 @@
 #company-dashboard {
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 4rem;
+
   main {
     height: 100%;
     display: grid;
     grid-template-areas:
-      'upcoming-events upcoming-events'
+      'upcoming-events about'
       'listings calendar'
       'listings calendar';
     gap: 2rem;
+
+    @media screen and (max-width: 994px) {
+      grid-template-areas:
+      'about calendar'
+      'upcoming-events upcoming-events'
+      'listings listings';
+    }
   }
 }
 
 #upcoming-events {
   grid-area: upcoming-events;
+  max-width: 50vw;
+  @media screen and (max-width: 994px) {
+    max-width: 100%;
+  }
 
   .events {
     display: flex;
+    overflow-x: scroll;
     gap: 1rem;
+    padding: 1rem 0;
 
     .event {
-      background: #ddd;
+      background: $theme-light;
       color: black;
-      border-radius: 20px;
+      border: 1px solid $theme-dark;
+      border-radius: 6px;
       padding: 1rem;
       width: min-content;
 
@@ -95,4 +112,15 @@
 
 #calendar {
   grid-area: calendar;
+  width: 400px;
+  @media screen and (max-width: 994px) {
+    width: 100%;
+  }
+}
+
+#about {
+  grid-area: about;
+  padding: 2rem;
+  min-width: 300px;
+  border: 1px solid $theme-accent;
 }
