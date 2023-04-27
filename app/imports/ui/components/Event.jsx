@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 
 const formatDate = (date) => {
   if (date) {
@@ -12,6 +14,9 @@ const formatDate = (date) => {
   }
   return 'Invalid Date';
 };
+
+const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
+const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const Event = ({ event }) => (
   <Card className="shadow event-card">
@@ -33,9 +38,11 @@ const Event = ({ event }) => (
         <h6>Event ends at</h6>
         {formatDate(event.eventDoneAt)}
       </Card.Text>
-      <Link to={`/edit/${event._id}`} className="event-edit-link mx-1">
-        <Button variant="dark" size="sm">Edit</Button>
-      </Link>
+      { (isAdmin || isCompany) ? (
+        <Link to={`/edit/${event._id}`} className="event-edit-link mx-1">
+          <Button variant="dark" size="sm">Edit</Button>
+        </Link>
+      ) : <></> }
       <Link to={`/event/${event._id}`} className="event-edit-link">
         <Button variant="secondary" size="sm">View</Button>
       </Link>

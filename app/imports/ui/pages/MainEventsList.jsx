@@ -55,9 +55,6 @@ const MainEventsPage = () => {
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col>
-          <Col className="text-center">
-            <h2>List Events</h2>
-          </Col>
           <Row>
             <Col>
               <div className="d-flex justify-content-center">
