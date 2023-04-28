@@ -21,7 +21,7 @@ import { Images } from '../../api/image/Image';
  *
  * - `buttonVariant` (optional):
  * The variant of the Bootstrap submit button.
- *   - Default: 'primary'
+ *   - Default: 'dark'
  *   - For more info: https://react-bootstrap.netlify.app/docs/components/buttons/
  *
  * - `customButton` (optional):
@@ -45,7 +45,7 @@ import { Images } from '../../api/image/Image';
  *     | 'outline-warning'       | 'outline-info'
  *     | 'outline-dark'          | 'outline-light';
  *   customButton: React.ReactNode;
- *   onUpload: VoidFunction;
+ *   onUpload: (fileRef: object) => void;
  * }> }
  */
 const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) => {
@@ -69,6 +69,10 @@ const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) =>
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
   const handleChangeFile = (e) => {
+    if (e.target.files.length === 0) {
+      alert();
+      return;
+    }
     const newFile = e.target.files[0];
     if (verifyFileType(newFile, accept)) {
       alert();
@@ -138,9 +142,7 @@ const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) =>
           {alertMsg}
         </Alert>
       )}
-      {customButton
-        ? <customButton onClick={handleUpload} />
-        : <Button variant={buttonVariant} type="submit" onClick={handleUpload}>Upload</Button>}
+      <Button variant={buttonVariant} type="submit" onClick={handleUpload}>{customButton || 'Upload'}</Button>
     </div>
   );
 };
@@ -174,7 +176,7 @@ FileUpload.propTypes = {
 FileUpload.defaultProps = {
   label: 'Upload an image',
   accept: 'image/png, image/jpeg',
-  buttonVariant: 'primary',
+  buttonVariant: 'dark',
   customButton: undefined,
   onUpload: undefined,
 };
