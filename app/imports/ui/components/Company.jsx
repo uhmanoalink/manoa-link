@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
+import ProtectedRender from './ProtectedRender';
 
-/** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
+const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
+const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
+
 const Company = ({ company }) => (
   <Card className="h-100">
     <Card.Header>
@@ -13,7 +18,7 @@ const Company = ({ company }) => (
     </Card.Header>
     <Card.Body>
       <Card.Text>{company.description}</Card.Text>
-      <Link to={`/edit/${company._id}`}>Edit</Link>
+      <ProtectedRender allowedRoles={['admin']}><Link to={`/edit/${company._id}`}>Edit</Link></ProtectedRender>
     </Card.Body>
   </Card>
 );

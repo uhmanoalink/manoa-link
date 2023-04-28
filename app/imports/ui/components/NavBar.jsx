@@ -4,6 +4,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight, PersonCircle, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import { Roles } from 'meteor/alanning:roles';
 
 import ProtectedRender from './ProtectedRender';
 
@@ -59,12 +60,6 @@ const NavBar = () => {
                   </Nav.Link>
                 </ProtectedRender>
               </ProtectedRender>
-
-              <ProtectedRender allowedRoles={['admin']}>
-                <Nav.Link as={NavLink} to="/admin">
-                  Admin
-                </Nav.Link>
-              </ProtectedRender>
             </ProtectedRender>
             {(currentUser === '') ? (
               <NavDropdown
@@ -97,11 +92,13 @@ const NavBar = () => {
                   />
                 )}
               >
-                <NavDropdown.Item as={NavLink} to="/my-profile">
-                  <div className="icon-button">
-                    <PersonCircle /> Profile
-                  </div>
-                </NavDropdown.Item>
+                <ProtectedRender allowedRoles={['student', 'company']}>
+                  <NavDropdown.Item as={NavLink} to="/my-profile">
+                    <div className="icon-button">
+                      <PersonCircle /> Profile
+                    </div>
+                  </NavDropdown.Item>
+                </ProtectedRender>
                 <NavDropdown.Item as={NavLink} to="/signout">
                   <div className="icon-button">
                     <BoxArrowRight /> Sign out
