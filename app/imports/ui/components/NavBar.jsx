@@ -92,14 +92,13 @@ const NavBar = () => {
                   />
                 )}
               >
-                {(!Roles.userIsInRole('admin')) &&
-                  (
-                    <NavDropdown.Item as={NavLink} to="/my-profile">
-                      <div className="icon-button">
-                        <PersonCircle /> Profile
-                      </div>
-                    </NavDropdown.Item>
-                  ) }
+                <ProtectedRender allowedRoles={['student']}>
+                  <NavDropdown.Item as={NavLink} to="/my-profile">
+                    <div className="icon-button">
+                      <PersonCircle /> Profile
+                    </div>
+                  </NavDropdown.Item>
+                </ProtectedRender>
                 <NavDropdown.Item as={NavLink} to="/signout">
                   <div className="icon-button">
                     <BoxArrowRight /> Sign out

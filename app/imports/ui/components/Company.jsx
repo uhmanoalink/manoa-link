@@ -4,6 +4,7 @@ import { Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
+import ProtectedRender from './ProtectedRender';
 
 const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
 const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
@@ -17,7 +18,7 @@ const Company = ({ company }) => (
     </Card.Header>
     <Card.Body>
       <Card.Text>{company.description}</Card.Text>
-      { (isAdmin || isCompany) && (<Link to={`/edit/${company._id}`}>Edit</Link>) }
+      <ProtectedRender allowedRoles={['admin']}><Link to={`/edit/${company._id}`}>Edit</Link></ProtectedRender>
     </Card.Body>
   </Card>
 );

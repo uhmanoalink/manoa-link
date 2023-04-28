@@ -4,6 +4,7 @@ import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
+import ProtectedRender from './ProtectedRender';
 
 const formatDate = (date) => {
   if (date) {
@@ -38,11 +39,11 @@ const Event = ({ event }) => (
         <h6>Event ends at</h6>
         {formatDate(event.eventDoneAt)}
       </Card.Text>
-      { (isAdmin || isCompany) && (
+      <ProtectedRender allowedRoles={['admin']}>
         <Link to={`/edit/${event._id}`} className="event-edit-link mx-1">
           <Button variant="dark" size="sm">Edit</Button>
         </Link>
-      )}
+      </ProtectedRender>
       <Link to={`/event/${event._id}`} className="event-edit-link">
         <Button variant="secondary" size="sm">View</Button>
       </Link>
