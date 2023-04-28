@@ -4,24 +4,27 @@ import SimpleSchema from 'simpl-schema';
 /**
  * The UsersCollection. It encapsulates state and variable values for stuff.
  */
-class UsersCollection {
+class StudentsCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'UsersCollection';
+    this.name = 'StudentsCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      firstName: String,
-      lastName: String,
-      address: String,
-      major: String,
-      owner: String,
+      name: {
+        firstName: String,
+        lastName: String,
+      },
+      email: String,
+      profileImage: String,
+      followedCompanies: Array,
+      savedEvents: Array,
+      savedListings: Array,
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
     // Define names for publications and subscriptions
-    this.userPublicationName = `${this.name}.publication.user`;
     this.companyPublicationName = `${this.name}.publication.company`;
     this.adminPublicationName = `${this.name}.publication.admin`;
   }
@@ -31,4 +34,4 @@ class UsersCollection {
  * The singleton instance of the UsersCollection.
  * @type {UsersCollection}
  */
-export const Users = new UsersCollection();
+export const Students = new StudentsCollection();

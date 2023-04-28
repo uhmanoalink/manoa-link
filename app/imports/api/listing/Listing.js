@@ -2,23 +2,27 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
 /**
- * The CompanysCollection. It encapsulates state and variable values for stuff.
+ * The ListingCollection. It encapsulates state and variable values for stuff.
  */
-class CompaniesCollection {
+class ListingsCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'CompaniesCollection';
+    this.name = 'ListingsCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      _id: String,
-      userId: String,
-      name: String,
-      image: String,
-      website: String,
-      address: String,
+      _id: String, // MongoDB ObjectId (in the document by default, don’t put in schema)
+      companyId: String, // the ObjectId of the company that created it
+      title: String,
       description: String,
+      image: String, // also keep as string
+      location: String, // optional. if not given, defaults to the address of the company
+      // employmentType: 'in-person' | 'remote' | 'hybrid',
+      // scheduleType: 'full-time' | 'part-time' | 'flexible',
+      tags: Array,
+      createdAt: Date,
+      startDate: Date,
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
@@ -30,8 +34,7 @@ class CompaniesCollection {
 }
 
 /**
- * The singleton instance of the CompanysCollection.
- * @type {CompaniesCollection}
+ * The singleton instance of the ListingsCollection.
+ * @type {ListingsCollection}
  */
-
-export const Companies = new CompaniesCollection();
+export const Events = new ListingsCollection();

@@ -6,7 +6,7 @@ import { ArrowsCollapse, ArrowsExpand, FilterLeft } from 'react-bootstrap-icons'
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Events } from '../../api/event/Event';
 import User from '../components/User';
-import { Users } from '../../api/user/User';
+import { Students } from '../../api/student/Student';
 import Company from '../components/Company';
 import { Companies } from '../../api/company/Company';
 import Position from '../components/Position';
@@ -27,13 +27,13 @@ const AdminDashboard = () => {
     // Determine if the subscription is ready
     const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready();
 
-    const studentItems = Users.collection.find({}).fetch();
+    const studentItems = Students.collection.find({}).fetch();
     const companyItems = Companies.collection.find({}).fetch();
     const eventItems = Events.collection.find({}).fetch();
     const listingItems = Positions.collection.find({}).fetch();
 
     setMinimizedTabs([
-      Users.collection.find({}).count() === 0,
+      Students.collection.find({}).count() === 0,
       Companies.collection.find({}).count() === 0,
       Events.collection.find({}).count() === 0,
       Positions.collection.find({}).count() === 0,

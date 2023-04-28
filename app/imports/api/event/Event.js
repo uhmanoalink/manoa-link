@@ -12,17 +12,16 @@ class EventsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
+      _id: String,
       eventName: String,
       companyId: String,
       address: String,
       description: String,
       image: String,
       tags: Array,
-      'tags.$': String,
       createdAt: Date,
-      eventAt: Date,
-      eventDoneAt: Date,
-      owner: String,
+      startDateTime: Date,
+      endDateTime: Date,
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
