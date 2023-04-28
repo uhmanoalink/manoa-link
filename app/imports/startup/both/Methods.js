@@ -1,11 +1,12 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 
 Meteor.methods({
   initUser(userId, role) {
     check(userId, String);
-    check(role, /\b(?=\w)(student|company)\b(?<=\w)/);
+    check(role, String);
+    Match.Where(/\b(?=\w)(student|company)\b(?<=\w)/.test(role));
     Roles.createRole(role, { unlessExists: true });
     Roles.addUsersToRoles(userId, [role]);
   },
