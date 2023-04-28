@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { ButtonType, ButtonOutlineVariant, Alert, Button, Form } from 'react-bootstrap';
+import { Alert, Button, Form, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Images } from '../../api/image/Image';
 
 /**
@@ -20,8 +20,7 @@ import { Images } from '../../api/image/Image';
  *   - For more info: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept
  *
  * - `buttonVariant` (optional):
- * The variant of the submit button.
- *   - Accepted values: 'top' | 'bottom'
+ * The variant of the Bootstrap submit button.
  *   - Default: 'primary'
  *   - For more info: https://react-bootstrap.netlify.app/docs/components/buttons/
  *
@@ -62,10 +61,10 @@ const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) =>
   const verifyFileType = (file, acceptString) => {
     // https://stackoverflow.com/questions/20524306/check-selected-file-matches-accept-attribute-on-an-input-tag
     const acceptedTypes = acceptString.toLowerCase().split(',').map(type => type.trim());
-    console.log(acceptedTypes);
     const fileType = file.type.toLowerCase();
-    console.log(fileType);
-    return acceptedTypes.some(type => type === fileType || type === `${fileType.split('/')[0]}/*`);
+    return acceptedTypes.some(type => type === fileType
+      || type === `${fileType.split('/')[0]}/*`
+      || type === `.${fileType.split('/')[1]}`);
   };
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
@@ -112,14 +111,27 @@ const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) =>
       <Form.Group>
         <Form.Label>
           {label}
-          <Form.Control
-            type="file"
-            accept={accept}
-            onChange={handleChangeFile}
-          />
+          <OverlayTrigger
+            placement="bottom"
+            overlay={inputFile?.type.startsWith('image') ? (
+              <Tooltip>
+                <Image
+                  alt="preview"
+                  src={URL.createObjectURL(inputFile)}
+                  width={100}
+                />
+              </Tooltip>
+            ) : <div />}
+          >
+            <Form.Control
+              type="file"
+              accept={accept}
+              onChange={handleChangeFile}
+            />
+          </OverlayTrigger>
         </Form.Label>
       </Form.Group>
-      {showAlert && (
+      {showAlert && alertMsg && (
         <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
           {alertMsg}
         </Alert>
