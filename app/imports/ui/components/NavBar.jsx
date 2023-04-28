@@ -92,7 +92,7 @@ const NavBar = () => {
                   />
                 )}
               >
-                <ProtectedRender allowedRoles={['student']}>
+                <ProtectedRender allowedRoles={['student', 'company']}>
                   <NavDropdown.Item as={NavLink} to="/my-profile">
                     <div className="icon-button">
                       <PersonCircle /> Profile
