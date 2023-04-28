@@ -3,7 +3,7 @@ import fs from 'fs';
 
 export const createOnAfterUpload = bucket => (
   function onAfterUpload(file) {
-
+    console.log('file was uploaded');
     // here you could manipulate your file
     // and create a new version, for example a scaled 'thumbnail'
     // ...
