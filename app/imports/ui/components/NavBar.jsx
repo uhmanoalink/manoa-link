@@ -60,12 +60,6 @@ const NavBar = () => {
                   </Nav.Link>
                 </ProtectedRender>
               </ProtectedRender>
-
-              <ProtectedRender allowedRoles={['admin']}>
-                <Nav.Link as={NavLink} to="/admin">
-                  Admin
-                </Nav.Link>
-              </ProtectedRender>
             </ProtectedRender>
             {(currentUser === '') ? (
               <NavDropdown
