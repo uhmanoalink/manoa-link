@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { ButtonType, ButtonOutlineVariant, Alert, Button, Form } from 'react-bootstrap';
 import { Images } from '../../api/image/Image';
 
 /**
@@ -11,17 +12,18 @@ import { Images } from '../../api/image/Image';
  *
  * - `label` (optional):
  * The label of the file input.
- *   - Default value: 'Upload an image'
+ *   - Default: 'Upload an image'
  *
  * - `accept` (optional):
  * The accepted types of the file input.
- *   - Default value: 'image/png, image/jpeg'
+ *   - Default: 'image/png, image/jpeg'
  *   - For more info: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept
  *
- * - `variant` (optional):
- * The style of the FileUpload component. The value places the label and button.
+ * - `buttonVariant` (optional):
+ * The variant of the submit button.
  *   - Accepted values: 'top' | 'bottom'
- *   - Default value: 'bottom'
+ *   - Default: 'primary'
+ *   - For more info: https://react-bootstrap.netlify.app/docs/components/buttons/
  *
  * - `customButton` (optional):
  * You can use a custom component to handle the submission. The custom button should not
@@ -35,14 +37,27 @@ import { Images } from '../../api/image/Image';
  * @type { React.FC<{
  *   label: string;
  *   accept: string;
- *   variant: 'top'|'bottom';
+ *   buttonVariant:
+ *     | 'primary' | 'secondary' | 'success'
+ *     | 'danger'  | 'warning'   | 'info'
+ *     | 'dark'    | 'light'     | 'link'
+ *     | 'outline-primary'       | 'outline-secondary'
+ *     | 'outline-success'       | 'outline-danger'
+ *     | 'outline-warning'       | 'outline-info'
+ *     | 'outline-dark'          | 'outline-light';
  *   customButton: React.ReactNode;
  *   onUpload: VoidFunction;
  * }> }
  */
-const FileUpload = ({ label, accept, variant, customButton, onUpload }) => {
+const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) => {
   const [inputFile, setInputFile] = useState(null);
-  const [warning, setWarning] = useState();
+  const [alertMsg, setAlertMsg] = useState();
+  const [showAlert, setShowAlert] = useState(false);
+
+  const alert = (msg) => {
+    setAlertMsg(msg);
+    setShowAlert(true);
+  };
 
   const verifyFileType = (file, acceptString) => {
     // https://stackoverflow.com/questions/20524306/check-selected-file-matches-accept-attribute-on-an-input-tag
@@ -57,9 +72,9 @@ const FileUpload = ({ label, accept, variant, customButton, onUpload }) => {
   const handleChangeFile = (e) => {
     const newFile = e.target.files[0];
     if (verifyFileType(newFile, accept)) {
-      setWarning();
+      alert();
     } else {
-      setWarning('The file type does not match');
+      alert(`The file type of ${newFile.name} is not a valid type`);
     }
     setInputFile(newFile);
   };
@@ -67,51 +82,51 @@ const FileUpload = ({ label, accept, variant, customButton, onUpload }) => {
   /** @type {React.MouseEventHandler<HTMLButtonElement>} */
   const handleUpload = async () => {
     if (!verifyFileType(inputFile, accept)) {
-      throw new Error('The file type does not match');
+      throw new Error(`The file type of ${inputFile.name} is not a valid type`);
     }
     await new Promise((res, rej) => {
       const uploader = Images.filesCollection.insert({
         file: inputFile,
       });
-      uploader.on('uploaded', () => {
+      const handleError = (error, file) => {
+        alert(`There was a problem while uploading file ${file.name}`);
+        console.error(error);
+        rej();
+      };
+      uploader.on('uploaded', (error, fileObj) => {
+        if (error) handleError(error, fileObj);
         // Upload was successful
-        console.log('Upload was successful');
-        onUpload?.();
+        console.log(`File ${fileObj.name} was uploaded successfully`);
+        onUpload?.(fileObj);
         res();
       });
-      uploader.on('error', () => {
+      uploader.on('error', (error, fileObj) => {
         // Upload was unsuccessful
-        console.log('Upload was unsuccessful');
-        rej();
+        if (error) handleError(error, fileObj);
       });
     });
   };
 
   return (
     <div className="file-upload">
-      {variant === 'top' ? (
-        <>
-          {customButton ? <customButton onClick={handleUpload} /> : <button type="submit" onClick={handleUpload}>Upload</button>}
-          <br />
-        </>
-      ) : undefined}
-      <label htmlFor="pfp-upload">
-        {variant === 'top' ? label : undefined}
-        <input
-          type="file"
-          id="file-upload"
-          accept={accept}
-          onChange={handleChangeFile}
-        />
-        <div className="warning">{warning}</div>
-        {variant === 'bottom' ? label : undefined}
-      </label>
-      {variant === 'bottom' ? (
-        <>
-          <br />
-          {customButton ? <customButton onClick={handleUpload} /> : <button type="submit" onClick={handleUpload}>Upload</button>}
-        </>
-      ) : undefined}
+      <Form.Group>
+        <Form.Label>
+          {label}
+          <Form.Control
+            type="file"
+            accept={accept}
+            onChange={handleChangeFile}
+          />
+        </Form.Label>
+      </Form.Group>
+      {showAlert && (
+        <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+          {alertMsg}
+        </Alert>
+      )}
+      {customButton
+        ? <customButton onClick={handleUpload} />
+        : <Button variant={buttonVariant} type="submit" onClick={handleUpload}>Upload</Button>}
     </div>
   );
 };
@@ -119,7 +134,25 @@ const FileUpload = ({ label, accept, variant, customButton, onUpload }) => {
 FileUpload.propTypes = {
   label: PropTypes.string,
   accept: PropTypes.string,
-  variant: PropTypes.oneOf(['top', 'bottom']),
+  buttonVariant: PropTypes.oneOf([
+    'primary',
+    'secondary',
+    'success',
+    'danger',
+    'warning',
+    'info',
+    'dark',
+    'light',
+    'link',
+    'outline-primary',
+    'outline-secondary',
+    'outline-success',
+    'outline-danger',
+    'outline-warning',
+    'outline-info',
+    'outline-dark',
+    'outline-light',
+  ]),
   customButton: PropTypes.elementType,
   onUpload: PropTypes.func,
 };
@@ -127,7 +160,7 @@ FileUpload.propTypes = {
 FileUpload.defaultProps = {
   label: 'Upload an image',
   accept: 'image/png, image/jpeg',
-  variant: 'bottom',
+  buttonVariant: 'primary',
   customButton: undefined,
   onUpload: undefined,
 };
