@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Images } from '../../api/image/Image';
 
-const ImageUpload = () => {
+/** @type { React.FC<{ onUpload: VoidFunction }> } */
+const ImageUpload = ({ onUpload }) => {
   const [file, setFile] = useState(null);
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
@@ -10,21 +12,34 @@ const ImageUpload = () => {
   };
 
   /** @type {React.MouseEventHandler<HTMLButtonElement>} */
-  const handleUpload = () => {
+  const handleUpload = async () => {
     const formData = new FormData();
     formData.append(
       'file',
       file,
       file.name,
     );
-    Images.filesCollection.insert({
-      file: file,
+    if (!/image\/.*/.test(file.type)) {
+      throw new Error('The given file was not an image');
+    }
+    await new Promise((res, rej) => {
+      const uploader = Images.filesCollection.insert({
+        file: file,
+      });
+      uploader.on('uploaded', () => {
+        // Upload was successful
+        onUpload();
+        res();
+      });
+      uploader.on('error', () => {
+        // Upload was unsuccessful
+        rej();
+      });
     });
-    console.log('uploading');
   };
 
   return (
-    <>
+    <div className="image-upload">
       <label htmlFor="pfp-upload">Upload a profile picture
         <br />
         <input
@@ -37,25 +52,17 @@ const ImageUpload = () => {
       </label>
       <br />
       <button type="submit" onClick={handleUpload}>Upload</button>
-      {
-        file ? (
-          <div>
-            <h2>File Details:</h2>
-            <p>File Name: {file.name}</p>
-            <p>File Type: {file.type}</p>
-            <p>
-              Last Modified: {file.lastModifiedDate.toDateString()}
-            </p>
-          </div>
-        ) : (
-          <div>
-            <h4>Upload something to see it</h4>
-          </div>
-        )
-      }
-
-    </>
+      { file ? <p>File Name: {file.name}</p> : undefined }
+    </div>
   );
+};
+
+ImageUpload.propTypes = {
+  onUpload: PropTypes.func,
+};
+
+ImageUpload.defaultProps = {
+  onUpload: undefined,
 };
 
 export default ImageUpload;

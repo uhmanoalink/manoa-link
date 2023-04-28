@@ -25,7 +25,6 @@ import MainEventsList from '../pages/MainEventsList';
 import EventPage from '../pages/EventPage';
 import CompanyProtectedRoute from './CompanyProtectedRoute';
 import Profile from '../pages/Profile';
-import TestPage from '../pages/Test';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -56,7 +55,6 @@ const App = () => {
           <Route path="/edit-event/:_id" element={<CompanyProtectedRoute ready={ready}><EditEvent /></CompanyProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListStuffAdmin /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
-          <Route path="/testing" element={<TestPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
