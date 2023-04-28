@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Images } from '../../api/image/Image';
 
 /**
- * ## ImageUpload component
+ * ## FileUpload component
  *
- * Adds an image input that adds an image to MongoDB.
+ * A component that uploads a file to MongoDB.
  *
  * ### Props
  *
