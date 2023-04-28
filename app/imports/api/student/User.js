@@ -18,9 +18,9 @@ class StudentsCollection {
       },
       email: String,
       profileImage: String,
-      followedCompanies: Array,
-      savedEvents: Array,
-      savedListings: Array,
+      followedCompanies: [String],
+      savedEvents: [String],
+      savedListings: [String],
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);

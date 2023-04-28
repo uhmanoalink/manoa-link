@@ -18,9 +18,15 @@ class ListingsCollection {
       description: String,
       image: String, // also keep as string
       location: String, // optional. if not given, defaults to the address of the company
-      // employmentType: 'in-person' | 'remote' | 'hybrid',
-      // scheduleType: 'full-time' | 'part-time' | 'flexible',
-      tags: Array,
+      employmentType: {
+        type: String,
+        allowedValues: ['in-person', 'online', 'hybrid'],
+      },
+      scheduleType: {
+        type: String,
+        allowedValues: ['part-time', 'full-time', 'flexible'],
+      },
+      tags: [String],
       createdAt: Date,
       startDate: Date,
     });
