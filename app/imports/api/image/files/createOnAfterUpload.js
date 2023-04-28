@@ -13,8 +13,8 @@ export const createOnAfterUpload = bucket => (
       const metadata = { ...file.meta, versionName, fileId: file._id };
       fs.createReadStream(file.versions[versionName].path)
 
-      // this is where we upload the binary to the bucket using bucket.openUploadStream
-      // see http://mongodb.github.io/node-mongodb-native/3.6/api/GridFSBucket.html#openUploadStream
+        // this is where we upload the binary to the bucket using bucket.openUploadStream
+        // see http://mongodb.github.io/node-mongodb-native/3.6/api/GridFSBucket.html#openUploadStream
         .pipe(bucket.openUploadStream(
           file.name,
           {
@@ -23,17 +23,16 @@ export const createOnAfterUpload = bucket => (
           },
         ))
 
-      // and we unlink the file from the fs on any error
-      // that occurred during the upload to prevent zombie files
+        // and we unlink the file from the fs on any error
+        // that occurred during the upload to prevent zombie files
         .on('error', err => {
-        // eslint-disable-next-line
-        console.error(err);
+          console.error(err);
           this.unlink(this.collection.findOne(file._id), versionName); // Unlink files from FS
         })
 
-      // once we are finished, we attach the gridFS Object id on the
-      // FilesCollection document's meta section and finally unlink the
-      // upload file from the filesystem
+        // once we are finished, we attach the gridFS Object id on the
+        // FilesCollection document's meta section and finally unlink the
+        // upload file from the filesystem
         .on('finish', Meteor.bindEnvironment(ver => {
           const property = `versions.${versionName}.meta.gridFsFileId`;
 
