@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Button, Form, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Alert, Button, Form, Image, OverlayTrigger, Popover } from 'react-bootstrap';
 import { Images } from '../../api/image/Image';
 
 /**
@@ -114,13 +114,15 @@ const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) =>
           <OverlayTrigger
             placement="bottom"
             overlay={inputFile?.type.startsWith('image') ? (
-              <Tooltip>
-                <Image
-                  alt="preview"
-                  src={URL.createObjectURL(inputFile)}
-                  width={100}
-                />
-              </Tooltip>
+              <Popover>
+                <Popover.Body>
+                  <Image
+                    alt="preview"
+                    src={URL.createObjectURL(inputFile)}
+                    width={100}
+                  />
+                </Popover.Body>
+              </Popover>
             ) : <div />}
           >
             <Form.Control
