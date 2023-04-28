@@ -25,8 +25,8 @@ import { Images } from '../../api/image/Image';
  *   - For more info: https://react-bootstrap.netlify.app/docs/components/buttons/
  *
  * - `customButton` (optional):
- * You can use a custom component to handle the submission. The custom button should not
- * have an `onClick` already defined.
+ * You can use a custom component to handle the submission. The custom button is passed as
+ * a child to the Button component.
  *
  * - `onUpload` (optional):
  * An optional callback function that is called when the upload is successful.
