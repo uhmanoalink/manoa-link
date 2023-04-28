@@ -38,11 +38,11 @@ const Event = ({ event }) => (
         <h6>Event ends at</h6>
         {formatDate(event.eventDoneAt)}
       </Card.Text>
-      { (isAdmin || isCompany) ? (
+      { (isAdmin || isCompany) && (
         <Link to={`/edit/${event._id}`} className="event-edit-link mx-1">
           <Button variant="dark" size="sm">Edit</Button>
         </Link>
-      ) : <></> }
+      )}
       <Link to={`/event/${event._id}`} className="event-edit-link">
         <Button variant="secondary" size="sm">View</Button>
       </Link>

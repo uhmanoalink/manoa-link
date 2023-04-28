@@ -17,7 +17,7 @@ const Company = ({ company }) => (
     </Card.Header>
     <Card.Body>
       <Card.Text>{company.description}</Card.Text>
-      { (isAdmin || isCompany) ? (<Link to={`/edit/${company._id}`}>Edit</Link>) : <></> }
+      { (isAdmin || isCompany) && (<Link to={`/edit/${company._id}`}>Edit</Link>) }
     </Card.Body>
   </Card>
 );
