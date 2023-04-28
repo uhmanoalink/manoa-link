@@ -21,7 +21,7 @@ const AdminDashboard = () => {
 
   const { ready, students, companies, events, listings } = useTracker(() => {
     const eventsSub = Meteor.subscribe(Events.adminPublicationName);
-    const studentsSub = Meteor.subscribe(Users.adminPublicationName);
+    const studentsSub = Meteor.subscribe(Students.adminPublicationName);
     const companiesSub = Meteor.subscribe(Companies.adminPublicationName);
     const listingsSub = Meteor.subscribe(Positions.adminPublicationName);
     // Determine if the subscription is ready

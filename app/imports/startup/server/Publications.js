@@ -52,7 +52,7 @@ Meteor.publish(Companies.adminPublicationName, function () {
   return this.ready();
 });
 
-Meteor.publish(Events.userPublicationName, function () {
+Meteor.publish(Events.studentPublicationName, function () {
   if (this.userId) {
     return Events.collection.find({});
   }
