@@ -15,7 +15,7 @@ import { Images } from '../../api/image/Image';
  *
  * - `accept` (optional):
  * The accepted types of the file input.
- *   - Default value: 'image/*'
+ *   - Default value: 'image/png, image/jpeg'
  *   - For more info: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept
  *
  * - `variant` (optional):
@@ -41,35 +41,47 @@ import { Images } from '../../api/image/Image';
  * }> }
  */
 const FileUpload = ({ label, accept, variant, customButton, onUpload }) => {
-  const [file, setFile] = useState(null);
+  const [inputFile, setInputFile] = useState(null);
+  const [warning, setWarning] = useState();
+
+  const verifyFileType = (file, acceptString) => {
+    // https://stackoverflow.com/questions/20524306/check-selected-file-matches-accept-attribute-on-an-input-tag
+    const acceptedTypes = acceptString.toLowerCase().split(',').map(type => type.trim());
+    console.log(acceptedTypes);
+    const fileType = file.type.toLowerCase();
+    console.log(fileType);
+    return acceptedTypes.some(type => type === fileType || type === `${fileType.split('/')[0]}/*`);
+  };
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
-  const onFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleChangeFile = (e) => {
+    const newFile = e.target.files[0];
+    if (verifyFileType(newFile, accept)) {
+      setWarning();
+    } else {
+      setWarning('The file type does not match');
+    }
+    setInputFile(newFile);
   };
 
   /** @type {React.MouseEventHandler<HTMLButtonElement>} */
   const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append(
-      'file',
-      file,
-      file.name,
-    );
-    if (!/image\/.*/.test(file.type)) {
-      throw new Error('The given file was not an image');
+    if (!verifyFileType(inputFile, accept)) {
+      throw new Error('The file type does not match');
     }
     await new Promise((res, rej) => {
       const uploader = Images.filesCollection.insert({
-        file: file,
+        file: inputFile,
       });
       uploader.on('uploaded', () => {
         // Upload was successful
-        onUpload();
+        console.log('Upload was successful');
+        onUpload?.();
         res();
       });
       uploader.on('error', () => {
         // Upload was unsuccessful
+        console.log('Upload was unsuccessful');
         rej();
       });
     });
@@ -85,22 +97,21 @@ const FileUpload = ({ label, accept, variant, customButton, onUpload }) => {
       ) : undefined}
       <label htmlFor="pfp-upload">
         {variant === 'top' ? label : undefined}
-        <br />
         <input
           type="file"
           id="file-upload"
           accept={accept}
-          onChange={onFileChange}
+          onChange={handleChangeFile}
         />
-        {variant === 'bottom' ? undefined : label}
+        <div className="warning">{warning}</div>
+        {variant === 'bottom' ? label : undefined}
       </label>
-      {variant === 'bottom' ? undefined : (
+      {variant === 'bottom' ? (
         <>
           <br />
           {customButton ? <customButton onClick={handleUpload} /> : <button type="submit" onClick={handleUpload}>Upload</button>}
         </>
-      )}
-      { file ? <p>File Name: {file.name}</p> : undefined }
+      ) : undefined}
     </div>
   );
 };
@@ -108,14 +119,14 @@ const FileUpload = ({ label, accept, variant, customButton, onUpload }) => {
 FileUpload.propTypes = {
   label: PropTypes.string,
   accept: PropTypes.string,
-  variant: PropTypes.oneOf('top', 'bottom'),
+  variant: PropTypes.oneOf(['top', 'bottom']),
   customButton: PropTypes.elementType,
   onUpload: PropTypes.func,
 };
 
 FileUpload.defaultProps = {
   label: 'Upload an image',
-  accept: 'image/*',
+  accept: 'image/png, image/jpeg',
   variant: 'bottom',
   customButton: undefined,
   onUpload: undefined,
