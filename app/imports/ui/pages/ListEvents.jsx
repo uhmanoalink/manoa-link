@@ -59,7 +59,7 @@ const ListEvents = () => {
       <Row className="justify-content-center">
         <Col>
           <Col className="text-center">
-            <h2>List Events</h2>
+            <h1>Events</h1>
           </Col>
           <Row>
             <Col>

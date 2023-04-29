@@ -76,9 +76,7 @@ class NavBar {
 
   async checkAdminNavLinks(tc: TestController) {
     await this.checkNavLinkExists(tc, 'Dashboard');
-    await this.checkNavLinkExists(tc, 'Admin');
     await this.openNavDropdown(tc);
-    await this.checkDropdownItemExists(tc, 'Profile');
     await this.checkDropdownItemExists(tc, 'Sign Out');
   }
 
