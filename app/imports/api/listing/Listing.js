@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
+import { oneOf } from 'prop-types';
 
 /**
  * The EventsCollection. It encapsulates state and variable values for stuff.
