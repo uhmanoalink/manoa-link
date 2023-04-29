@@ -25,8 +25,7 @@ const AdminDashboard = () => {
     const companiesSub = Meteor.subscribe(Companies.adminPublicationName);
     const listingsSub = Meteor.subscribe(Listings.adminPublicationName);
     // Determine if the subscription is ready
-    // const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready();
-    const rdy = eventsSub.ready();
+    const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready();
 
     const studentItems = Students.collection.find({}).fetch();
     const companyItems = Companies.collection.find({}).fetch();
