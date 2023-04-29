@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import ProtectedRender from './ProtectedRender';
+import { Events } from '../../api/event/Event';
+import DeleteConfirmation from './DeleteConfirmation';
 
 const formatDate = (date) => {
   if (date) {
