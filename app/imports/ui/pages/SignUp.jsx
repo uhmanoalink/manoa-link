@@ -9,6 +9,7 @@ import StudentSignUpForm from '../components/StudentSignUpForm';
 import CompanySignUpForm from '../components/CompanySignUpForm';
 import RegisterUserForm from '../components/RegisterUserForm';
 import { Students } from '../../api/student/Student';
+import { Companies } from '../../api/company/Company';
 
 const SignUp = ({ location }) => {
   const [page, setPage] = useState('newUser');
@@ -30,7 +31,7 @@ const SignUp = ({ location }) => {
   };
 
   const createCompanyUser = (userId, name, website, address, description, onSuccess) => {
-    Students.collection.insert(
+    Companies.collection.insert(
       { userId, name, image: 'None', website, address, description },
       (error) => {
         if (error) {
@@ -44,7 +45,8 @@ const SignUp = ({ location }) => {
 
   const submit = (doc) => {
     setErrorAlert('');
-    setInfo({ ...info, doc });
+    setInfo({ ...info, ...doc });
+    console.log(doc);
 
     if (page === 'newUser') {
       const { email, youAreA: role } = doc;
@@ -78,13 +80,11 @@ const SignUp = ({ location }) => {
             if (page === 'student') {
               console.log(doc);
               const { firstName, lastName } = doc;
-              // createStudentUser(userId, { firstName, lastName }, email, () => setRedirectToRef(true));
-              createStudentUser(userId, { firstName, lastName }, email, () => console.log('added student'));
+              createStudentUser(userId, { firstName, lastName }, email, () => setRedirectToRef(true));
             } else if (page === 'company') {
               console.log(doc);
               const { companyName, website, address, description } = doc;
-              // createCompanyUser(userId, companyName, website, address, description, () => setRedirectToRef(true));
-              createCompanyUser(userId, companyName, website, address, description, () => console.log('added company'));
+              createCompanyUser(userId, companyName, website, address, description, () => setRedirectToRef(true));
             } else {
               setErrorAlert('Something went wrong! 😢');
             }
@@ -96,8 +96,7 @@ const SignUp = ({ location }) => {
     }
   };
 
-  const back = (doc) => {
-    console.log(doc);
+  const back = () => {
     setErrorAlert('');
     setPage('newUser');
   };
