@@ -38,10 +38,10 @@ const SignUp = ({ location }) => {
         errorMsg = createUserError.reason;
       } else {
         const userId = Meteor.userId();
-        Meteor.call('initUser', { userId, role }, (initUserError) => {
+        Meteor.call('initUser', userId, role, (initUserError) => {
           if (initUserError) {
             errorMsg = 'There was a problem creating the user';
-            Meteor.call('deleteUser', { userId }, (deleteUserError) => {
+            Meteor.call('deleteUser', userId, (deleteUserError) => {
               if (deleteUserError) {
                 errorMsg += ", but it couldn't be removed!";
               }
