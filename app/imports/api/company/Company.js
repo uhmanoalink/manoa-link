@@ -13,7 +13,10 @@ class CompaniesCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       _id: String,
-      userId: String,
+      userId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+      },
       name: String,
       image: String,
       website: String,
