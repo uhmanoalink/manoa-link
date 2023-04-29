@@ -46,7 +46,6 @@ const SignUp = ({ location }) => {
   const submit = (doc) => {
     setErrorAlert('');
     setInfo({ ...info, ...doc });
-    console.log(doc);
 
     if (page === 'newUser') {
       const { email, youAreA: role } = doc;
@@ -78,11 +77,9 @@ const SignUp = ({ location }) => {
             }
             // User successfully created
             if (page === 'student') {
-              console.log(doc);
               const { firstName, lastName } = doc;
               createStudentUser(userId, { firstName, lastName }, email, () => setRedirectToRef(true));
             } else if (page === 'company') {
-              console.log(doc);
               const { companyName, website, address, description } = doc;
               createCompanyUser(userId, companyName, website, address, description, () => setRedirectToRef(true));
             } else {
