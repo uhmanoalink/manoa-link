@@ -18,7 +18,7 @@ class EventsCollection {
       address: String,
       description: String,
       image: String,
-      tags: Array,
+      tags: [String],
       createdAt: Date,
       startDateTime: Date,
       endDateTime: Date,
