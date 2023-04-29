@@ -13,10 +13,7 @@ class EventsCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       eventName: String,
-      companyId: {
-        type: String,
-        regEx: SimpleSchema.RegEx.Id,
-      },
+      companyId: String,
       address: String,
       description: String,
       image: String,
