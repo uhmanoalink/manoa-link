@@ -12,32 +12,13 @@ import HelpButton from '../components/HelpButton';
 
 const formSchema = new SimpleSchema({
   eventName: String,
-  image: String,
   address: String,
   description: String,
-  tags: {
-    type: Array,
-    defaultValue: [],
-  },
-  'tags.$': {
-    type: String,
-  },
-  companyId: {
-    type: String,
-    defaultValue: Companies.companyPublicationName,
-  },
-  createdAt: {
-    type: Date,
-    defaultValue: new Date(),
-  },
-  eventAt: Date,
-  eventDoneAt: Date,
-  isPast: {
-    type: Boolean,
-    defaultValue: false,
-  },
+  image: String,
+  tags: [String],
+  startDateTime: Date,
+  endDateTime: Date,
 });
-
 const bridge = new SimpleSchema2Bridge(formSchema);
 
 const tagOptions = [
@@ -55,11 +36,11 @@ const AddEvent = () => {
   const [selectedTags, setSelectedTags] = React.useState([]);
 
   const submit = (data, formRef) => {
-    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date(), eventAt, eventDoneAt } = data;
+    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date(), startDateTime, endDateTime } = data;
     const tags = selectedTags.map(tag => tag.value);
     const owner = Meteor.user().username;
     Events.collection.insert(
-      { eventName, image, address, description, tags, companyId, createdAt, eventAt, eventDoneAt, owner },
+      { eventName, image, address, description, tags, companyId, createdAt, startDateTime, endDateTime, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -100,8 +81,8 @@ const AddEvent = () => {
                   <Col><TextField className="mb-3" name="image" placeholder="Image URL" /></Col>
                 </Row>
                 <LongTextField className="mb-3" name="description" placeholder="Description" />
-                <DateField className="mb-3" name="eventAt" placeholder="Time to start the event" />
-                <DateField className="mb-3" name="eventDoneAt" placeholder="Time to end the event" />
+                <DateField className="mb-3" name="startDateTime" placeholder="Time to start the event" />
+                <DateField className="mb-3" name="endDateTime" placeholder="Time to end the event" />
                 <ErrorsField />
                 <SubmitField className="submit-btn" value="Add Event" />
               </Card.Body>
