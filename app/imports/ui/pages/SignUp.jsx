@@ -12,19 +12,46 @@ import { Students } from '../../api/student/Student';
 
 const SignUp = ({ location }) => {
   const [page, setPage] = useState('newUser');
-  const [error, setError] = useState('');
+  const [errorAlert, setErrorAlert] = useState('');
   const [redirectToReferer, setRedirectToRef] = useState(false);
   const [info, setInfo] = useState({});
 
+  const createStudentUser = (userId, name, email, onSuccess) => {
+    Students.collection.insert(
+      { userId, name, email, profileImage: 'None', followedCompanies: [], savedEvents: [], savedListings: [] },
+      (error) => {
+        if (error) {
+          setErrorAlert(error.message);
+        } else {
+          onSuccess();
+        }
+      },
+    );
+  };
+
+  const createCompanyUser = (userId, name, website, address, description, onSuccess) => {
+    Students.collection.insert(
+      { userId, name, image: 'None', website, address, description },
+      (error) => {
+        if (error) {
+          setErrorAlert(error.message);
+        } else {
+          onSuccess();
+        }
+      },
+    );
+  };
+
   const submit = (doc) => {
+    setErrorAlert('');
     setInfo({ ...info, doc });
 
     if (page === 'newUser') {
-      const { email, password, youAreA: role } = doc;
+      const { email, youAreA: role } = doc;
       // Check if the user exists already
       Meteor.call('findUserByUsername', email, (err, result) => {
         if (result) {
-          setError('That email is already taken!');
+          setErrorAlert('That email is already taken!');
         } else {
           setPage(role);
         }
@@ -45,36 +72,33 @@ const SignUp = ({ location }) => {
                   errorMsg += ", but it couldn't be removed!";
                 }
               });
-            } else {
-              setRedirectToRef(true);
+              return;
             }
+            // User successfully created
+            if (page === 'student') {
+              console.log(doc);
+              const { firstName, lastName } = doc;
+              // createStudentUser(userId, { firstName, lastName }, email, () => setRedirectToRef(true));
+              createStudentUser(userId, { firstName, lastName }, email, () => console.log('added student'));
+            } else if (page === 'company') {
+              console.log(doc);
+              const { companyName, website, address, description } = doc;
+              // createCompanyUser(userId, companyName, website, address, description, () => setRedirectToRef(true));
+              createCompanyUser(userId, companyName, website, address, description, () => console.log('added company'));
+            } else {
+              setErrorAlert('Something went wrong! 😢');
+            }
+
           });
         }
-        setError(errorMsg);
+        setErrorAlert(errorMsg);
       });
-      if (page === 'student') {
-        Students.collection.insert(
-          { eventName, image, address, description, tags, companyId, createdAt, eventAt, eventDoneAt, owner },
-          (error) => {
-            if (error) {
-              swal('Error', error.message, 'error');
-            } else {
-              swal('Success', 'Item added successfully', 'success');
-              formRef.reset();
-              setSelectedTags([]);
-            }
-          },
-        );
-      } else if (page === 'company') {
-
-      } else {
-        setError('Something went wrong! 😢');
-      }
     }
   };
 
   const back = (doc) => {
     console.log(doc);
+    setErrorAlert('');
     setPage('newUser');
   };
 
@@ -93,7 +117,7 @@ const SignUp = ({ location }) => {
     } if (pageNumber === 'company') {
       return <CompanySignUpForm onBack={back} onSubmit={submit} />;
     }
-    setError('Something went wrong! 😢');
+    setErrorAlert('Something went wrong! 😢');
     setPage('newUser');
     return null;
   };
@@ -108,12 +132,12 @@ const SignUp = ({ location }) => {
             {' '}
             <Link to="/signin">here</Link>
           </Alert>
-          {error === '' ? (
+          {errorAlert === '' ? (
             ''
           ) : (
             <Alert variant="danger">
               <Alert.Heading>Registration Error</Alert.Heading>
-              {error}
+              {errorAlert}
             </Alert>
           )}
         </Col>
