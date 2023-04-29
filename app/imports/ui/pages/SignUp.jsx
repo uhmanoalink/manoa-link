@@ -1,58 +1,80 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';
-import { Accounts } from 'meteor/accounts-base';
-import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
-import SimpleSchema from 'simpl-schema';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+import { Alert, Col, Container, Row } from 'react-bootstrap';
 
-/**
- * SignUp component is similar to signin component, but we create a new user instead.
- */
+import StudentSignUpForm from '../components/StudentSignUpForm';
+import CompanySignUpForm from '../components/CompanySignUpForm';
+import RegisterUserForm from '../components/RegisterUserForm';
 
 const SignUp = ({ location }) => {
-
+  const [page, setPage] = useState('newUser');
   const [error, setError] = useState('');
   const [redirectToReferer, setRedirectToRef] = useState(false);
+  const [info, setInfo] = useState({});
 
-  const schema = new SimpleSchema({
-    email: String,
-    password: String,
-    role: {
-      type: String,
-      allowedValues: ['company', 'student'],
-      defaultValue: 'student',
-    },
-  });
-  const bridge = new SimpleSchema2Bridge(schema);
-
-  /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
-    const { email, password, role } = doc;
+    setInfo({ ...info, doc });
 
-    Accounts.createUser({ email, username: email, password }, (createUserError) => {
-      let errorMsg = '';
-      if (createUserError) {
-        errorMsg = createUserError.reason;
+    if (page === 'newUser') {
+      const { email, password, youAreA: role } = doc;
+      // Check if the user exists already
+      Meteor.call('findUserByUsername', email, (err, result) => {
+        if (result) {
+          setError('That email is already taken!');
+        } else {
+          setPage(role);
+        }
+      });
+    } else {
+      const { email, password, youAreA: role } = info;
+      Accounts.createUser({ email, username: email, password }, (createUserError) => {
+        let errorMsg = '';
+        if (createUserError) {
+          errorMsg = createUserError.reason;
+        } else {
+          const userId = Meteor.userId();
+          Meteor.call('initUser', userId, role, (initUserError) => {
+            if (initUserError) {
+              errorMsg = 'There was a problem creating the user';
+              Meteor.call('deleteUser', userId, (deleteUserError) => {
+                if (deleteUserError) {
+                  errorMsg += ", but it couldn't be removed!";
+                }
+              });
+            } else {
+              setRedirectToRef(true);
+            }
+          });
+        }
+        setError(errorMsg);
+      });
+      if (page === 'student') {
+        // Students.collection.insert(
+        //   { eventName, image, address, description, tags, companyId, createdAt, eventAt, eventDoneAt, owner },
+        //   (error) => {
+        //     if (error) {
+        //       swal('Error', error.message, 'error');
+        //     } else {
+        //       swal('Success', 'Item added successfully', 'success');
+        //       formRef.reset();
+        //       setSelectedTags([]);
+        //     }
+        //   },
+        // );
+      } else if (page === 'company') {
+
       } else {
-        const userId = Meteor.userId();
-        Meteor.call('initUser', userId, role, (initUserError) => {
-          if (initUserError) {
-            errorMsg = 'There was a problem creating the user';
-            Meteor.call('deleteUser', userId, (deleteUserError) => {
-              if (deleteUserError) {
-                errorMsg += ", but it couldn't be removed!";
-              }
-            });
-          } else {
-            setRedirectToRef(true);
-          }
-        });
+        setError('Something went wrong! 😢');
       }
-      setError(errorMsg);
-    });
+    }
+  };
+
+  const back = (doc) => {
+    console.log(doc);
+    setPage('newUser');
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
@@ -61,24 +83,25 @@ const SignUp = ({ location }) => {
   if (redirectToReferer) {
     return <Navigate to={from} />;
   }
+
+  const renderFormPage = (pageNumber) => {
+    if (pageNumber === 'newUser') {
+      return <RegisterUserForm onSubmit={submit} />;
+    } if (pageNumber === 'student') {
+      return <StudentSignUpForm onBack={back} onSubmit={submit} />;
+    } if (pageNumber === 'company') {
+      return <CompanySignUpForm onBack={back} onSubmit={submit} />;
+    }
+    setError('Something went wrong! 😢');
+    setPage('newUser');
+    return null;
+  };
+
   return (
     <Container id="signup-page" className="py-3">
       <Row className="justify-content-center">
-        <Col xs={5}>
-          <Col className="text-center">
-            <h2 id="signup-title">Register Your Account</h2>
-          </Col>
-          <AutoForm schema={bridge} onSubmit={data => submit(data)}>
-            <Card>
-              <Card.Body>
-                <TextField name="email" placeholder="E-mail address" />
-                <TextField name="password" placeholder="Password" type="password" />
-                <SelectField name="role" />
-                <ErrorsField />
-                <SubmitField />
-              </Card.Body>
-            </Card>
-          </AutoForm>
+        <Col xs={7} lg={5}>
+          {renderFormPage(page)}
           <Alert variant="light">
             Already have an account? Login
             {' '}
@@ -88,7 +111,7 @@ const SignUp = ({ location }) => {
             ''
           ) : (
             <Alert variant="danger">
-              <Alert.Heading>Registration was not successful</Alert.Heading>
+              <Alert.Heading>Registration Error</Alert.Heading>
               {error}
             </Alert>
           )}
