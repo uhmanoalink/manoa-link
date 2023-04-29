@@ -11,7 +11,7 @@ import PastEvent from '../components/PastEvent';
 const MainEventsPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const { ready, upcomingEvents, pastEvents } = useTracker(() => {
-    const subscription = Meteor.subscribe(Events.userPublicationName);
+    const subscription = Meteor.subscribe(Events.studentPublicationName);
     const subscription2 = Meteor.subscribe(Events.adminPublicationName);
     const rdy = subscription.ready() && subscription2.ready();
     let allEvents = Events.collection.find({}).fetch();
@@ -76,20 +76,20 @@ const MainEventsPage = () => {
             </Col>
           </Row>
           <Row className="g-4">
-            <Col xs={12} md={8}>
+            <Col xs={12} md={8} id="upcoming-event">
               <h3 className="text-center">Upcoming Events</h3>
               <Row xs={1} md={2} lg={2} className="g-4">
-                {ready ? (upcomingEvents.map((event) => (<Col id="upcoming-event" key={event._id}><Event event={event} /></Col>))
+                {ready ? (upcomingEvents.map((event) => (<Col key={event._id}><Event event={event} /></Col>))
                 ) : (
                   <LoadingSpinner />
                 )}
               </Row>
             </Col>
-            <Col xs={12} md={4}>
+            <Col xs={12} md={4} id="past-event">
               <h3 className="text-center">Past Events</h3>
               <div className="custom-scroll mt-2" style={{ height: '1000px', paddingLeft: '30px', paddingRight: '30px' }}>
                 <Row xs={1} md={1} lg={1} className="g-4">
-                  {ready ? (pastEvents.map((event) => (<Col id="past-event" key={event._id}><PastEvent event={event} /></Col>))) : (
+                  {ready ? (pastEvents.map((event) => (<Col key={event._id}><PastEvent event={event} /></Col>))) : (
                     <LoadingSpinner />
                   )}
                 </Row>
