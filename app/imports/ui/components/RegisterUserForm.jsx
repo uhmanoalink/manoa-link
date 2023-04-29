@@ -10,7 +10,7 @@ const RegisterUserForm = ({ onSubmit }) => {
   const schema = new SimpleSchema({
     email: String,
     password: String,
-    youAreA: {
+    role: {
       type: String,
       allowedValues: ['company', 'student'],
       defaultValue: 'student',
@@ -31,7 +31,7 @@ const RegisterUserForm = ({ onSubmit }) => {
         <Card.Body>
           <TextField name="email" placeholder="E-mail address" />
           <TextField name="password" placeholder="Password" type="password" />
-          <div id="role-field"><SelectField name="youAreA" /></div>
+          <div id="role-field"><SelectField name="role" label="You are a" /></div>
           <ErrorsField />
           <Button className="w-100" variant="success" type="submit">Next</Button>
         </Card.Body>

@@ -48,7 +48,7 @@ const SignUp = ({ location }) => {
     setInfo({ ...info, ...doc });
 
     if (page === 'newUser') {
-      const { email, youAreA: role } = doc;
+      const { email, role } = doc;
       // Check if the user exists already
       Meteor.call('findUserByUsername', email, (err, result) => {
         if (result) {
@@ -58,7 +58,7 @@ const SignUp = ({ location }) => {
         }
       });
     } else {
-      const { email, password, youAreA: role } = info;
+      const { email, password, role } = info;
       Accounts.createUser({ email, username: email, password }, (createUserError) => {
         let errorMsg = '';
         if (createUserError) {
@@ -131,7 +131,7 @@ const SignUp = ({ location }) => {
           {errorAlert === '' ? (
             ''
           ) : (
-            <Alert variant="danger">
+            <Alert variant="danger" id="registration-error">
               <Alert.Heading>Registration Error</Alert.Heading>
               {errorAlert}
             </Alert>

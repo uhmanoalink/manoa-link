@@ -1,7 +1,9 @@
-import { Selector } from 'testcafe';
+import { Selector, ClientFunction } from 'testcafe';
 import { navBar } from './navbar.component';
 import Credentials from './types/CredentialsType';
 import Role from './types/RoleType';
+import RegisterCompanyInputData, { isRegisterCompanyInputData } from './types/RegisterCompanyInputDataType';
+import RegisterStudentInputData, { isRegisterStudentInputData } from './types/RegisterStudentInputDataType';
 
 class SignupPage {
   private pageId: string;
@@ -18,25 +20,70 @@ class SignupPage {
     await testController.expect(this.pageSelector.exists).ok();
   }
 
-  /** Signs up a new user, then checks to see that they are logged in by checking the navbar. */
-  async signUpAs(tc: TestController, credentials: Credentials, role: Role) {
-    await tc.expect(role).notEql('admin');
-    await this.isDisplayed(tc);
+  /** @returns true if it was successful, false if not */
+  private async fillInFirstPage(tc: TestController, credentials: Credentials, role: Role) {
     await tc.typeText(this.pageSelector.find('input[type="text"][name="email"]'), credentials.username, { replace: true });
     await tc.typeText(this.pageSelector.find('input[type="password"][name="password"]'), credentials.password, { replace: true });
     await tc.click(this.pageSelector.find('select[name="role"]'));
     await tc.click(this.pageSelector.find('select[name="role"]').find('option').withText(role));
-    await tc.click(this.pageSelector.find('input[type="submit"]'));
+    await tc.click(this.pageSelector.find('button[type="submit"]'));
+    if (await Selector('#registration-error').visible) {
+      return false;
+    }
+    return true;
+  }
+
+  /** @returns true if it was successful, false if not */
+  private async fillInSecondPage(tc: TestController, role: Role, inputData: RegisterCompanyInputData | RegisterStudentInputData) {
+    if (role === 'student' && isRegisterStudentInputData(inputData)) {
+      Object.keys(inputData).forEach(async (key) => {
+        const inputField = this.pageSelector.find(`input[type="text"][name="${key}"]`);
+        await tc.typeText(inputField, inputData[key as keyof RegisterStudentInputData], { replace: true });
+      });
+    } else if (role === 'company' && isRegisterCompanyInputData(inputData)) {
+      Object.keys(inputData).forEach(async (key) => {
+        if (key === 'description') {
+          const inputField = this.pageSelector.find(`textarea[name="${key}"]`);
+          await tc.typeText(inputField, inputData[key as keyof RegisterCompanyInputData], { replace: true });
+          return;
+        }
+        const inputField = this.pageSelector.find(`input[type="text"][name="${key}"]`);
+        await tc.typeText(inputField, inputData[key as keyof RegisterCompanyInputData], { replace: true });
+      });
+    }
+    await tc.click(this.pageSelector.find('button[type="submit"]'));
+    await tc.wait(500);
+    const location = await ClientFunction(() => window.location.pathname)();
+    return location === '/dashboard';
+  }
+
+  /** Signs up a new user, then checks to see that they are logged in by checking the navbar. */
+  async signUpAs(tc: TestController, credentials: Credentials, role: Role, inputData: RegisterCompanyInputData | RegisterStudentInputData, expected = true) {
+    await tc.expect(role).notEql('admin');
+    await this.isDisplayed(tc);
+    let success;
+    success = await this.fillInFirstPage(tc, credentials, role);
+    if (success) {
+      success = await this.fillInSecondPage(tc, role, inputData);
+    }
+    await tc.expect(success).eql(expected);
   }
 
   private async testCreateStudent(tc: TestController) {
     // If the user already exists, it should fail
-    await this.signUpAs(tc, { username: 'john@foo.com', password: 'changeme' }, 'student');
-    await tc.expect(this.pageSelector.find('div[role="alert"]').withText('Username already exists').visible).ok();
+    await this.signUpAs(tc, { username: 'john@foo.com', password: 'changeme' }, 'student', {
+      firstName: 'Should',
+      lastName: 'Fail',
+    }, false);
+    await tc.expect(this.pageSelector.find('div[role="alert"]').withText('That email is already taken!').visible).ok();
     await navBar.checkUnloggedNavLinks(tc);
     // Create a new student
+    await ClientFunction(() => window.location.reload())();
     const newCreds: Credentials = { username: `student_${Math.floor(Math.random() * 10000 + 10000)}@foo.com`, password: 'changeme' };
-    await this.signUpAs(tc, newCreds, 'student');
+    await this.signUpAs(tc, newCreds, 'student', {
+      firstName: 'New',
+      lastName: 'User',
+    });
     await navBar.checkLoggedInAs(tc, newCreds.username);
     // await tc.debug();
     await navBar.checkStudentNavLinks(tc);
@@ -44,12 +91,23 @@ class SignupPage {
 
   private async testCreateCompany(tc: TestController) {
     // If the user already exists, it should fail
-    await this.signUpAs(tc, { username: 'company@foo.com', password: 'changeme' }, 'company');
-    await tc.expect(this.pageSelector.find('div[role="alert"]').withText('Username already exists').visible).ok();
+    await this.signUpAs(tc, { username: 'company@foo.com', password: 'changeme' }, 'company', {
+      companyName: 'This',
+      website: 'Should',
+      address: 'Also',
+      description: 'Fail',
+    }, false);
+    await tc.expect(this.pageSelector.find('div[role="alert"]').withText('That email is already taken!').visible).ok();
     await navBar.checkUnloggedNavLinks(tc);
     // Create a new company
+    await ClientFunction(() => window.location.reload())();
     const newCreds: Credentials = { username: `company_${Math.floor(Math.random() * 10000 + 10000)}@foo.com`, password: 'changeme' };
-    await this.signUpAs(tc, newCreds, 'company');
+    await this.signUpAs(tc, newCreds, 'company', {
+      companyName: 'New Company',
+      website: 'newcompany.com',
+      address: 'New, Company 12345',
+      description: 'This is a new company',
+    });
     await navBar.checkLoggedInAs(tc, newCreds.username);
     await navBar.checkCompanyNavLinks(tc);
   }
