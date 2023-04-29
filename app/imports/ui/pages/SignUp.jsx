@@ -8,6 +8,7 @@ import { Alert, Col, Container, Row } from 'react-bootstrap';
 import StudentSignUpForm from '../components/StudentSignUpForm';
 import CompanySignUpForm from '../components/CompanySignUpForm';
 import RegisterUserForm from '../components/RegisterUserForm';
+import { Students } from '../../api/student/Student';
 
 const SignUp = ({ location }) => {
   const [page, setPage] = useState('newUser');
@@ -52,18 +53,18 @@ const SignUp = ({ location }) => {
         setError(errorMsg);
       });
       if (page === 'student') {
-        // Students.collection.insert(
-        //   { eventName, image, address, description, tags, companyId, createdAt, eventAt, eventDoneAt, owner },
-        //   (error) => {
-        //     if (error) {
-        //       swal('Error', error.message, 'error');
-        //     } else {
-        //       swal('Success', 'Item added successfully', 'success');
-        //       formRef.reset();
-        //       setSelectedTags([]);
-        //     }
-        //   },
-        // );
+        Students.collection.insert(
+          { eventName, image, address, description, tags, companyId, createdAt, eventAt, eventDoneAt, owner },
+          (error) => {
+            if (error) {
+              swal('Error', error.message, 'error');
+            } else {
+              swal('Success', 'Item added successfully', 'success');
+              formRef.reset();
+              setSelectedTags([]);
+            }
+          },
+        );
       } else if (page === 'company') {
 
       } else {
