@@ -43,4 +43,4 @@ class ListingsCollection {
  * The singleton instance of the ListingsCollection.
  * @type {ListingsCollection}
  */
-export const Events = new ListingsCollection();
+export const Listings = new ListingsCollection();
