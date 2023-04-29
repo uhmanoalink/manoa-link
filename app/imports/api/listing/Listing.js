@@ -3,7 +3,7 @@ import SimpleSchema from 'simpl-schema';
 import { oneOf } from 'prop-types';
 
 /**
- * The EventsCollection. It encapsulates state and variable values for stuff.
+ * The ListingCollection. It encapsulates state and variable values for stuff.
  */
 class ListingsCollection {
   constructor() {
@@ -13,13 +13,20 @@ class ListingsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      companyId: String,
+      _id: String, // MongoDB ObjectId (in the document by default, don’t put in schema)
+      companyId: String, // the ObjectId of the company that created it
       title: String,
       description: String,
-      image: String,
-      location: String,
-      employmentType: oneOf(['in-person', 'remote', 'hybrid']),
-      scheduleType: oneOf(['full-time', 'part-time', 'flexible']),
+      image: String, // also keep as string
+      location: String, // optional. if not given, defaults to the address of the company
+      employmentType: {
+        type: String,
+        allowedValues: ['in-person', 'online', 'hybrid'],
+      },
+      scheduleType: {
+        type: String,
+        allowedValues: ['part-time', 'full-time', 'flexible'],
+      },
       tags: [String],
       createdAt: Date,
       startDate: Date,
@@ -34,7 +41,7 @@ class ListingsCollection {
 }
 
 /**
- * The singleton instance of the EventsCollection.
- * @type {ListinsgCollection}
+ * The singleton instance of the ListingsCollection.
+ * @type {ListingsCollection}
  */
 export const Listings = new ListingsCollection();

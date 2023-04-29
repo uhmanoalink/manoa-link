@@ -12,12 +12,13 @@ class CompaniesCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      companyName: String,
+      _id: String,
+      userId: String,
+      name: String,
+      image: String,
+      website: String,
       address: String,
       description: String,
-      image: String,
-      tag: String,
-      owner: String,
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
