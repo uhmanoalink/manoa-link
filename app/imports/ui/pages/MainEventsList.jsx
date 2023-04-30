@@ -36,8 +36,6 @@ const MainEventsPage = () => {
       ready: rdy,
     };
   }, [selectedTags]);
-  console.log(upcomingEvents);
-  console.log(pastEvents);
   const handleClearFilter = () => {
     setSelectedTags([]);
   };

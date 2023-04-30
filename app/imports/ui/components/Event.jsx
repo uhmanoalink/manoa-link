@@ -28,8 +28,6 @@ const Event = ({ event }) => {
       student: studentsItems,
     };
   }, []);
-  console.log(student);
-  console.log(Meteor.userId());
 
   return (
     <Card className="shadow event-card">
