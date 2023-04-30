@@ -24,14 +24,14 @@ import { Events } from '../../api/event/Event';
 //
 // Initialize the database with a default data document.
 const addEvent = (data) => {
-  console.log(`  Adding: ${data.eventName} (${data.owner})`);
+  console.log(`  Adding: ${data.eventName}`);
   Events.collection.insert(data);
 };
 
 // Initialize the EventsCollection if empty.
 if (Events.collection.find().count() === 0) {
   if (Meteor.settings.defaultEvents) {
-    console.log('Creating default data.');
+    console.log('Creating default events.');
     Meteor.settings.defaultEvents.forEach(data => addEvent(data));
   }
 }

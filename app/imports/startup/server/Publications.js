@@ -62,8 +62,7 @@ Meteor.publish(Events.studentPublicationName, function () {
 // If logged in and with company role, then publish the documents for companys. Otherwise publish nothing.
 Meteor.publish(Events.companyPublicationName, function () {
   if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Events.collection.find({ owner: username });
+    return Events.collection.find({ _id: this.userId });
   }
   return this.ready();
 });

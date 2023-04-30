@@ -35,7 +35,6 @@ EventAdmin.propTypes = {
     image: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     createdAt: PropTypes.instanceOf(Date),
-    owner: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };

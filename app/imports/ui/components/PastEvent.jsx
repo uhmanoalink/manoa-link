@@ -13,7 +13,7 @@ const formatDate = (date) => {
   return 'Invalid Date';
 };
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-const Event = ({ event }) => (
+const PastEvent = ({ event }) => (
   <Card className="shadow event-card h-100 bg-dark past-event">
     <Card.Img variant="top" src={event.image} className="event-image" />
     <Card.Body className="event-body">
@@ -26,8 +26,8 @@ const Event = ({ event }) => (
         ))}
       </div>
       <Card.Text className="event-date">
-        <h6>Event ends at</h6>
-        {formatDate(event.eventDoneAt)}
+        Event ended on:
+        {formatDate(event.endDateTime)}
       </Card.Text>
       <Link to={`/event/${event._id}`} className="event-edit-link">
         <Button variant="secondary" size="sm">View</Button>
@@ -37,7 +37,7 @@ const Event = ({ event }) => (
 );
 
 // Require a document to be passed to this component.
-Event.propTypes = {
+PastEvent.propTypes = {
   event: PropTypes.shape({
     eventName: PropTypes.string,
     companyId: String,
@@ -46,11 +46,9 @@ Event.propTypes = {
     image: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     createdAt: Date,
-    eventAt: Date,
-    eventDoneAt: Date,
-    owner: PropTypes.string,
-    _id: PropTypes.string,
+    startDateTime: Date,
+    endDateTime: Date,
   }).isRequired,
 };
 
-export default Event;
+export default PastEvent;

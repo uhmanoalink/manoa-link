@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
 import ProtectedRender from './ProtectedRender';
 
 const formatDate = (date) => {
@@ -16,8 +14,6 @@ const formatDate = (date) => {
   return 'Invalid Date';
 };
 
-const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
-const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const Event = ({ event }) => (
   <Card className="shadow event-card">
@@ -33,11 +29,11 @@ const Event = ({ event }) => (
       </div>
       <Card.Text className="event-date">
         <h6>Event starts at</h6>
-        {formatDate(event.eventAt)}
+        {formatDate(event.startDateTime)}
       </Card.Text>
       <Card.Text className="event-date">
         <h6>Event ends at</h6>
-        {formatDate(event.eventDoneAt)}
+        {formatDate(event.eventDateTime)}
       </Card.Text>
       <ProtectedRender allowedRoles={['admin']}>
         <Link to={`/edit/${event._id}`} className="event-edit-link mx-1">
@@ -61,10 +57,8 @@ Event.propTypes = {
     image: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     createdAt: Date,
-    eventAt: Date,
-    eventDoneAt: Date,
-    owner: PropTypes.string,
-    _id: PropTypes.string,
+    startDateTime: Date,
+    eventDateTime: Date,
   }).isRequired,
 };
 

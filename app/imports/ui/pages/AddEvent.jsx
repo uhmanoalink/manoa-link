@@ -38,9 +38,8 @@ const AddEvent = () => {
   const submit = (data, formRef) => {
     const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date(), startDateTime, endDateTime } = data;
     const tags = selectedTags.map(tag => tag.value);
-    const owner = Meteor.user().username;
     Events.collection.insert(
-      { eventName, image, address, description, tags, companyId, createdAt, startDateTime, endDateTime, owner },
+      { eventName, image, address, description, tags, companyId, createdAt, startDateTime, endDateTime },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');

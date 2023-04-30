@@ -18,7 +18,7 @@ import ProtectedRoute from './ProtectedRoute';
 import AdminProtectedRoute from './AdminProtectedRoute';
 import EditEvent from '../pages/EditEvent';
 import Dashboard from '../pages/Dashboard';
-import MainEventsList from '../pages/MainEventsList';
+import MainEventsPage from '../pages/MainEventsPage';
 import EventPage from '../pages/EventPage';
 import CompanyProtectedRoute from './CompanyProtectedRoute';
 import Profile from '../pages/Profile';
@@ -45,7 +45,7 @@ const App = () => {
           <Route path="/event/:_id" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
           <Route path="/add-event" element={<CompanyProtectedRoute ready={ready}><AddEvent /></CompanyProtectedRoute>} />
           <Route path="/list-events" element={<ProtectedRoute><ListEvents /></ProtectedRoute>} />
-          <Route path="/events" element={<ProtectedRoute><MainEventsList /></ProtectedRoute>} />
+          <Route path="/events" element={<ProtectedRoute><MainEventsPage /></ProtectedRoute>} />
           <Route path="/company-listing" element={<ProtectedRoute><CompanyListing /></ProtectedRoute>} />
           <Route path="/edit-event/:_id" element={<CompanyProtectedRoute ready={ready}><EditEvent /></CompanyProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
