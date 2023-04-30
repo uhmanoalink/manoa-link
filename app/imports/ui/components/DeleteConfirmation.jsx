@@ -17,7 +17,7 @@ const DeleteConfirmation = ({ collection, document }) => {
 
   /** @type { React.MouseEventHandler<HTMLButtonElement> } */
   const handleDelete = () => {
-    collection.removeOne({ _id: document._id });
+    collection.removeOne(document._id);
     handleClose();
   };
 

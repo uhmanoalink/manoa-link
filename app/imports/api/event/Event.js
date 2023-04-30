@@ -60,7 +60,7 @@ class EventsCollection extends CRUDCollection {
    * @param {string} _id
    */
   findOne(_id) {
-    return Meteor.call('findOne', this.collection, _id);
+    return Meteor.call('findOne', this.name, _id);
   }
 
   /**
@@ -70,7 +70,7 @@ class EventsCollection extends CRUDCollection {
    * @param {EventSchema} doc
    */
   updateOne(_id, doc) {
-    return Meteor.call('updateOne', this.collection, _id, doc);
+    return Meteor.call('updateOne', this.name, _id, doc);
   }
 
   /**
@@ -79,7 +79,7 @@ class EventsCollection extends CRUDCollection {
    * @param {string} _id
    */
   removeOne(_id) {
-    return Meteor.call('removeOne', this.collection, _id);
+    return Meteor.call('removeOne', this.name, _id);
   }
 }
 

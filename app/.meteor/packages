@@ -43,3 +43,4 @@ zodern:hide-production-sourcemaps
 hot-module-replacement@0.5.2
 dev-error-overlay@0.1.1
 ostrio:files
+dburles:mongo-collection-instances

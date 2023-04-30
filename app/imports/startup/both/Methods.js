@@ -20,30 +20,35 @@ Meteor.methods({
     const user = Meteor.users.findOne({ username });
     return user;
   },
-  insertOne(collection, doc) {
-    check(collection, Mongo.Collection);
+  insertOne(collectionName, doc) {
+    check(collectionName, String);
     check(doc, Object);
+    const collection = Mongo.Collection.get(collectionName);
     collection.insert(doc);
   },
-  readOne(collection, _id) {
-    check(collection, Mongo.Collection);
+  readOne(collectionName, _id) {
+    check(collectionName, String);
     check(_id, String);
+    const collection = Mongo.Collection.get(collectionName);
     return collection.findOne(_id);
   },
-  updateOne(collection, _id, doc) {
-    check(collection, Mongo.Collection);
+  updateOne(collectionName, _id, doc) {
+    check(collectionName, String);
     check(_id, String);
     check(doc, Object);
+    const collection = Mongo.Collection.get(collectionName);
     collection.update(_id, doc);
   },
-  removeOne(collection, _id) {
-    check(collection, Mongo.Collection);
+  removeOne(collectionName, _id) {
+    check(collectionName, String);
     check(_id, String);
+    const collection = Mongo.Collection.get(collectionName);
     collection.remove(_id);
   },
-  removeOneUser(collection, _id) {
-    check(collection, Mongo.Collection);
+  removeOneUser(collectionName, _id) {
+    check(collectionName, String);
     check(_id, String);
+    const collection = Mongo.Collection.get(collectionName);
     const { userId } = collection.findOne(_id);
     Meteor.users.remove({ _id: userId });
     collection.remove(_id);
