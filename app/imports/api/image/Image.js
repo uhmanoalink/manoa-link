@@ -47,7 +47,7 @@ class ImagesCollection {
   }
 
   /**
-   * Inserts a given File into a FilesCollection.
+   * Inserts a given image File into the FilesCollection.
    *
    * FilesCollection documentation: https://github.com/veliovgroup/Meteor-Files/blob/master/docs/constructor.md
    *
