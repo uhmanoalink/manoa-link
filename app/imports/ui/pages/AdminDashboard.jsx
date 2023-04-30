@@ -9,9 +9,9 @@ import User from '../components/User';
 import { Students } from '../../api/student/Student';
 import Company from '../components/Company';
 import { Companies } from '../../api/company/Company';
-import Position from '../components/Position';
-import { Positions } from '../../api/position/Position';
 import EventAdmin from '../components/EventAdmin';
+import { Listings } from '../../api/listing/Listing';
+import Listing from '../components/Listing';
 
 const AdminDashboard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -23,20 +23,20 @@ const AdminDashboard = () => {
     const eventsSub = Meteor.subscribe(Events.adminPublicationName);
     const studentsSub = Meteor.subscribe(Students.adminPublicationName);
     const companiesSub = Meteor.subscribe(Companies.adminPublicationName);
-    const listingsSub = Meteor.subscribe(Positions.adminPublicationName);
+    const listingsSub = Meteor.subscribe(Listings.studentPublicationName);
     // Determine if the subscription is ready
     const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready();
 
     const studentItems = Students.collection.find({}).fetch();
     const companyItems = Companies.collection.find({}).fetch();
     const eventItems = Events.collection.find({}).fetch();
-    const listingItems = Positions.collection.find({}).fetch();
+    const listingItems = Listings.collection.find({}).fetch();
 
     setMinimizedTabs([
       Students.collection.find({}).count() === 0,
       Companies.collection.find({}).count() === 0,
       Events.collection.find({}).count() === 0,
-      Positions.collection.find({}).count() === 0,
+      Listings.collection.find({}).count() === 0,
     ]);
     return {
       events: eventItems,
@@ -161,7 +161,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[3] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {listings.map((listing) => <Position position={listing} />)}
+                {listings.map((listing) => <Listing listing={listing} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>

@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Companies } from '../../api/company/Company';
 import { Events } from '../../api/event/Event';
-import { Positions } from '../../api/position/Position';
 import { Students } from '../../api/student/Student';
 import { Listings } from '../../api/listing/Listing';
 import { Images } from '../../api/image/Image';
@@ -13,8 +12,7 @@ Meteor.publish(Images.allImagesPublication, () => Images.collection.find({}));
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
 Meteor.publish(Students.userPublicationName, function () {
   if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Students.collection.find({ owner: username });
+    return Students.collection.find({ _id: this.userId });
   }
   return this.ready();
 });
@@ -28,10 +26,9 @@ Meteor.publish(Students.adminPublicationName, function () {
   return this.ready();
 });
 
-Meteor.publish(Companies.userPublicationName, function () {
+Meteor.publish(Companies.studentPublicationName, function () {
   if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Companies.collection.find({ owner: username });
+    return Companies.collection.find({ });
   }
   return this.ready();
 });
@@ -40,8 +37,7 @@ Meteor.publish(Companies.userPublicationName, function () {
 // If logged in and with company role, then publish the documents for companys. Otherwise publish nothing.
 Meteor.publish(Companies.companyPublicationName, function () {
   if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Companies.collection.find({ owner: username });
+    return Companies.collection.find({ _id: this.userId });
   }
   return this.ready();
 });
@@ -56,6 +52,13 @@ Meteor.publish(Companies.adminPublicationName, function () {
 });
 
 Meteor.publish(Listings.studentPublicationName, function () {
+  if (this.userId) {
+    return Listings.collection.find({});
+  }
+  return this.ready();
+});
+
+Meteor.publish(Listings.companyPublicationName, function () {
   if (this.userId) {
     return Listings.collection.find({});
   }
@@ -84,24 +87,6 @@ Meteor.publish(Events.companyPublicationName, function () {
 Meteor.publish(Events.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Events.collection.find();
-  }
-  return this.ready();
-});
-
-Meteor.publish(Positions.studentPublicationName, function () {
-  if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Positions.collection.find({ owner: username });
-  }
-  return this.ready();
-});
-
-// Company-level publication.
-// If logged in and with company role, then publish the documents for companys. Otherwise publish nothing.
-Meteor.publish(Positions.companyPublicationName, function () {
-  if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Positions.collection.find({ owner: username });
   }
   return this.ready();
 });

@@ -16,12 +16,10 @@ const formatDate = (date) => {
   return 'Invalid Date';
 };
 
-const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
-const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const Event = ({ event }) => (
   <Card className="shadow event-card">
-    <Card.Img variant="top" src={event.image} className="event-image" />
+    <Card.Img variant="top" src={event.imageId} className="event-image" />
     <Card.Body className="event-body">
       <Card.Title className="event-name">{event.eventName}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted event-address">{event.address}</Card.Subtitle>
@@ -58,7 +56,7 @@ Event.propTypes = {
     companyId: PropTypes.string,
     address: PropTypes.string,
     description: PropTypes.string,
-    image: PropTypes.string,
+    imageId: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     createdAt: Date,
     eventAt: Date,

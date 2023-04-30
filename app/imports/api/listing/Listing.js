@@ -34,6 +34,7 @@ class ListingsCollection {
     this.collection.attachSchema(this.schema);
     // Define names for publications and subscriptions
     this.studentPublicationName = `${this.name}.publication.student`;
+    this.companyPublicationName = `${this.name}.publication.company`;
   }
 }
 

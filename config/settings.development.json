@@ -87,5 +87,40 @@
       "createdAt": "2022-12-05T18:00:00.000Z",
       "startDate": "2023-06-05T18:00:00.000Z"
     }
+  ],
+
+  "defaultCompanies": [
+    {
+      "userId": "a",
+      "name": "RevaComm",
+      "imageId": "images/sample-image-landscape.png",
+      "website": "#",
+      "address": "rvcm@gmail.com",
+      "description": "A mission-driven digital transformation firm focused on Agile DevSecOps practices that deliver scale, speed, and security for government agencies and enterprises facing continually evolving IT needs and cyber security threats."
+    },
+    {
+      "userId": "b",
+      "name": "NASA",
+      "imageId": "images/sample-image-landscape.png",
+      "website": "#",
+      "address": "nasa@gmail.com",
+      "description": "NASA explores the unknown in air and space, innovates for the benefit of humanity, and inspires the world through discovery."
+    },
+    {
+      "userId": "c",
+      "name": "ISEC",
+      "imageId": "images/sample-image-landscape.png",
+      "website": "#",
+      "address": "isec@gmail.com",
+      "description": "The mission of ISEC Conferences is to enhance communication and understanding between structural, system, and construction engineers, for successful design and construction of engineering projects."
+    },
+    {
+      "userId": "d",
+      "name": "OpenAI",
+      "imageId": "images/sample-image-landscape.png",
+      "website": "#",
+      "address": "openai@gmail.com",
+      "description": "ChatGPT is a state-of-the-art language model developed by OpenAI, capable of providing personalized and intelligent response to a wide range of queries and conversations."
+    }
   ]
 }
