@@ -118,12 +118,12 @@ const SignUp = ({ location }) => {
     return <Navigate to={from} />;
   }
 
-  const renderFormPage = (pageNumber) => {
-    if (pageNumber === 'newUser') {
+  const renderFormPage = () => {
+    if (page === 'newUser') {
       return <RegisterUserForm onSubmit={submit} />;
-    } if (pageNumber === 'student') {
+    } if (page === 'student') {
       return <StudentSignUpForm onBack={back} onSubmit={submit} />;
-    } if (pageNumber === 'company') {
+    } if (page === 'company') {
       return <CompanySignUpForm onBack={back} onSubmit={submit} />;
     }
     setErrorAlert('Something went wrong! 😢');
@@ -135,7 +135,7 @@ const SignUp = ({ location }) => {
     <Container id="signup-page" className="py-3">
       <Row className="justify-content-center">
         <Col xs={7} lg={5}>
-          {renderFormPage(page)}
+          {renderFormPage()}
           <Alert variant="light">
             Already have an account? Login
             {' '}
