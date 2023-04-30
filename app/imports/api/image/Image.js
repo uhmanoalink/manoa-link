@@ -77,6 +77,17 @@ class ImagesCollection {
       return insertFileToFilesCollection(this.filesCollection, imageFile);
     };
 
+    /**
+     * Given the ObjectId of an image, convert to the URL of the file.
+     *
+     * @param {string} imageId
+     * @returns {string}
+     */
+    this.getFileUrlFromId = (imageId) => {
+      const imageDoc = this.collection.findOne({ _id: imageId });
+      return this.filesCollection.link(imageDoc);
+    };
+
     this.collection = this.filesCollection.collection;
     this.allImagesPublication = `${this.name}.all.publication`;
   }

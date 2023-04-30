@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
+import { Button, Container } from 'react-bootstrap';
 import { ArrowsCollapse, ArrowsExpand, FilterLeft } from 'react-bootstrap-icons';
 import LoadingSpinner from '../components/LoadingSpinner';
 import EventAdmin from '../components/EventAdmin';
@@ -12,6 +12,7 @@ import CompanyAdmin from '../components/CompanyAdmin';
 import { Companies } from '../../api/company/Company';
 import ListingAdmin from '../components/ListingAdmin';
 import { Listings } from '../../api/listing/Listing';
+import { Images } from '../../api/image/Image';
 
 const AdminDashboard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -24,8 +25,9 @@ const AdminDashboard = () => {
     const studentsSub = Meteor.subscribe(Students.adminPublicationName);
     const companiesSub = Meteor.subscribe(Companies.adminPublicationName);
     const listingsSub = Meteor.subscribe(Listings.adminPublicationName);
+    const imagesSub = Meteor.subscribe(Images.allImagesPublication);
     // Determine if the subscription is ready
-    const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready();
+    const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready() && imagesSub.ready();
 
     const studentItems = Students.collection.find({}).fetch();
     const companyItems = Companies.collection.find({}).fetch();
