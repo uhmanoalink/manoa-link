@@ -1,11 +1,22 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
+import CRUDCollection from '../CRUDCollection';
 
 /**
- * The CompanysCollection. It encapsulates state and variable values for stuff.
+ * The CompanysCollection.
+ *
+ * @typedef {{
+ *   name: string
+ *   imageId: string
+ *   website: string
+ *   address: string
+ *   description: string
+ * }} CompanySchema
  */
-class CompaniesCollection {
+class CompaniesCollection extends CRUDCollection {
   constructor() {
+    super();
     // The name of this collection.
     this.name = 'CompaniesCollection';
     // Define the Mongo collection.
@@ -28,6 +39,43 @@ class CompaniesCollection {
     this.userPublicationName = `${this.name}.publication.user`;
     this.companyPublicationName = `${this.name}.publication.company`;
     this.adminPublicationName = `${this.name}.publication.admin`;
+  }
+
+  /**
+   * Inserts a single document into the collection.
+   *
+   * @param {CompanySchema} newDoc
+   */
+  insertOne(newDoc) {
+    return Meteor.call('insertOne', newDoc);
+  }
+
+  /**
+   * Finds a single document from the collection.
+   *
+   * @param {string} _id
+   */
+  findOne(_id) {
+    return Meteor.call('findOne', this.collection, _id);
+  }
+
+  /**
+   * Updates a single document in the collection.
+   *
+   * @param {string} _id
+   * @param {CompanySchema} doc
+   */
+  updateOne(_id, doc) {
+    return Meteor.call('updateOne', this.collection, _id, doc);
+  }
+
+  /**
+   * Removes a single document from the collection.
+   *
+   * @param {string} _id
+   */
+  removeOne(_id) {
+    return Meteor.call('removeOneUser', this.collection, _id);
   }
 }
 
