@@ -1,95 +1,152 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';
-import { Accounts } from 'meteor/accounts-base';
-import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
-import SimpleSchema from 'simpl-schema';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { AutoForm, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+import { Alert, Col, Container, Row } from 'react-bootstrap';
 
-/**
- * SignUp component is similar to signin component, but we create a new user instead.
- */
+import StudentSignUpForm from '../components/StudentSignUpForm';
+import CompanySignUpForm from '../components/CompanySignUpForm';
+import RegisterUserForm from '../components/RegisterUserForm';
+import { Students } from '../../api/student/Student';
+import { Companies } from '../../api/company/Company';
+import { Images } from '../../api/image/Image';
 
 const SignUp = ({ location }) => {
-
-  const [error, setError] = useState('');
+  const [page, setPage] = useState('newUser');
+  const [errorAlert, setErrorAlert] = useState('');
   const [redirectToReferer, setRedirectToRef] = useState(false);
+  const [info, setInfo] = useState({});
 
-  const schema = new SimpleSchema({
-    email: String,
-    password: String,
-    role: {
-      type: String,
-      allowedValues: ['company', 'student'],
-      defaultValue: 'student',
-    },
-  });
-  const bridge = new SimpleSchema2Bridge(schema);
+  const createStudentUser = (userId, name, email, profileImageId, onSuccess) => {
+    Students.collection.insert(
+      { userId, name, email, profileImageId, followedCompanies: [], savedEvents: [], savedListings: [] },
+      (error) => {
+        if (error) {
+          setErrorAlert(error.message);
+        } else {
+          onSuccess();
+        }
+      },
+    );
+  };
 
-  /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
-  const submit = (doc) => {
-    const { email, password, role } = doc;
+  const createCompanyUser = (userId, name, imageId, website, address, description, onSuccess) => {
+    Companies.collection.insert(
+      { userId, name, imageId, website, address, description },
+      (error) => {
+        if (error) {
+          setErrorAlert(error.message);
+        } else {
+          onSuccess();
+        }
+      },
+    );
+  };
 
-    Accounts.createUser({ email, username: email, password }, (createUserError) => {
-      let errorMsg = '';
-      if (createUserError) {
-        errorMsg = createUserError.reason;
-      } else {
-        const userId = Meteor.userId();
-        Meteor.call('initUser', userId, role, (initUserError) => {
+  const submit = async (doc) => {
+    setErrorAlert('');
+    setInfo({ ...info, ...doc });
+
+    if (page === 'newUser') {
+      const { email, role } = doc;
+      // Check if the user exists already
+      Meteor.call('findUserByUsername', email, (err, result) => {
+        if (result) {
+          setErrorAlert('That email is already taken!');
+        } else {
+          setPage(role);
+        }
+      });
+    } else {
+      const { email, password, role } = info;
+      Accounts.createUser({ email, username: email, password }, async (createUserError) => {
+        let errorMsg = '';
+        if (createUserError) {
+          errorMsg = createUserError.reason;
+        } else {
+          const userId = Meteor.userId();
+          const initUserError = await new Promise((res) => {
+            Meteor.call('initUser', userId, role, (err) => {
+              if (err) res(err);
+              res();
+            });
+          });
           if (initUserError) {
             errorMsg = 'There was a problem creating the user';
-            Meteor.call('deleteUser', userId, (deleteUserError) => {
-              if (deleteUserError) {
+            Meteor.call('deleteUser', userId, (err) => {
+              if (err) {
                 errorMsg += ", but it couldn't be removed!";
               }
             });
-          } else {
-            setRedirectToRef(true);
+            return;
           }
-        });
-      }
-      setError(errorMsg);
-    });
+          // User successfully created
+          if (page === 'student') {
+            const { firstName, lastName } = doc;
+            const imageLink = `https://ui-avatars.com/api/?name=${firstName}+${lastName}`;
+            const blob = await (await fetch(imageLink)).blob();
+            const defaultPfp = new File([blob], `${email}-pfp.png`, { type: 'image/png' });
+            const fileObj = await Images.uploadFile(defaultPfp);
+            createStudentUser(userId, { firstName, lastName }, email, fileObj._id, () => setRedirectToRef(true));
+          } else if (page === 'company') {
+            const { companyName, website, address, description } = doc;
+            const imageLink = '/images/sample-company-pfp.png';
+            const blob = await (await fetch(imageLink)).blob();
+            const defaultPfp = new File([blob], `${email}-pfp.png`, { type: 'image/png' });
+            const fileObj = await Images.uploadFile(defaultPfp);
+            createCompanyUser(userId, companyName, fileObj._id, website, address, description ?? '', () => setRedirectToRef(true));
+          } else {
+            setErrorAlert('Something went wrong! 😢');
+          }
+
+        }
+        setErrorAlert(errorMsg);
+      });
+    }
   };
 
-  /* Display the signup form. Redirect to add page after successful registration and login. */
+  const back = () => {
+    setErrorAlert('');
+    setPage('newUser');
+  };
+
+  /* Display the signup form. Redirect to dashboard after successful registration and login. */
   const { from } = location?.state || { from: { pathname: '/dashboard' } };
   // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
     return <Navigate to={from} />;
   }
+
+  const renderFormPage = () => {
+    if (page === 'newUser') {
+      return <RegisterUserForm onSubmit={submit} />;
+    } if (page === 'student') {
+      return <StudentSignUpForm onBack={back} onSubmit={submit} />;
+    } if (page === 'company') {
+      return <CompanySignUpForm onBack={back} onSubmit={submit} />;
+    }
+    setErrorAlert('Something went wrong! 😢');
+    setPage('newUser');
+    return null;
+  };
+
   return (
     <Container id="signup-page" className="py-3">
       <Row className="justify-content-center">
-        <Col xs={5}>
-          <Col className="text-center">
-            <h2 id="signup-title">Register Your Account</h2>
-          </Col>
-          <AutoForm schema={bridge} onSubmit={data => submit(data)}>
-            <Card>
-              <Card.Body>
-                <TextField name="email" placeholder="E-mail address" />
-                <TextField name="password" placeholder="Password" type="password" />
-                <SelectField name="role" />
-                <ErrorsField />
-                <SubmitField />
-              </Card.Body>
-            </Card>
-          </AutoForm>
+        <Col xs={7} lg={5}>
+          {renderFormPage()}
           <Alert variant="light">
             Already have an account? Login
             {' '}
             <Link to="/signin">here</Link>
           </Alert>
-          {error === '' ? (
+          {errorAlert === '' ? (
             ''
           ) : (
-            <Alert variant="danger">
-              <Alert.Heading>Registration was not successful</Alert.Heading>
-              {error}
+            <Alert variant="danger" id="registration-error">
+              <Alert.Heading>Registration Error</Alert.Heading>
+              {errorAlert}
             </Alert>
           )}
         </Col>
