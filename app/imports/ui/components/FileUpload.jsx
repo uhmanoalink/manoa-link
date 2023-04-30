@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FilesCollection } from 'meteor/ostrio:files';
 import { Alert, Button, Form, Image, OverlayTrigger, Popover } from 'react-bootstrap';
 import { Images } from '../../api/image/Image';
+import { insertFileToFilesCollection, verifyFileType } from '../../../lib/files';
 
 /**
  * ## FileUpload component
@@ -34,6 +36,7 @@ import { Images } from '../../api/image/Image';
  * ---
  *
  * @type { React.FC<{
+ *   fc: FilesCollection
  *   label: string;
  *   accept: string;
  *   buttonVariant:
@@ -48,7 +51,7 @@ import { Images } from '../../api/image/Image';
  *   onUpload: (fileRef: object) => void;
  * }> }
  */
-const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) => {
+const FileUpload = ({ fc, label, accept, buttonVariant, customButton, onUpload }) => {
   const [inputFile, setInputFile] = useState(null);
   const [alertMsg, setAlertMsg] = useState();
   const [showAlert, setShowAlert] = useState(false);
@@ -56,15 +59,6 @@ const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) =>
   const alert = (msg) => {
     setAlertMsg(msg);
     setShowAlert(true);
-  };
-
-  const verifyFileType = (file, acceptString) => {
-    // https://stackoverflow.com/questions/20524306/check-selected-file-matches-accept-attribute-on-an-input-tag
-    const acceptedTypes = acceptString.toLowerCase().split(',').map(type => type.trim());
-    const fileType = file.type.toLowerCase();
-    return acceptedTypes.some(type => type === fileType
-      || type === `${fileType.split('/')[0]}/*`
-      || type === `.${fileType.split('/')[1]}`);
   };
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
@@ -87,27 +81,12 @@ const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) =>
     if (!verifyFileType(inputFile, accept)) {
       throw new Error(`The file type of ${inputFile.name} is not a valid type`);
     }
-    await new Promise((res, rej) => {
-      const uploader = Images.filesCollection.insert({
-        file: inputFile,
-      });
-      const handleError = (error, file) => {
-        alert(`There was a problem while uploading file ${file.name}`);
-        console.error(error);
-        rej();
-      };
-      uploader.on('uploaded', (error, fileObj) => {
-        if (error) handleError(error, fileObj);
-        // Upload was successful
-        console.log(`File ${fileObj.name} was uploaded successfully`);
-        onUpload?.(fileObj);
-        res();
-      });
-      uploader.on('error', (error, fileObj) => {
-        // Upload was unsuccessful
-        if (error) handleError(error, fileObj);
-      });
-    });
+    try {
+      const fileObj = await insertFileToFilesCollection(fc, inputFile);
+      onUpload?.(fileObj);
+    } catch (err) {
+      alert(`There was a problem while uploading file ${inputFile.name}`);
+    }
   };
 
   return (
@@ -148,6 +127,7 @@ const FileUpload = ({ label, accept, buttonVariant, customButton, onUpload }) =>
 };
 
 FileUpload.propTypes = {
+  fc: PropTypes.instanceOf(FilesCollection),
   label: PropTypes.string,
   accept: PropTypes.string,
   buttonVariant: PropTypes.oneOf([
@@ -174,6 +154,7 @@ FileUpload.propTypes = {
 };
 
 FileUpload.defaultProps = {
+  fc: Images.filesCollection,
   label: 'Upload an image',
   accept: 'image/png, image/jpeg',
   buttonVariant: 'dark',

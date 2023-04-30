@@ -11,6 +11,7 @@ import { createBucket } from './grid/createBucket';
 import { createOnAfterUpload } from './files/createOnAfterUpload';
 import { createInterceptDownload } from './files/createInterceptDownload';
 import { createOnAfterRemove } from './files/createOnAfterRemove';
+import { insertFileToFilesCollection, verifyFileType } from '../../../lib/files';
 
 let imagesBucket;
 if (Meteor.isServer) {
@@ -36,6 +37,45 @@ class ImagesCollection {
       interceptDownload: createInterceptDownload(imagesBucket),
       onAfterRemove: createOnAfterRemove(imagesBucket),
     });
+
+    /**
+     * Inserts a given File into a FilesCollection.
+     *
+     * FilesCollection documentation: https://github.com/veliovgroup/Meteor-Files/blob/master/docs/constructor.md
+     *
+     * @param {FilesCollection} filesCollection
+     * @param {File} imageFile
+     * @typedef {{
+     *   size: number,
+     *   type: "image/png" | "image/jpeg",
+     *   ext: "png" | "jpg" | "jpeg",
+     *   extension: "png" | "jpg" | "jpeg",
+     *   extensionWithDot: ".png" | ".jpg" | ".jpeg",
+     *   mime: "image/png" | "image/jpeg",
+     *   "mime-type": "image/png" | "image/jpeg",
+     *   _id: string,
+     *   userId: string,
+     *   path: string,
+     *   versions: object,
+     *   _downloadRoute: string,
+     *   _collectionName: "ImagesCollection",
+     *   isVideo: false,
+     *   isAudio: false,
+     *   isImage: true,
+     *   isText: false,
+     *   isJSON: false,
+     *   isPDF: false,
+     *   _storagePath: string,
+     *   public: boolean
+     * }} ImageDocument
+     * @returns {Promise<ImageDocument>} The new document of the file in the collection
+     */
+    this.uploadFile = async (imageFile) => {
+      if (!verifyFileType(imageFile, 'image/png, image/jpeg')) {
+        throw new Error(`${imageFile.name} is not an image`);
+      }
+      return insertFileToFilesCollection(this.filesCollection, imageFile);
+    };
 
     this.collection = this.filesCollection.collection;
     this.allImagesPublication = `${this.name}.all.publication`;

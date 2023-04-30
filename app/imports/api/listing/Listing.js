@@ -15,7 +15,7 @@ class ListingsCollection {
       companyId: String, // the ObjectId of the company that created it
       title: String,
       description: String,
-      image: String, // also keep as string
+      imageId: String, // also keep as string
       location: String, // optional. if not given, defaults to the address of the company
       employmentType: {
         type: String,

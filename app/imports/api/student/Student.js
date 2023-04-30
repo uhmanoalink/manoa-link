@@ -17,7 +17,7 @@ class StudentsCollection {
       'name.firstName': String,
       'name.lastName': String,
       email: String,
-      profileImage: String,
+      profileImageId: String,
       followedCompanies: [String],
       savedEvents: [String],
       savedListings: [String],

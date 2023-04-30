@@ -10,6 +10,7 @@ import CompanySignUpForm from '../components/CompanySignUpForm';
 import RegisterUserForm from '../components/RegisterUserForm';
 import { Students } from '../../api/student/Student';
 import { Companies } from '../../api/company/Company';
+import { Images } from '../../api/image/Image';
 
 const SignUp = ({ location }) => {
   const [page, setPage] = useState('newUser');
@@ -17,9 +18,9 @@ const SignUp = ({ location }) => {
   const [redirectToReferer, setRedirectToRef] = useState(false);
   const [info, setInfo] = useState({});
 
-  const createStudentUser = (userId, name, email, onSuccess) => {
+  const createStudentUser = (userId, name, email, profileImageId, onSuccess) => {
     Students.collection.insert(
-      { userId, name, email, profileImage: 'None', followedCompanies: [], savedEvents: [], savedListings: [] },
+      { userId, name, email, profileImageId, followedCompanies: [], savedEvents: [], savedListings: [] },
       (error) => {
         if (error) {
           setErrorAlert(error.message);
@@ -30,9 +31,9 @@ const SignUp = ({ location }) => {
     );
   };
 
-  const createCompanyUser = (userId, name, website, address, description, onSuccess) => {
+  const createCompanyUser = (userId, name, imageId, website, address, description, onSuccess) => {
     Companies.collection.insert(
-      { userId, name, image: 'None', website, address, description },
+      { userId, name, imageId, website, address, description },
       (error) => {
         if (error) {
           setErrorAlert(error.message);
@@ -43,7 +44,7 @@ const SignUp = ({ location }) => {
     );
   };
 
-  const submit = (doc) => {
+  const submit = async (doc) => {
     setErrorAlert('');
     setInfo({ ...info, ...doc });
 
@@ -59,34 +60,46 @@ const SignUp = ({ location }) => {
       });
     } else {
       const { email, password, role } = info;
-      Accounts.createUser({ email, username: email, password }, (createUserError) => {
+      Accounts.createUser({ email, username: email, password }, async (createUserError) => {
         let errorMsg = '';
         if (createUserError) {
           errorMsg = createUserError.reason;
         } else {
           const userId = Meteor.userId();
-          Meteor.call('initUser', userId, role, (initUserError) => {
-            if (initUserError) {
-              errorMsg = 'There was a problem creating the user';
-              Meteor.call('deleteUser', userId, (deleteUserError) => {
-                if (deleteUserError) {
-                  errorMsg += ", but it couldn't be removed!";
-                }
-              });
-              return;
-            }
-            // User successfully created
-            if (page === 'student') {
-              const { firstName, lastName } = doc;
-              createStudentUser(userId, { firstName, lastName }, email, () => setRedirectToRef(true));
-            } else if (page === 'company') {
-              const { companyName, website, address, description } = doc;
-              createCompanyUser(userId, companyName, website, address, description, () => setRedirectToRef(true));
-            } else {
-              setErrorAlert('Something went wrong! 😢');
-            }
-
+          const initUserError = await new Promise((res) => {
+            Meteor.call('initUser', userId, role, (err) => {
+              if (err) res(err);
+              res();
+            });
           });
+          if (initUserError) {
+            errorMsg = 'There was a problem creating the user';
+            Meteor.call('deleteUser', userId, (err) => {
+              if (err) {
+                errorMsg += ", but it couldn't be removed!";
+              }
+            });
+            return;
+          }
+          // User successfully created
+          if (page === 'student') {
+            const { firstName, lastName } = doc;
+            const imageLink = `https://ui-avatars.com/api/?name=${firstName}+${lastName}`;
+            const blob = await (await fetch(imageLink)).blob();
+            const defaultPfp = new File([blob], `${email}-pfp.png`, { type: 'image/png' });
+            const fileObj = await Images.uploadFile(defaultPfp);
+            createStudentUser(userId, { firstName, lastName }, email, fileObj._id, () => setRedirectToRef(true));
+          } else if (page === 'company') {
+            const { companyName, website, address, description } = doc;
+            const imageLink = '/images/sample-company-pfp.png';
+            const blob = await (await fetch(imageLink)).blob();
+            const defaultPfp = new File([blob], `${email}-pfp.png`, { type: 'image/png' });
+            const fileObj = await Images.uploadFile(defaultPfp);
+            createCompanyUser(userId, companyName, fileObj._id, website, address, description ?? '', () => setRedirectToRef(true));
+          } else {
+            setErrorAlert('Something went wrong! 😢');
+          }
+
         }
         setErrorAlert(errorMsg);
       });
@@ -98,7 +111,7 @@ const SignUp = ({ location }) => {
     setPage('newUser');
   };
 
-  /* Display the signup form. Redirect to add page after successful registration and login. */
+  /* Display the signup form. Redirect to dashboard after successful registration and login. */
   const { from } = location?.state || { from: { pathname: '/dashboard' } };
   // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {

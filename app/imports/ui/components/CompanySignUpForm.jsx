@@ -11,7 +11,10 @@ const CompanySignUpForm = ({ onBack, onSubmit }) => {
     companyName: String,
     website: String,
     address: String,
-    description: String,
+    description: {
+      type: String,
+      optional: true,
+    },
   });
   const bridge = new SimpleSchema2Bridge(schema);
 

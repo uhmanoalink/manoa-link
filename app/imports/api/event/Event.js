@@ -16,7 +16,7 @@ class EventsCollection {
       companyId: String,
       address: String,
       description: String,
-      image: String,
+      imageId: String,
       tags: [String],
       createdAt: Date,
       startDateTime: Date,
