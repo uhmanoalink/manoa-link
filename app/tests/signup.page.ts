@@ -85,7 +85,6 @@ class SignupPage {
       lastName: 'User',
     });
     await navBar.checkLoggedInAs(tc, newCreds.username);
-    // await tc.debug();
     await navBar.checkStudentNavLinks(tc);
   }
 
