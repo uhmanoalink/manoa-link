@@ -1,0 +1,16 @@
+import { createObjectId } from '../grid/createObjectId';
+
+export const createOnAfterRemove = bucket => function onAfterRemove(files) {
+  files.forEach(file => {
+    Object.keys(file.versions).forEach(versionName => {
+      const gridFsFileId = (file.versions[versionName].meta || {}).gridFsFileId;
+      if (gridFsFileId) {
+        const gfsId = createObjectId({ gridFsFileId });
+        bucket.delete(gfsId, err => {
+          // eslint-disable-next-line
+          if (err) console.error(err);
+        });
+      }
+    });
+  });
+};

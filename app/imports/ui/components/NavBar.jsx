@@ -49,6 +49,9 @@ const NavBar = () => {
               </ProtectedRender>
               <ProtectedRender allowedRoles={['student']}>
                 <Nav.Link as={NavLink} to="/company-listing">
+                  Company Listings
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/job-listing">
                   Job Listings
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/events">

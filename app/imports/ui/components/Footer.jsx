@@ -51,6 +51,12 @@ const Footer = () => (
           { name: 'Help', to: '/help' },
         ]}
       />
+      <FooterCol
+        title="Credits"
+        items={[
+          { name: 'Default Company Logo', to: 'https://www.freepik.com/free-vector/buildings_1109424.htm#query=building&position=5&from_view=search&track=sph' },
+        ]}
+      />
       <div className="align-right">
         <FooterCol
           title="Contact"

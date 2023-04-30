@@ -14,4 +14,9 @@ Meteor.methods({
     check(userId, String);
     Meteor.users.remove({ _id: userId });
   },
+  findUserByUsername(username) {
+    check(username, String);
+    const user = Meteor.users.findOne({ username });
+    return user;
+  },
 });

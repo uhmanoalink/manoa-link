@@ -1,4 +1,4 @@
-#company-card-image {
+#listing-card-image {
   padding-top: 0;
   padding-bottom: 10px;
   margin-top: 10px;
@@ -6,25 +6,25 @@
   align-self: center;
 }
 
-#company-card-title {
-  color: white;
+#listing-card-title {
+  color: black;
   padding: 0;
 }
 
-#company-card-text {
-  color: white;
+#listing-card-text {
+  color: black;
   align-self: center;
   max-height: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-#company-card-link {
+#listing-card-link {
   padding: 0;
-  margin: 0;
+  margin: auto;
 }
 
-#company-card {
+#listing-card {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +32,14 @@
   height: 400px;
   overflow: hidden;
   gap: 10px;
-  background: #024731;
+  background: #eeeeee;
+  box-shadow: #2b2b2b;
   margin: 10px;
+}
+.visit-button {
+  width: 100px;
+  color: #ffffff;
+  background-color: #1ce934 !important;
+  box-shadow: 0px 0px 5px #2b2b2b;
 }
 

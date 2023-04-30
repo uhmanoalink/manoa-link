@@ -12,11 +12,10 @@ class ListingsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      _id: String, // MongoDB ObjectId (in the document by default, don’t put in schema)
       companyId: String, // the ObjectId of the company that created it
       title: String,
       description: String,
-      image: String, // also keep as string
+      imageId: String, // also keep as string
       location: String, // optional. if not given, defaults to the address of the company
       employmentType: {
         type: String,

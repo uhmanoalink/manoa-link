@@ -4,6 +4,9 @@ import { Companies } from '../../api/company/Company';
 import { Events } from '../../api/event/Event';
 import { Listings } from '../../api/listing/Listing';
 import { Students } from '../../api/student/Student';
+import { Images } from '../../api/image/Image';
+
+Meteor.publish(Images.allImagesPublication, () => Images.collection.find({}));
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
