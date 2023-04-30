@@ -20,7 +20,7 @@ const EventAdmin = ({ event }) => (
       <Link to={`/edit/${event._id}`} className="event-edit-link">
         <Button variant="outline-dark" size="sm">Edit</Button>
       </Link>
-      <DeleteConfirmation collection={Events.collection} document={event} />
+      <DeleteConfirmation collection={Events} document={event} />
     </Card.Body>
   </Card>
 );
