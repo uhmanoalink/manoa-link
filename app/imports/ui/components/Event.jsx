@@ -17,7 +17,7 @@ const formatDate = (date) => {
   }
   return 'Invalid Date';
 };
-const student = Students.collection.findOne({ userId: Meteor.userId() });
+// const student = Students.collection.findOne({ userId: Meteor.userId() });
 const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
 const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
