@@ -1,12 +1,12 @@
 /**
- * @typedef {object} Schema
+ * @typedef {object} DocumentSchema
  * @abstract
  */
 class CRUDCollection {
   /**
    * Inserts a single document into the collection.
    *
-   * @param {Schema} newDoc
+   * @param {DocumentSchema} newDoc
    * @abstract
    */
   insertOne(newDoc) {
@@ -26,7 +26,7 @@ class CRUDCollection {
    * Updates a single document in the collection.
    *
    * @param {string} _id
-   * @param {Schema} doc
+   * @param {DocumentSchema} doc
    * @abstract
    */
   updateOne(_id, doc) {
