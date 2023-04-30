@@ -22,6 +22,18 @@ export const insertFileToFilesCollection = async (filesCollection, file) => new 
 });
 
 /**
+ * Removes a File from a FilesCollection based on a given ID.
+ *
+ * FilesCollection documentation: https://github.com/veliovgroup/Meteor-Files/blob/master/docs/constructor.md
+ *
+ * @param {FilesCollection} filesCollection
+ * @param {string} _id
+ */
+export const removeFileFromFilesCollection = (filesCollection, _id) => {
+  filesCollection.remove({ _id: _id });
+};
+
+/**
  * Verifies the type of a file against an accept property value.
  *
  * @param {File} file
