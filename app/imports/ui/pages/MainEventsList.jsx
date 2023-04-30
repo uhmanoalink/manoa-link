@@ -36,6 +36,8 @@ const MainEventsPage = () => {
       ready: rdy,
     };
   }, [selectedTags]);
+  console.log(upcomingEvents);
+  console.log(pastEvents);
   const handleClearFilter = () => {
     setSelectedTags([]);
   };
@@ -81,8 +83,7 @@ const MainEventsPage = () => {
               <Row xs={1} md={2} lg={2} className="g-4">
                 {ready ? (upcomingEvents.map((event) => (<Col key={event._id}><Event event={event} /></Col>))
                 ) : (
-                  <LoadingSpinner />
-                )}
+                  <LoadingSpinner />)}
               </Row>
             </Col>
             <Col xs={12} md={4} id="past-event">

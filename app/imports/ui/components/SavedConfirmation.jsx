@@ -1,25 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { Mongo } from 'meteor/mongo';
 
-/** @type {React.FC<{ collection: Mongo.Collection<Document, Document>, student: { _id: string, savedEvents: string[] }, eventId: string }>} */
 const SavedConfirmation = ({ collection, student, eventId }) => {
-  const isEventSaved = student.savedEvents.includes(eventId);
+  const [isEventSaved, setIsEventSaved] = useState(student.savedEvents.includes(eventId));
+  const findStudentIdByUserId = (userId) => {
+    const studentDoc = collection.findOne({ userId });
+    return studentDoc ? studentDoc._id : null;
+  };
+  useEffect(() => {
+    setIsEventSaved(student.savedEvents.includes(eventId));
+  }, [student, eventId]);
 
-  /** @type { React.MouseEventHandler<HTMLButtonElement> } */
   const handleToggleSave = () => {
+    const studentId = findStudentIdByUserId(student.userId);
     if (isEventSaved) {
       collection.update(
-        { _id: student.userId },
+        { _id: studentId },
         { $pull: { savedEvents: eventId } },
       );
     } else {
       collection.update(
-        { _id: student.userId },
-        { $addToSet: { savedEvents: eventId } },
+        { _id: studentId },
+        { $push: { savedEvents: eventId } },
       );
     }
+    setIsEventSaved(!isEventSaved);
   };
 
   return (
