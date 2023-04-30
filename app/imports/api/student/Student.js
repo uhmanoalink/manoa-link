@@ -2,7 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
 /**
- * The UsersCollection. It encapsulates state and variable values for stuff.
+ * The StudentsCollection. It encapsulates state and variable values for stuff.
  */
 class StudentsCollection {
   constructor() {
@@ -12,11 +12,12 @@ class StudentsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
+      userId: String,
       name: Object,
       'name.firstName': String,
       'name.lastName': String,
       email: String,
-      profileImage: String,
+      profileImageId: String,
       followedCompanies: [String],
       savedEvents: [String],
       savedListings: [String],
@@ -30,7 +31,7 @@ class StudentsCollection {
 }
 
 /**
- * The singleton instance of the UsersCollection.
- * @type {UsersCollection}
+ * The singleton instance of the StudentsCollection.
+ * @type {StudentsCollection}
  */
 export const Students = new StudentsCollection();
