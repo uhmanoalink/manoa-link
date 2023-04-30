@@ -25,6 +25,7 @@ class StudentsCollection {
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
     // Define names for publications and subscriptions
+    this.studentPublicationName = `${this.name}.publication.student`;
     this.companyPublicationName = `${this.name}.publication.company`;
     this.adminPublicationName = `${this.name}.publication.admin`;
   }
