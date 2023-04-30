@@ -5,8 +5,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
-import ListStuff from '../pages/ListStuff';
-import AddStuff from '../pages/AddStuff';
 import AddEvent from '../pages/AddEvent';
 import ListEvents from '../pages/ListEvents';
 import CompanyListing from '../pages/CompanyListing';
@@ -44,8 +42,6 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
-          <Route path="/add" element={<ProtectedRoute><AddStuff /></ProtectedRoute>} />
           <Route path="/my-profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/event/:_id" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
           <Route path="/add-event" element={<CompanyProtectedRoute ready={ready}><AddEvent /></CompanyProtectedRoute>} />

@@ -70,4 +70,14 @@ const CompanyListing = () => {
   );
 };
 
+/*
+  const submit = (data) => {
+    const { eventName, address, image, description, companyId = Companies.companyPublicationName, createdAt = new Date() } = data;
+    const tags = selectedTags.map(tag => tag.value);
+    Events.collection.update(_id, { $set: { eventName, address, image, description, tags, companyId, createdAt } }, (error) => (error ?
+    swal('Error', error.message, 'error') :
+    swal('Success', 'Item updated successfully', 'success')));
+  };
+ */
+
 export default CompanyListing;
