@@ -16,7 +16,8 @@ class ListingsCollection {
       companyId: String, // the ObjectId of the company that created it
       title: String,
       description: String,
-      image: String, // also keep as string
+      imageId: String, // also keep as string
+      website: String,
       location: String, // optional. if not given, defaults to the address of the company
       employmentType: {
         type: String,
@@ -34,8 +35,6 @@ class ListingsCollection {
     this.collection.attachSchema(this.schema);
     // Define names for publications and subscriptions
     this.studentPublicationName = `${this.name}.publication.student`;
-    this.companyPublicationName = `${this.name}.publication.company`;
-    this.adminPublicationName = `${this.name}.publication.admin`;
   }
 }
 

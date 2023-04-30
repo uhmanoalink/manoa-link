@@ -22,6 +22,7 @@ import Dashboard from '../pages/Dashboard';
 import MainEventsList from '../pages/MainEventsList';
 import EventPage from '../pages/EventPage';
 import CompanyProtectedRoute from './CompanyProtectedRoute';
+import StudentProtectedRoute from './StudentProtectedRoute';
 import Profile from '../pages/Profile';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
@@ -47,8 +48,8 @@ const App = () => {
           <Route path="/add-event" element={<CompanyProtectedRoute ready={ready}><AddEvent /></CompanyProtectedRoute>} />
           <Route path="/list-events" element={<ProtectedRoute><ListEvents /></ProtectedRoute>} />
           <Route path="/events" element={<ProtectedRoute><MainEventsList /></ProtectedRoute>} />
-          <Route path="/company-listing" element={<ProtectedRoute><CompanyListing /></ProtectedRoute>} />
-          <Route path="/job-listing" element={<ProtectedRoute><JobListing /></ProtectedRoute>} />
+          <Route path="/company-listing" element={<StudentProtectedRoute ready={ready}><CompanyListing /></StudentProtectedRoute>} />
+          <Route path="/job-listing" element={<StudentProtectedRoute ready={ready}><JobListing /></StudentProtectedRoute>} />
           <Route path="/edit-event/:_id" element={<CompanyProtectedRoute ready={ready}><EditEvent /></CompanyProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />

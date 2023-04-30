@@ -4,6 +4,7 @@ import { Companies } from '../../api/company/Company';
 import { Events } from '../../api/event/Event';
 import { Positions } from '../../api/position/Position';
 import { Students } from '../../api/student/Student';
+import { Listings } from '../../api/listing/Listing';
 import { Images } from '../../api/image/Image';
 
 Meteor.publish(Images.allImagesPublication, () => Images.collection.find({}));
@@ -50,6 +51,13 @@ Meteor.publish(Companies.companyPublicationName, function () {
 Meteor.publish(Companies.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Companies.collection.find();
+  }
+  return this.ready();
+});
+
+Meteor.publish(Listings.studentPublicationName, function () {
+  if (this.userId) {
+    return Listings.collection.find({});
   }
   return this.ready();
 });

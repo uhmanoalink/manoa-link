@@ -163,5 +163,47 @@
       "endDateTime": "2023-10-06T12:00:00.000Z",
       "owner": "admin@foo.com"
     }
+  ],
+
+  "defaultJobs": [
+    {
+      "companyId": "University of Hawaii at Manoa",
+      "title": "Research Assistant",
+      "description": "Seeking student majoring in astrophysics, with upperclassmen standing. Research conducted on black holes and neutron stars. Student wages offered.",
+      "imageId": "images/sample-image-landscape.png",
+      "website": "#",
+      "location": "Honolulu, HI, 96822",
+      "employmentType": "hybrid",
+      "scheduleType": "flexible",
+      "tags": ["Astrophysics", "Python"],
+      "createdAt": "2022-12-05T18:00:00.000Z",
+      "startDate": "2023-06-05T18:00:00.000Z"
+    },
+    {
+      "companyId": "OpenAI",
+      "title": "Data Scientist at OpenAI",
+      "description": "Paid internship, ranging from $17 through $22 per hour. Seeking graduate student in Computer Science with proficiency in Python.",
+      "imageId": "images/sample-image-landscape.png",
+      "website": "#",
+      "location": "San Fransisco",
+      "employmentType": "online",
+      "scheduleType": "part-time",
+      "tags": ["Computer Science", "Machine Learning"],
+      "createdAt": "2022-12-05T18:00:00.000Z",
+      "startDate": "2023-06-05T18:00:00.000Z"
+    },
+    {
+      "companyId": "RevaComm",
+      "title": "Software Engineer Intern",
+      "description": "$20.50 per hour, looking for a junior or senior undergraduate student. Experience with php preferred.",
+      "imageId": "images/sample-image-landscape.png",
+      "website": "#",
+      "location": "Kaka'ako",
+      "employmentType": "hybrid",
+      "scheduleType": "flexible",
+      "tags": ["Computer Science", "Web Development"],
+      "createdAt": "2022-12-05T18:00:00.000Z",
+      "startDate": "2023-06-05T18:00:00.000Z"
+    }
   ]
 }

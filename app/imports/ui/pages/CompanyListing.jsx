@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Container, Col, Row } from 'react-bootstrap';
+import { Card, Container, Col, Row } from 'react-bootstrap';
 import HelpButton from '../components/HelpButton';
 import Sidebar from '../components/Sidebar';
 
@@ -7,40 +7,28 @@ const CompanyListing = () => {
 
   const sampleCompanies = [
     {
-      image: 'images/sample-image-landscape.png',
+      imageId: 'images/sample-image-landscape.png',
       name: 'RevaComm',
       description: 'A mission-driven digital transformation firm focused on Agile DevSecOps practices that deliver scale, speed, and security for government agencies and enterprises facing continually evolving IT needs and cyber security threats.',
-      link: '#',
+      website: '#',
     },
     {
-      image: 'images/sample-image-landscape.png',
+      imageId: 'images/sample-image-landscape.png',
       name: 'NASA',
       description: 'NASA explores the unknown in air and space, innovates for the benefit of humanity, and inspires the world through discovery.',
-      link: '#',
+      website: '#',
     },
     {
-      image: 'images/sample-image-landscape.png',
+      imageId: 'images/sample-image-landscape.png',
       name: 'ISEC',
       description: 'The mission of ISEC Conferences is to enhance communication and understanding between structural, system, and construction engineers, for successful design and construction of engineering projects.',
-      link: '#',
+      website: '#',
     },
     {
-      image: 'images/sample-image-landscape.png',
+      imageId: 'images/sample-image-landscape.png',
       name: 'OpenAI',
       description: 'ChatGPT is a state-of-the-art language model developed by OpenAI, capable of providing personalized and intelligent responses to a wide range of queries and conversations.',
-      link: '#',
-    },
-    {
-      image: 'images/sample-image-landscape.png',
-      name: 'Sample',
-      description: 'Sample-text',
-      link: '#',
-    },
-    {
-      image: 'images/sample-image-landscape.png',
-      name: 'Sample-2',
-      description: 'Sample-text-2',
-      link: '#',
+      website: '#',
     },
   ];
 
@@ -52,13 +40,13 @@ const CompanyListing = () => {
         </Col>
         <Col>
           <Row>
-            { sampleCompanies.map(({ image, name, description, link }, index) => (
+            { sampleCompanies.map(({ imageId, name, description, website }, index) => (
               <Col xs={12} md={4} key={index}>
                 <Card className="justify-content-center" id="listing-card">
-                  <Card.Img id="listing-card-image" variant="top" src={image} />
+                  <Card.Img id="listing-card-image" variant="top" src={imageId} />
                   <Card.Title id="listing-card-title">{name}</Card.Title>
                   <Card.Text id="listing-card-text">{description}</Card.Text>
-                  <Card.Link id="listing-card-link" to={link}><Button className="visit-button">Visit</Button></Card.Link>
+                  <Card.Link id="listing-card-link" to={website}><button type="submit" className="visit-button">Visit</button></Card.Link>
                 </Card>
               </Col>
             )) }

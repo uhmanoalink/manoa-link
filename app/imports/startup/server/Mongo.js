@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 // import { Companies } from '../../api/company/Company';
 import { Events } from '../../api/event/Event';
+import { Listings } from '../../api/listing/Listing';
 // import { Positions } from '../../api/position/Position';
 // import { Users } from '../../api/user/User';
 
@@ -31,8 +32,21 @@ const addEvent = (data) => {
 // Initialize the EventsCollection if empty.
 if (Events.collection.find().count() === 0) {
   if (Meteor.settings.defaultEvents) {
-    console.log('Creating default data.');
+    console.log('Creating default event.');
     Meteor.settings.defaultEvents.forEach(data => addEvent(data));
+  }
+}
+
+const addListing = (data) => {
+  console.log(`  Adding: ${data.title} at ${data.companyId}`);
+  Listings.collection.insert(data);
+};
+
+// Initialize the EventsCollection if empty.
+if (Listings.collection.find().count() === 0) {
+  if (Meteor.settings.defaultJobs) {
+    console.log('Creating default listings.');
+    Meteor.settings.defaultJobs.forEach(data => addListing(data));
   }
 }
 //
