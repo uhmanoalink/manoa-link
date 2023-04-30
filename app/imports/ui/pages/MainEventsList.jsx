@@ -22,13 +22,13 @@ const MainEventsPage = () => {
       allEvents = allEvents.filter(event => selectedTagValues.some(tag => event.tags.includes(tag)));
     }
     allEvents.forEach(event => {
-      if (new Date(event.eventAt) > new Date()) {
+      if (new Date(event.startDateTime) > new Date()) {
         upcoming.push(event);
       } else {
         past.push(event);
       }
     });
-    upcoming.sort((a, b) => a.eventAt - b.eventAt);
+    upcoming.sort((a, b) => a.startDateTime - b.startDateTime);
     past.sort();
     return {
       upcomingEvents: upcoming,
