@@ -1,0 +1,22 @@
+#signup-page {
+  #role-field {
+    div.required {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      label {
+        white-space: nowrap;
+      }
+      select {
+        flex-grow: 1;
+      }
+    }
+  }
+  .btn-toolbar {
+    justify-content: space-between;
+    gap: 12px;
+    button {
+      flex: 1;
+    }
+  }
+}
