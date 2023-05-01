@@ -11,7 +11,7 @@ const EventPage = () => {
   const { doc, ready } = useTracker(() => {
     const subscription = Meteor.subscribe(Events.adminPublicationName);
     const subscription2 = Meteor.subscribe(Events.companyPublicationName);
-    const subscription3 = Meteor.subscribe(Events.userPublicationName);
+    const subscription3 = Meteor.subscribe(Events.studentPublicationName);
     const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
     const event = Events.collection.findOne(_id);
     return {
@@ -25,7 +25,7 @@ const EventPage = () => {
       <Row className="justify-content-md-center event-page-main-row">
         <Col xs={12} md={8}>
           <h1 className="event-page-title">{doc.eventName}</h1>
-          <Image src={doc.image} fluid className="event-page-image mb-4" />
+          <Image src={doc.imageId} fluid className="event-page-image mb-4" />
           <div className="event-page-info">
             <p className="event-page-address"><strong>Address:</strong> {doc.address}</p>
             <p className="event-page-date"><strong>Date:</strong> {doc.eventAt.toString()}</p>

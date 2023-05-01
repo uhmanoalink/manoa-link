@@ -7,7 +7,6 @@ import DeleteConfirmation from './DeleteConfirmation';
 
 const EventAdmin = ({ event }) => (
   <Card className="shadow event-card">
-    <Card.Img variant="top" src={event.image} className="event-image" />
     <Card.Body className="event-body">
       <Card.Title className="event-name">{event.eventName}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted event-address">{event.address}</Card.Subtitle>
@@ -32,7 +31,7 @@ EventAdmin.propTypes = {
     companyId: PropTypes.string,
     address: PropTypes.string,
     description: PropTypes.string,
-    image: PropTypes.string,
+    imageId: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     createdAt: PropTypes.instanceOf(Date),
     owner: PropTypes.string,

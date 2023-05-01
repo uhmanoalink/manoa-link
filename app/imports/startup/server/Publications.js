@@ -110,6 +110,13 @@ Meteor.publish(Students.adminPublicationName, function () {
   return this.ready();
 });
 
+Meteor.publish(Students.studentPublicationName, function () {
+  if (this.userId) {
+    return Students.collection.find({});
+  }
+  return this.ready();
+});
+
 // alanning:roles publication
 // Recommended code to publish roles for each user.
 Meteor.publish(null, function () {
