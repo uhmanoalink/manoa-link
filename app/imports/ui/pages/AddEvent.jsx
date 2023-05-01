@@ -58,7 +58,6 @@ const AddEvent = () => {
       },
     );
   };
-  console.log(selectedTags);
 
   let fRef = null;
 
