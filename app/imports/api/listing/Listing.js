@@ -76,10 +76,10 @@ class ListingsCollection extends CRUDCollection {
    * Updates a single document in the collection.
    *
    * @param {string} _id
-   * @param {ListingSchema} doc
+   * @param {StudentSchema | Mongo.Modifier<Document>} modifier
    */
-  updateOne(_id, doc) {
-    return Meteor.call('update', this.name, _id, doc);
+  updateOne(_id, modifier) {
+    return Meteor.call('update', this.name, _id, modifier);
   }
 
   /**
