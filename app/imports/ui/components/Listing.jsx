@@ -13,7 +13,10 @@ const Listing = ({ listing }) => (
       <Card.Title id="listing-card-title">{listing.title}</Card.Title>
       <Card.Text id="listing-card-text">Company: {listing.companyId}</Card.Text>
       <Card.Text id="listing-card-text">{listing.description}</Card.Text>
-      <Card.Link id="listing-card-link" to={listing.website}><button type="submit" className="visit-button">More Info</button></Card.Link>
+      <div>
+        <Card.Link id="listing-card-link" to={listing.website}><button type="submit" className="visit-button">More Info</button></Card.Link>
+        <Card.Link id="listing-card-link" to={listing.updateOne('savedListings', listing.title)}><button type="submit" className="visit-button">Save Job</button></Card.Link>
+      </div>
     </Card>
   </Col>
 );

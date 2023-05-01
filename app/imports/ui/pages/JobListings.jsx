@@ -22,9 +22,9 @@ const JobListings = () => {
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
-        <Col xs={12} md={3}>
-          <Sidebar />
-        </Col>
+        {/* <Col xs={12} md={3}> */}
+        {/*  <Sidebar /> */}
+        {/* </Col> */}
         <Col>
           <Row>
             { ready ? (listings.map((listing) => (
