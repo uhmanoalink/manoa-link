@@ -5,11 +5,11 @@ import { Col, Container, Row, Button, Tooltip, OverlayTrigger } from 'react-boot
 import { useTracker } from 'meteor/react-meteor-data';
 import Select from 'react-select';
 import LoadingSpinner from '../components/LoadingSpinner';
-import Event from '../components/Event';
 import { Events } from '../../api/event/Event';
 import PastEvent from '../components/PastEvent';
+import EventCompany from '../components/EventCompany';
 
-const MainEventsPage = () => {
+const ManageEvents = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const { ready, upcomingEvents, pastEvents } = useTracker(() => {
     const subscription = Meteor.subscribe(Events.studentPublicationName);
@@ -59,6 +59,15 @@ const MainEventsPage = () => {
           <Row>
             <Col>
               <div className="d-flex justify-content-center">
+                <OverlayTrigger
+                  placement="top"
+                  overlay={(<Tooltip id="tooltip-top">Do you want to add an event?</Tooltip>
+                  )}
+                >
+                  <Link to="/add-event">
+                    <Button className="btn btn-add-event me-3">Add Event</Button>
+                  </Link>
+                </OverlayTrigger>
                 <Select
                   className="align-content-center mb-3 customSelectWidth"
                   value={selectedTags}
@@ -80,7 +89,7 @@ const MainEventsPage = () => {
             <Col xs={12} md={8} id="upcoming-event">
               <h3 className="text-center">Upcoming Events</h3>
               <Row xs={1} md={2} lg={2} className="g-4">
-                {ready ? (upcomingEvents.map((event) => (<Col key={event._id}><Event event={event} /></Col>))
+                {ready ? (upcomingEvents.map((event) => (<Col key={event._id}><EventCompany event={event} /></Col>))
                 ) : (
                   <LoadingSpinner />)}
               </Row>
@@ -102,4 +111,4 @@ const MainEventsPage = () => {
   );
 };
 
-export default MainEventsPage;
+export default ManageEvents;

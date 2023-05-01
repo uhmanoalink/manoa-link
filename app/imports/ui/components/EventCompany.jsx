@@ -2,12 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
-import { useTracker } from 'meteor/react-meteor-data';
-import ProtectedRender from './ProtectedRender';
-import { Students } from '../../api/student/Student';
-import SavedConfirmation from './SavedConfirmation';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const Event = ({ event }) => {
@@ -20,14 +14,6 @@ const Event = ({ event }) => {
     }
     return 'Invalid Date';
   };
-  const { ready, student } = useTracker(() => {
-    const sub = Meteor.subscribe(Students.studentPublicationName);
-    const studentsItems = Students.collection.findOne({ userId: Meteor.userId() });
-    return {
-      ready: sub.ready(),
-      student: studentsItems,
-    };
-  }, []);
 
   return (
     <Card className="shadow event-card">
@@ -48,15 +34,12 @@ const Event = ({ event }) => {
           <span>Event ends at</span>
           {formatDate(event.endDateTime)}
         </Card.Text>
-        <ProtectedRender allowedRoles={['admin']}>
-          <Link to={`/edit-event/${event._id}`} className="event-edit-link mx-1">
-            <Button variant="dark" size="sm">Edit</Button>
-          </Link>
-        </ProtectedRender>
+        <Link to={`/edit-event/${event._id}`} className="event-edit-link mx-1">
+          <Button variant="dark" size="sm">Edit</Button>
+        </Link>
         <Link to={`/event/${event._id}`} className="event-edit-link">
           <Button variant="secondary" size="sm">View</Button>
         </Link>
-        { ready ? <SavedConfirmation collection={Students.collection} student={student} eventId={event._id} /> : undefined }
       </Card.Body>
     </Card>
   );

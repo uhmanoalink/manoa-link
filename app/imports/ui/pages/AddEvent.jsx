@@ -38,9 +38,8 @@ const AddEvent = () => {
   const submit = (data, formRef) => {
     const { eventName, address, imageId, description, companyId = Companies.companyPublicationName, createdAt = new Date(), startDateTime, endDateTime } = data;
     const tags = selectedTags.map(tag => tag.value);
-    const owner = Meteor.user().username;
     Events.collection.insert(
-      { eventName, imageId, address, description, tags, companyId, createdAt, startDateTime, endDateTime, owner },
+      { eventName, companyId, address, description, imageId, tags, createdAt, startDateTime, endDateTime },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -52,6 +51,7 @@ const AddEvent = () => {
       },
     );
   };
+  console.log(selectedTags);
 
   let fRef = null;
 
@@ -73,6 +73,7 @@ const AddEvent = () => {
                       options={tagOptions}
                       value={selectedTags}
                       onChange={setSelectedTags}
+                      name="tags"
                     />
                   </Col>
                 </Row>
