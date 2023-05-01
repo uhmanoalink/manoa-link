@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Col } from 'react-bootstrap';
-import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
+import { Images } from '../../api/image/Image';
 
-const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
-const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
-
+const defaultImage = 'images/sample-image-landscape.png';
 const Company = ({ company }) => (
   <Col xs={12} md={4}>
     <Card className="justify-content-center" id="listing-card">
-      <Card.Img id="listing-card-image" variant="top" src={company.imageId} />
+      <Card.Img id="listing-card-image" variant="top" src={(company.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(company.imageId)} />
       <Card.Title id="listing-card-title">{company.name}</Card.Title>
       <Card.Text id="listing-card-text">{company.description}</Card.Text>
       <Card.Link id="listing-card-link" to={company.website}><button type="submit" className="visit-button">Visit</button></Card.Link>

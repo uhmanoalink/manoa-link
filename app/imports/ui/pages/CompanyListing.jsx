@@ -27,8 +27,8 @@ const CompanyListing = () => {
         </Col>
         <Col>
           <Row>
-            { ready ? (companies.map((company, id) => (
-              <Company company={company} key={id} />
+            { ready ? (companies.map((company) => (
+              <Company company={company} key={company._id} />
             ))) : (<LoadingSpinner />)}
           </Row>
         </Col>

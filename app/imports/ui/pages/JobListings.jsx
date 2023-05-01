@@ -8,7 +8,7 @@ import { Listings } from '../../api/listing/Listing';
 import Listing from '../components/Listing';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const JobListing = () => {
+const JobListings = () => {
   const { ready, listings } = useTracker(() => {
     const subscription = Meteor.subscribe(Listings.studentPublicationName);
     const rdy = subscription.ready();
@@ -27,8 +27,8 @@ const JobListing = () => {
         </Col>
         <Col>
           <Row>
-            { ready ? (listings.map((listing, index) => (
-              <Listing listing={listing} key={index} />
+            { ready ? (listings.map((listing) => (
+              <Listing listing={listing} key={listing._id} />
             )))
               : (<LoadingSpinner />) }
           </Row>
@@ -39,4 +39,4 @@ const JobListing = () => {
   );
 };
 
-export default JobListing;
+export default JobListings;

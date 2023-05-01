@@ -10,7 +10,6 @@ import StudentAdmin from '../components/StudentAdmin';
 import { Students } from '../../api/student/Student';
 import CompanyAdmin from '../components/CompanyAdmin';
 import { Companies } from '../../api/company/Company';
-import EventAdmin from '../components/EventAdmin';
 import { Listings } from '../../api/listing/Listing';
 import Listing from '../components/Listing';
 import { Images } from '../../api/image/Image';

@@ -10,22 +10,6 @@ Meteor.publish(Images.allImagesPublication, () => Images.collection.find({}));
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
-Meteor.publish(Students.userPublicationName, function () {
-  if (this.userId) {
-    return Students.collection.find({ _id: this.userId });
-  }
-  return this.ready();
-});
-
-// Admin-level publication.
-// If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
-Meteor.publish(Students.adminPublicationName, function () {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return Students.collection.find();
-  }
-  return this.ready();
-});
-
 Meteor.publish(Companies.studentPublicationName, function () {
   if (this.userId) {
     return Companies.collection.find({ });

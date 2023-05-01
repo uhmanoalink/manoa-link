@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Companies } from '../../api/company/Company';
 import { Events } from '../../api/event/Event';
 import { Listings } from '../../api/listing/Listing';
+import { Images } from '../../api/image/Image';
 // import { Positions } from '../../api/position/Position';
 // import { Users } from '../../api/user/User';
 
@@ -10,7 +11,7 @@ import { Listings } from '../../api/listing/Listing';
 // Initialize the database with a default data document.
 
 const addCompany = (data) => {
-  console.log(`  Adding: ${data.name}`);
+  console.log(`  Adding: ${data.name} ${data.imageId}`);
   Companies.collection.insert(data);
 };
 
@@ -23,7 +24,7 @@ if (Companies.collection.find().count() === 0) {
 
 // Initialize the database with a default data document.
 const addEvent = (data) => {
-  console.log(`  Adding: ${data.eventName} (${data.owner})`);
+  console.log(`  Adding: ${data.eventName}`);
   Events.collection.insert(data);
 };
 
