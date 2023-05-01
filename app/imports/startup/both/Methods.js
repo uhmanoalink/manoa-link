@@ -28,34 +28,34 @@ Meteor.methods({
   },
   find(collectionName, selector) {
     check(collectionName, String);
-    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
+    check(selector, Match.OneOf(Object, String, Mongo.ObjectID, Mongo.Selector));
     const collection = Mongo.Collection.get(collectionName);
     return collection.find(selector).fetch();
   },
   findOne(collectionName, selector) {
     check(collectionName, String);
-    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
+    check(selector, Match.OneOf(Object, String, Mongo.ObjectID, Mongo.Selector));
     const collection = Mongo.Collection.get(collectionName);
     return collection.findOne(selector);
   },
   update(collectionName, selector, modifier, options) {
     check(collectionName, String);
-    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
-    check(modifier, Mongo.Modifier);
+    check(selector, Match.OneOf(Object, String, Mongo.ObjectID, Mongo.Selector));
+    check(modifier, Match.OneOf(Object, Mongo.Modifier));
     check(options, Match.Optional(Object));
     const collection = Mongo.Collection.get(collectionName);
     collection.update(selector, modifier, options);
   },
   remove(collectionName, selector) {
     check(collectionName, String);
-    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
+    check(selector, Match.OneOf(Object, String, Mongo.ObjectID, Mongo.Selector));
     const collection = Mongo.Collection.get(collectionName);
     collection.remove(selector);
   },
   removeUser(collectionName, selector) {
     check(collectionName, String);
     Match.Where(/\b(?=\w)(StudentsCollection|CompaniesCollection)\b(?<=\w)/.test(collectionName));
-    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
+    check(selector, Match.OneOf(Object, String, Mongo.ObjectID, Mongo.Selector));
     const collection = Mongo.Collection.get(collectionName);
     const { userId } = collection.findOne(selector);
     Meteor.users.remove({ _id: userId });
