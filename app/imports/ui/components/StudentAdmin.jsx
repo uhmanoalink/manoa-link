@@ -16,7 +16,7 @@ const StudentAdmin = ({ student }) => (
     </Card.Header>
     <Card.Body>
       <Link to={`/edit/${student._id}`}>Edit</Link>
-      <DeleteConfirmation collection={Students.collection} document={student} />
+      <DeleteConfirmation collection={Students} document={student} />
     </Card.Body>
   </Card>
 );
