@@ -110,7 +110,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[1] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {companies.map((company) => <CompanyAdmin company={company} />)}
+                {companies.map((company) => <CompanyAdmin company={company} key={company._id} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>
@@ -164,7 +164,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[3] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {listings.map((listing) => <Listing listing={listing} />)}
+                {listings.map((listing) => <Listing listing={listing} key={listing._id} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>
