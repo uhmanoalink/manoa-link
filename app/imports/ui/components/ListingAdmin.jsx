@@ -20,7 +20,7 @@ const ListingAdmin = ({ listing }) => {
       <Card.Body>
         <Card.Text>{listing.description}</Card.Text>
         <Link to={`/edit/${listing._id}`}>Edit</Link>
-        <DeleteConfirmation collection={Listings.collection} document={listing} />
+        <DeleteConfirmation collection={Listings} document={listing} />
       </Card.Body>
     </Card>
   );
