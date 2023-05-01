@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Companies } from '../../api/company/Company';
 import { Events } from '../../api/event/Event';
-import { Positions } from '../../api/position/Position';
+import { Listings } from '../../api/listing/Listing';
 import { Students } from '../../api/student/Student';
 import { Images } from '../../api/image/Image';
 
@@ -61,20 +61,34 @@ Meteor.publish(Events.adminPublicationName, function () {
   return this.ready();
 });
 
-Meteor.publish(Positions.studentPublicationName, function () {
+Meteor.publish(Listings.studentPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return Positions.collection.find({ owner: username });
+    return Listings.collection.find({ owner: username });
   }
   return this.ready();
 });
 
 // Company-level publication.
 // If logged in and with company role, then publish the documents for companys. Otherwise publish nothing.
-Meteor.publish(Positions.companyPublicationName, function () {
+Meteor.publish(Listings.companyPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return Positions.collection.find({ owner: username });
+    return Listings.collection.find({ owner: username });
+  }
+  return this.ready();
+});
+
+Meteor.publish(Listings.adminPublicationName, function () {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return Listings.collection.find({});
+  }
+  return this.ready();
+});
+
+Meteor.publish(Students.studentPublicationName, function () {
+  if (this.userId) {
+    return Students.collection.find({ userId: this.userId });
   }
   return this.ready();
 });

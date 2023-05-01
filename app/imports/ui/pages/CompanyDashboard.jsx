@@ -7,8 +7,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import HelpButton from '../components/HelpButton';
 import { Events } from '../../api/event/Event';
 import Event from '../components/Event';
-import { Positions } from '../../api/position/Position';
-import Position from '../components/Position';
+import { Listings } from '../../api/listing/Listing';
+import Listing from '../components/Listing';
 import { Companies } from '../../api/company/Company';
 import Company from '../components/Company';
 
@@ -17,12 +17,12 @@ const CompanyDashboard = () => {
 
   const { events, listings, company } = useTracker(() => {
     const eventsSub = Meteor.subscribe(Events.companyPublicationName);
-    const listingsSub = Meteor.subscribe(Positions.companyPublicationName);
+    const listingsSub = Meteor.subscribe(Listings.companyPublicationName);
     // Determine if the subscription is ready
     const rdy = eventsSub.ready() && listingsSub.ready();
 
     const eventItems = Events.collection.find({}).fetch();
-    const listingItems = Positions.collection.find({}).fetch();
+    const listingItems = Listings.collection.find({}).fetch();
     const companyItem = Companies.collection.findOne({ _id: Meteor.userId() });
 
     return {
@@ -79,7 +79,7 @@ const CompanyDashboard = () => {
               <hr />
               {listings.map((listing) => (
                 <div key={listing._id} className="listing">
-                  <Position position={listing} />
+                  <Listing listing={listing} />
                   <Badge>Saved by {getNumSaved(listing)} {getNumSaved(listing) === 1 ? 'person' : 'people'}</Badge>
                 </div>
               ))}

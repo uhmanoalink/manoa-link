@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
+import { Button, Container } from 'react-bootstrap';
 import { ArrowsCollapse, ArrowsExpand, FilterLeft } from 'react-bootstrap-icons';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Events } from '../../api/event/Event';
-import User from '../components/User';
-import { Students } from '../../api/student/Student';
-import Company from '../components/Company';
-import { Companies } from '../../api/company/Company';
-import Position from '../components/Position';
-import { Positions } from '../../api/position/Position';
 import EventAdmin from '../components/EventAdmin';
+import { Events } from '../../api/event/Event';
+import StudentAdmin from '../components/StudentAdmin';
+import { Students } from '../../api/student/Student';
+import CompanyAdmin from '../components/CompanyAdmin';
+import { Companies } from '../../api/company/Company';
+import ListingAdmin from '../components/ListingAdmin';
+import { Listings } from '../../api/listing/Listing';
+import { Images } from '../../api/image/Image';
 
 const AdminDashboard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -23,20 +24,21 @@ const AdminDashboard = () => {
     const eventsSub = Meteor.subscribe(Events.adminPublicationName);
     const studentsSub = Meteor.subscribe(Students.adminPublicationName);
     const companiesSub = Meteor.subscribe(Companies.adminPublicationName);
-    const listingsSub = Meteor.subscribe(Positions.adminPublicationName);
+    const listingsSub = Meteor.subscribe(Listings.adminPublicationName);
+    const imagesSub = Meteor.subscribe(Images.allImagesPublication);
     // Determine if the subscription is ready
-    const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready();
+    const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready() && imagesSub.ready();
 
     const studentItems = Students.collection.find({}).fetch();
     const companyItems = Companies.collection.find({}).fetch();
     const eventItems = Events.collection.find({}).fetch();
-    const listingItems = Positions.collection.find({}).fetch();
+    const listingItems = Listings.collection.find({}).fetch();
 
     setMinimizedTabs([
       Students.collection.find({}).count() === 0,
       Companies.collection.find({}).count() === 0,
       Events.collection.find({}).count() === 0,
-      Positions.collection.find({}).count() === 0,
+      Listings.collection.find({}).count() === 0,
     ]);
     return {
       events: eventItems,
@@ -96,7 +98,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[0] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {students.map((user) => <User user={user} />)}
+                {students.map((student) => <StudentAdmin student={student} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>
@@ -107,7 +109,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[1] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {companies.map((company) => <Company company={company} />)}
+                {companies.map((company) => <CompanyAdmin company={company} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>
@@ -161,7 +163,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[3] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {listings.map((listing) => <Position position={listing} />)}
+                {listings.map((listing) => <ListingAdmin Listing={listing} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>
