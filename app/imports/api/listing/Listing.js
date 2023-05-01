@@ -1,11 +1,28 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
+import CRUDCollection from '../CRUDCollection';
+import { Students } from '../student/Student';
 
 /**
- * The ListingCollection. It encapsulates state and variable values for stuff.
+ * The ListingCollection.
+ *
+ * @typedef {{
+ *   companyId: string,
+ *   title: string,
+ *   description: string,
+ *   imageId: String,
+ *   location: String,
+ *   employmentType: 'in-person' | 'online' | 'hybrid',
+ *   scheduleType: 'part-time' | 'full-time' | 'flexible',
+ *   tags: string[],
+ *   createdAt: Date,
+ *   startDate: Date,
+ * }} ListingSchema
  */
-class ListingsCollection {
+class ListingsCollection extends CRUDCollection {
   constructor() {
+    super();
     // The name of this collection.
     this.name = 'ListingsCollection';
     // Define the Mongo collection.
@@ -35,6 +52,49 @@ class ListingsCollection {
     // Define names for publications and subscriptions
     this.studentPublicationName = `${this.name}.publication.student`;
     this.companyPublicationName = `${this.name}.publication.company`;
+  }
+
+  /**
+   * Inserts a single document into the collection.
+   *
+   * @param {ListingSchema} newDoc
+   */
+  insertOne(newDoc) {
+    return Meteor.call('insert', newDoc);
+  }
+
+  /**
+   * Finds a single document from the collection.
+   *
+   * @param {string} _id
+   */
+  findOne(_id) {
+    return Meteor.call('find', this.name, _id);
+  }
+
+  /**
+   * Updates a single document in the collection.
+   *
+   * @param {string} _id
+   * @param {ListingSchema} doc
+   */
+  updateOne(_id, doc) {
+    return Meteor.call('update', this.name, _id, doc);
+  }
+
+  /**
+   * Removes a single document from the collection.
+   *
+   * @param {string} _id
+   */
+  removeOne(_id) {
+    Meteor.call(
+      'update',
+      Students.name,
+      { savedListings: _id },
+      { $pull: { savedListings: _id } },
+    );
+    return Meteor.call('remove', this.name, _id);
   }
 }
 

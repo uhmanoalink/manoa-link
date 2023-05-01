@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'react-bootstrap';
-import { Mongo } from 'meteor/mongo';
+import CRUDCollection from '../../api/CRUDCollection';
 
-/** @type {React.FC<{ collection: Mongo.Collection<Document, Document>, document: { _id: string } }>} */
+/**
+ * @type {React.FC<{ collection: CRUDCollection, document: { _id: string } }>}
+ */
 const DeleteConfirmation = ({ collection, document }) => {
 
   const [showConfirm, setShowConfirm] = useState(false);
@@ -15,7 +17,7 @@ const DeleteConfirmation = ({ collection, document }) => {
 
   /** @type { React.MouseEventHandler<HTMLButtonElement> } */
   const handleDelete = () => {
-    collection.remove({ _id: document._id });
+    collection.removeOne(document._id);
     handleClose();
   };
 
@@ -52,7 +54,7 @@ const DeleteConfirmation = ({ collection, document }) => {
 };
 
 DeleteConfirmation.propTypes = {
-  collection: PropTypes.instanceOf(Mongo.Collection).isRequired,
+  collection: PropTypes.instanceOf(CRUDCollection).isRequired,
   document: PropTypes.shape({
     _id: PropTypes.string,
   }).isRequired,

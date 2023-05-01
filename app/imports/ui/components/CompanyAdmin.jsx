@@ -17,7 +17,7 @@ const CompanyAdmin = ({ company }) => (
     </Card.Header>
     <Card.Body>
       <Link to={`/edit/${company._id}`}>Edit</Link>
-      <DeleteConfirmation collection={Companies.collection} document={company} />
+      <DeleteConfirmation collection={Companies} document={company} />
     </Card.Body>
   </Card>
 );
