@@ -58,7 +58,7 @@ class NavBar {
 
   async checkStudentNavLinks(tc: TestController) {
     await this.checkNavLinkExists(tc, 'Dashboard');
-    await this.checkNavLinkExists(tc, 'Company Listings');
+    await this.checkNavLinkExists(tc, 'Companies');
     await this.checkNavLinkExists(tc, 'Job Listings');
     await this.checkNavLinkExists(tc, 'Events Board');
     await this.openNavDropdown(tc);

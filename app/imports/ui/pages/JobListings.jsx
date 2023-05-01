@@ -4,32 +4,33 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import HelpButton from '../components/HelpButton';
 import Sidebar from '../components/Sidebar';
-import { Companies } from '../../api/company/Company';
+import { Listings } from '../../api/listing/Listing';
+import Listing from '../components/Listing';
 import LoadingSpinner from '../components/LoadingSpinner';
-import Company from '../components/Company';
 
-const CompanyListing = () => {
-  const { ready, companies } = useTracker(() => {
-    const subscription = Meteor.subscribe(Companies.studentPublicationName);
+const JobListings = () => {
+  const { ready, listings } = useTracker(() => {
+    const subscription = Meteor.subscribe(Listings.studentPublicationName);
     const rdy = subscription.ready();
-    const allCompanies = Companies.collection.find({}).fetch();
+    const allListings = Listings.collection.find({}).fetch();
     return {
       ready: rdy,
-      companies: allCompanies,
+      listings: allListings,
     };
   });
 
   return (
-    <Container id="listing" className="py-3">
+    <Container className="py-3">
       <Row className="justify-content-center">
         <Col xs={12} md={3}>
           <Sidebar />
         </Col>
         <Col>
           <Row>
-            { ready ? (companies.map((company) => (
-              <Company company={company} key={company._id} />
-            ))) : (<LoadingSpinner />)}
+            { ready ? (listings.map((listing) => (
+              <Listing listing={listing} key={listing._id} />
+            )))
+              : (<LoadingSpinner />) }
           </Row>
         </Col>
       </Row>
@@ -38,4 +39,4 @@ const CompanyListing = () => {
   );
 };
 
-export default CompanyListing;
+export default JobListings;

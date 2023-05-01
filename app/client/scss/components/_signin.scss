@@ -1,4 +1,6 @@
 .signin-container {
+  z-index: 1;
+  background: $theme-light;
   border: 1px solid #ccc;
   padding: 1.5rem;
   font-family: "Montserrat", sans-serif;

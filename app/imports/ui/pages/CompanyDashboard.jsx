@@ -7,10 +7,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import HelpButton from '../components/HelpButton';
 import { Events } from '../../api/event/Event';
 import Event from '../components/Event';
+import { Companies } from '../../api/company/Company';
 import { Listings } from '../../api/listing/Listing';
 import Listing from '../components/Listing';
-import { Companies } from '../../api/company/Company';
-import Company from '../components/Company';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const CompanyDashboard = () => {
@@ -22,7 +21,7 @@ const CompanyDashboard = () => {
     const rdy = eventsSub.ready() && listingsSub.ready();
 
     const eventItems = Events.collection.find({}).fetch();
-    const listingItems = Listings.collection.find({}).fetch();
+    const listingItems = Listings.collection.find({ companyId: Meteor.userId() }).fetch();
     const companyItem = Companies.collection.findOne({ _id: Meteor.userId() });
 
     return {

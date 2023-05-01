@@ -1,38 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
-import ProtectedRender from './ProtectedRender';
+import { Card, Col } from 'react-bootstrap';
+import { Images } from '../../api/image/Image';
 
-const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
-const isCompany = Roles.userIsInRole(Meteor.userId(), 'company');
-
+const defaultImage = 'images/sample-image-landscape.png';
 const Company = ({ company }) => (
-  <Card className="h-100">
-    <Card.Header>
-      <Image src={company.image} width={75} />
-      <Card.Title>{company.companyName}</Card.Title>
-      <Card.Subtitle>{company.address}</Card.Subtitle>
-    </Card.Header>
-    <Card.Body>
-      <Card.Text>{company.description}</Card.Text>
-      <ProtectedRender allowedRoles={['admin']}><Link to={`/edit/${company._id}`}>Edit</Link></ProtectedRender>
-    </Card.Body>
-  </Card>
+  <Col xs={12} md={4}>
+    <Card className="justify-content-center" id="listing-card">
+      <Card.Img id="listing-card-image" variant="top" src={(company.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(company.imageId)} />
+      <Card.Title id="listing-card-title">{company.name}</Card.Title>
+      <Card.Text id="listing-card-text">{company.description}</Card.Text>
+      <Card.Link id="listing-card-link" to={company.website}><button type="submit" className="visit-button">Visit</button></Card.Link>
+    </Card>
+  </Col>
 );
 
 // Require a document to be passed to this component.
 Company.propTypes = {
   company: PropTypes.shape({
-    companyName: PropTypes.string,
+    _id: PropTypes.string,
+    userId: PropTypes.string,
+    name: PropTypes.string,
+    imageId: PropTypes.string,
+    website: PropTypes.string,
     address: PropTypes.string,
     description: PropTypes.string,
-    image: PropTypes.string,
-    tag: PropTypes.string,
-    owner: PropTypes.string,
-    _id: PropTypes.string,
   }).isRequired,
 };
 
