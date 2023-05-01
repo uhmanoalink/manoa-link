@@ -15,7 +15,14 @@ const formSchema = new SimpleSchema({
   address: String,
   description: String,
   imageId: String,
-  tags: [String],
+  tags: {
+    type: Array,
+    defaultValue: [],
+    optional: true,
+  },
+  'tags.$': {
+    type: String,
+  },
   startDateTime: Date,
   endDateTime: Date,
 });
@@ -72,7 +79,7 @@ const AddEvent = () => {
                       isMulti
                       options={tagOptions}
                       value={selectedTags}
-                      onChange={setSelectedTags}
+                      onChange={(selected) => setSelectedTags(selected)}
                       name="tags"
                     />
                   </Col>

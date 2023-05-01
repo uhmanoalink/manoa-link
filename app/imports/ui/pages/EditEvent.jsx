@@ -86,15 +86,14 @@ const EditEvent = () => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col><TextField name="image" /></Col>
+                  <Col><TextField name="imageId" /></Col>
                   <Col><TextField name="address" /></Col>
                 </Row>
                 <LongTextField name="description" />
-                <DateField className="mb-3" name="eventAt" placeholder="Time to start the event" />
-                <DateField className="mb-3" name="eventDoneAt" placeholder="Time to end the event" />
+                <DateField className="mb-3" name="startDateTime" placeholder="Time to start the event" />
+                <DateField className="mb-3" name="endDateTime" placeholder="Time to end the event" />
                 <SubmitField />
                 <ErrorsField />
-                <HiddenField name="owner" />
               </Card.Body>
             </Card>
           </AutoForm>
