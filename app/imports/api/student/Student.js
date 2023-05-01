@@ -49,7 +49,10 @@ class StudentsCollection extends CRUDCollection {
   /**
    * Inserts a single document into the collection.
    *
+   * ---
+   *
    * @param {StudentSchema} newDoc
+   * @override
    */
   insertOne(newDoc) {
     return Meteor.call('insert', newDoc);
@@ -58,29 +61,39 @@ class StudentsCollection extends CRUDCollection {
   /**
    * Finds a single document from the collection.
    *
-   * @param {string} _id
+   * ---
+   *
+   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query describing the documents to find.
+   * @override
    */
-  findOne(_id) {
-    return Meteor.call('find', this.name, _id);
+  findOne(selector) {
+    return Meteor.call('find', this.name, selector);
   }
 
   /**
    * Updates a single document in the collection.
    *
-   * @param {string} _id
+   * ---
+   *
+   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query that specifies which documents to modify.
    * @param {StudentSchema | Mongo.Modifier<Document>} modifier
+   * @override
    */
-  updateOne(_id, modifier) {
-    return Meteor.call('update', this.name, _id, modifier);
+  updateOne(selector, modifier) {
+    return Meteor.call('update', this.name, selector, modifier);
   }
 
   /**
    * Removes a single document from the collection.
    *
-   * @param {string} _id
+   * ---
+   *
+   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query that specifies which documents to remove.
+   * @override
    */
-  removeOne(_id) {
-    return Meteor.call('removeUser', this.name, _id);
+  removeOne(selector) {
+    this.collection.remove();
+    return Meteor.call('removeUser', this.name, selector);
   }
 }
 
