@@ -52,7 +52,7 @@ class StudentsCollection extends CRUDCollection {
    * @param {StudentSchema} newDoc
    */
   insertOne(newDoc) {
-    return Meteor.call('insertOne', newDoc);
+    return Meteor.call('insert', newDoc);
   }
 
   /**
@@ -61,7 +61,7 @@ class StudentsCollection extends CRUDCollection {
    * @param {string} _id
    */
   findOne(_id) {
-    return Meteor.call('findOne', this.name, _id);
+    return Meteor.call('find', this.name, _id);
   }
 
   /**
@@ -71,7 +71,7 @@ class StudentsCollection extends CRUDCollection {
    * @param {StudentSchema} doc
    */
   updateOne(_id, doc) {
-    return Meteor.call('updateOne', this.name, _id, doc);
+    return Meteor.call('update', this.name, _id, doc);
   }
 
   /**
@@ -80,7 +80,7 @@ class StudentsCollection extends CRUDCollection {
    * @param {string} _id
    */
   removeOne(_id) {
-    return Meteor.call('removeOneUser', this.name, _id);
+    return Meteor.call('removeUser', this.name, _id);
   }
 }
 

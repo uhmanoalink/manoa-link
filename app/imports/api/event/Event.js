@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import CRUDCollection from '../CRUDCollection';
+import { Students } from '../student/Student';
 
 /**
  * The EventsCollection.
@@ -51,7 +52,7 @@ class EventsCollection extends CRUDCollection {
    * @param {EventSchema} newDoc
    */
   insertOne(newDoc) {
-    return Meteor.call('insertOne', newDoc);
+    return Meteor.call('insert', newDoc);
   }
 
   /**
@@ -60,7 +61,7 @@ class EventsCollection extends CRUDCollection {
    * @param {string} _id
    */
   findOne(_id) {
-    return Meteor.call('findOne', this.name, _id);
+    return Meteor.call('find', this.name, _id);
   }
 
   /**
@@ -70,7 +71,7 @@ class EventsCollection extends CRUDCollection {
    * @param {EventSchema} doc
    */
   updateOne(_id, doc) {
-    return Meteor.call('updateOne', this.name, _id, doc);
+    return Meteor.call('update', this.name, _id, doc);
   }
 
   /**
@@ -79,7 +80,13 @@ class EventsCollection extends CRUDCollection {
    * @param {string} _id
    */
   removeOne(_id) {
-    return Meteor.call('removeOne', this.name, _id);
+    Meteor.call(
+      'update',
+      Students.name,
+      { savedEvents: _id },
+      { $pull: { savedEvents: _id } },
+    );
+    return Meteor.call('remove', this.name, _id);
   }
 }
 

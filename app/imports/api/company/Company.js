@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import CRUDCollection from '../CRUDCollection';
+import { Students } from '../student/Student';
 
 /**
  * The CompanysCollection.
@@ -47,7 +48,7 @@ class CompaniesCollection extends CRUDCollection {
    * @param {CompanySchema} newDoc
    */
   insertOne(newDoc) {
-    return Meteor.call('insertOne', newDoc);
+    return Meteor.call('insert', newDoc);
   }
 
   /**
@@ -56,7 +57,7 @@ class CompaniesCollection extends CRUDCollection {
    * @param {string} _id
    */
   findOne(_id) {
-    return Meteor.call('findOne', this.name, _id);
+    return Meteor.call('find', this.name, _id);
   }
 
   /**
@@ -66,7 +67,7 @@ class CompaniesCollection extends CRUDCollection {
    * @param {CompanySchema} doc
    */
   updateOne(_id, doc) {
-    return Meteor.call('updateOne', this.name, _id, doc);
+    return Meteor.call('update', this.name, _id, doc);
   }
 
   /**
@@ -75,7 +76,13 @@ class CompaniesCollection extends CRUDCollection {
    * @param {string} _id
    */
   removeOne(_id) {
-    return Meteor.call('removeOneUser', this.name, _id);
+    Meteor.call(
+      'update',
+      Students.name,
+      { followedCompanies: _id },
+      { $pull: { followedCompanies: _id } },
+    );
+    return Meteor.call('removeUser', this.name, _id);
   }
 }
 

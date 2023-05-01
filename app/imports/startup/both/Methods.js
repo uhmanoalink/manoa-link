@@ -20,37 +20,45 @@ Meteor.methods({
     const user = Meteor.users.findOne({ username });
     return user;
   },
-  insertOne(collectionName, doc) {
+  insert(collectionName, doc) {
     check(collectionName, String);
     check(doc, Object);
     const collection = Mongo.Collection.get(collectionName);
     collection.insert(doc);
   },
-  readOne(collectionName, _id) {
+  find(collectionName, selector) {
     check(collectionName, String);
-    check(_id, String);
+    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
     const collection = Mongo.Collection.get(collectionName);
-    return collection.findOne(_id);
+    return collection.find(selector).fetch();
   },
-  updateOne(collectionName, _id, doc) {
+  findOne(collectionName, selector) {
     check(collectionName, String);
-    check(_id, String);
-    check(doc, Object);
+    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
     const collection = Mongo.Collection.get(collectionName);
-    collection.update(_id, doc);
+    return collection.findOne(selector);
   },
-  removeOne(collectionName, _id) {
+  update(collectionName, selector, modifier, options) {
     check(collectionName, String);
-    check(_id, String);
+    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
+    check(modifier, Mongo.Modifier);
+    check(options, Match.Optional(Object));
     const collection = Mongo.Collection.get(collectionName);
-    collection.remove(_id);
+    collection.update(selector, modifier, options);
   },
-  removeOneUser(collectionName, _id) {
+  remove(collectionName, selector) {
     check(collectionName, String);
-    check(_id, String);
+    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
     const collection = Mongo.Collection.get(collectionName);
-    const { userId } = collection.findOne(_id);
+    collection.remove(selector);
+  },
+  removeUser(collectionName, selector) {
+    check(collectionName, String);
+    Match.Where(/\b(?=\w)(StudentsCollection|CompaniesCollection)\b(?<=\w)/.test(collectionName));
+    check(selector, Match.OneOf(String, Mongo.ObjectID, Mongo.Selector));
+    const collection = Mongo.Collection.get(collectionName);
+    const { userId } = collection.findOne(selector);
     Meteor.users.remove({ _id: userId });
-    collection.remove(_id);
+    collection.remove(selector);
   },
 });
