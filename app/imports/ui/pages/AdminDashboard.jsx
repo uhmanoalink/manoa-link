@@ -10,8 +10,8 @@ import StudentAdmin from '../components/StudentAdmin';
 import { Students } from '../../api/student/Student';
 import CompanyAdmin from '../components/CompanyAdmin';
 import { Companies } from '../../api/company/Company';
-import ListingAdmin from '../components/ListingAdmin';
 import { Listings } from '../../api/listing/Listing';
+import ListingAdmin from '../components/ListingAdmin';
 import { Images } from '../../api/image/Image';
 
 const AdminDashboard = () => {
@@ -24,8 +24,9 @@ const AdminDashboard = () => {
     const eventsSub = Meteor.subscribe(Events.adminPublicationName);
     const studentsSub = Meteor.subscribe(Students.adminPublicationName);
     const companiesSub = Meteor.subscribe(Companies.adminPublicationName);
-    const listingsSub = Meteor.subscribe(Listings.adminPublicationName);
+    const listingsSub = Meteor.subscribe(Listings.studentPublicationName);
     const imagesSub = Meteor.subscribe(Images.allImagesPublication);
+
     // Determine if the subscription is ready
     const rdy = eventsSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready() && imagesSub.ready();
 
@@ -98,7 +99,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[0] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {students.map((student) => <StudentAdmin key={student._id} student={student} />)}
+                {students.map((student) => <StudentAdmin student={student} key={student._id} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>
@@ -109,7 +110,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[1] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {companies.map((company) => <CompanyAdmin key={company._id} company={company} />)}
+                {companies.map((company) => <CompanyAdmin company={company} key={company._id} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>
@@ -163,7 +164,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[3] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {listings.map((listing) => <ListingAdmin key={listing._id} Listing={listing} />)}
+                {listings.map((listing) => <ListingAdmin listing={listing} key={listing._id} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>

@@ -17,7 +17,7 @@
       "companyId": "pqr-company",
       "address": "789 Oak St, Anytown USA",
       "description": "Explore cutting-edge research in environmental science and policy.",
-      "imageId": "0",
+      "imageId": "noId",
       "tags": ["Environmental Science", "Geology", "Biology"],
       "createdAt": "2022-08-20T11:00:00Z",
       "startDateTime": "2024-10-05T12:00:00.000Z",
@@ -28,7 +28,7 @@
       "companyId": "efg-company",
       "address": "321 Elm St, Anytown USA",
       "description": "Enjoy live music performances by some of today's hottest artists.",
-      "imageId": "1",
+      "imageId": "noId",
       "tags": ["Music", "Fine Arts"],
       "createdAt": "2022-09-05T12:00:00Z",
       "startDateTime": "2023-10-05T12:00:00.000Z",
@@ -39,11 +39,88 @@
       "companyId": "lmn-company",
       "address": "654 Pine St, Anytown USA",
       "description": "Practice your language skills and meet new friends from around the world.",
-      "imageId": "2",
+      "imageId": "noId",
       "tags": ["Foreign Languages", "Linguistics", "Global Studies"],
       "createdAt": "2022-10-10T13:00:00Z",
       "startDateTime": "2023-03-05T12:00:00.000Z",
       "endDateTime": "2023-03-06T12:00:00.000Z"
+    }
+  ],
+
+  "defaultJobs": [
+    {
+      "companyId": "University of Hawaii at Manoa",
+      "title": "Research Assistant",
+      "description": "Seeking student majoring in astrophysics, with upperclassmen standing. Research conducted on black holes and neutron stars. Student wages offered.",
+      "imageId": "noId",
+      "website": "#",
+      "location": "Honolulu, HI, 96822",
+      "employmentType": "hybrid",
+      "scheduleType": "flexible",
+      "tags": ["Foreign Languages"],
+      "createdAt": "2022-12-05T18:00:00.000Z",
+      "startDate": "2023-06-05T18:00:00.000Z"
+    },
+    {
+      "companyId": "OpenAI",
+      "title": "Data Scientist at OpenAI",
+      "description": "Paid internship, ranging from $17 through $22 per hour. Seeking graduate student in Computer Science with proficiency in Python.",
+      "imageId": "noId",
+      "website": "#",
+      "location": "San Fransisco",
+      "employmentType": "online",
+      "scheduleType": "part-time",
+      "tags": ["Foreign Languages"],
+      "createdAt": "2022-12-05T18:00:00.000Z",
+      "startDate": "2023-06-05T18:00:00.000Z"
+    },
+    {
+      "companyId": "RevaComm",
+      "title": "Software Engineer Intern",
+      "description": "$20.50 per hour, looking for a junior or senior undergraduate student. Experience with php preferred.",
+      "imageId": "noId",
+      "website": "#",
+      "location": "Kaka'ako",
+      "employmentType": "hybrid",
+      "scheduleType": "flexible",
+      "tags": ["Foreign Languages"],
+      "createdAt": "2022-12-05T18:00:00.000Z",
+      "startDate": "2023-06-05T18:00:00.000Z"
+    }
+  ],
+
+  "defaultCompanies": [
+    {
+      "userId": "a",
+      "name": "RevaComm",
+      "imageId": "noId",
+      "website": "#",
+      "address": "rvcm@gmail.com",
+      "description": "A mission-driven digital transformation firm focused on Agile DevSecOps practices that deliver scale, speed, and security for government agencies and enterprises facing continually evolving IT needs and cyber security threats."
+    },
+    {
+      "userId": "b",
+      "name": "NASA",
+      "imageId": "noId",
+      "website": "#",
+      "address": "nasa@gmail.com",
+      "description": "NASA explores the unknown in air and space, innovates for the benefit of humanity, and inspires the world through discovery."
+    },
+    {
+      "userId": "c",
+      "name": "ISEC",
+      "imageId": "noId",
+      "website": "#",
+      "address": "isec@gmail.com",
+      "description": "The mission of ISEC Conferences is to enhance communication and understanding between structural, system, and construction engineers, for successful design and construction of engineering projects."
+    },
+    {
+      "userId": "d",
+      "name": "OpenAI",
+      "imageId": "noId",
+      "website": "#",
+      "address": "openai@gmail.com",
+      "description": "ChatGPT is a state-of-the-art language model developed by OpenAI, capable of providing personalized and intelligent response to a wide range of queries and conversations."
     }
   ]
 }

@@ -40,7 +40,7 @@ const NavBar = () => {
                 Dashboard
               </Nav.Link>
               <ProtectedRender allowedRoles={['company']}>
-                <Nav.Link as={NavLink} to="/company-listing">
+                <Nav.Link as={NavLink} to="/companies">
                   Manage Listings
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/manage-events">
@@ -48,10 +48,10 @@ const NavBar = () => {
                 </Nav.Link>
               </ProtectedRender>
               <ProtectedRender allowedRoles={['student']}>
-                <Nav.Link as={NavLink} to="/company-listing">
-                  Company Listings
+                <Nav.Link as={NavLink} to="/companies">
+                  Companies
                 </Nav.Link>
-                <Nav.Link as={NavLink} to="/job-listing">
+                <Nav.Link as={NavLink} to="/job-listings">
                   Job Listings
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/events">
