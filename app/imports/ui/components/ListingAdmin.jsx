@@ -15,7 +15,7 @@ const ListingAdmin = ({ listing }) => {
     <Card className="h-100">
       <Card.Header>
         <Card.Title>{listing.title}</Card.Title>
-        <Card.Subtitle>{company.name}</Card.Subtitle>
+        <Card.Subtitle>{(company !== undefined) && company.name}</Card.Subtitle>
       </Card.Header>
       <Card.Body>
         <Card.Text>{listing.description}</Card.Text>
@@ -29,11 +29,17 @@ const ListingAdmin = ({ listing }) => {
 // Require a document to be passed to this component.
 ListingAdmin.propTypes = {
   listing: PropTypes.shape({
-    companyId: PropTypes.string,
+    companyId: PropTypes.string, // the ObjectId of the company that created it
     title: PropTypes.string,
     description: PropTypes.string,
-    location: PropTypes.string,
+    imageId: PropTypes.string, // also keep as string
+    website: PropTypes.string,
+    location: PropTypes.string, // optional. if not given, defaults to the address of the company
     employmentType: PropTypes.string,
+    scheduleType: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    createdAt: PropTypes.instanceOf(Date),
+    startDate: PropTypes.instanceOf(Date),
     _id: PropTypes.string,
   }).isRequired,
 };

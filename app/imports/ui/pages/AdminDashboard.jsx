@@ -11,7 +11,7 @@ import { Students } from '../../api/student/Student';
 import CompanyAdmin from '../components/CompanyAdmin';
 import { Companies } from '../../api/company/Company';
 import { Listings } from '../../api/listing/Listing';
-import Listing from '../components/Listing';
+import ListingAdmin from '../components/ListingAdmin';
 import { Images } from '../../api/image/Image';
 
 const AdminDashboard = () => {
@@ -99,7 +99,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[0] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {students.map((student) => <StudentAdmin student={student} />)}
+                {students.map((student) => <StudentAdmin student={student} key={student._id} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>
@@ -164,7 +164,7 @@ const AdminDashboard = () => {
           <div className={`collapsible ${minimizedTabs[3] ? 'collapsed' : ''}`}>
             {ready ? (
               <div className="cards">
-                {listings.map((listing) => <Listing listing={listing} key={listing._id} />)}
+                {listings.map((listing) => <ListingAdmin listing={listing} key={listing._id} />)}
               </div>
             ) : <LoadingSpinner />}
           </div>
