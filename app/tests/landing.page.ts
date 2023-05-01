@@ -19,6 +19,7 @@ class LandingPage {
 
   private async checkSections(tc: TestController) {
     await tc.expect(Selector('section#tagline').visible).ok();
+    await tc.expect(Selector('section#reasons-to-join').visible).ok();
     await tc.expect(Selector('section#interface-features').visible).ok();
   }
 
