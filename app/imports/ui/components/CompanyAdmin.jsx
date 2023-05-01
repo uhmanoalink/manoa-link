@@ -11,7 +11,7 @@ const defaultImage = 'images/sample-image-landscape.png';
 const CompanyAdmin = ({ company }) => (
   <Card className="h-100">
     <Card.Header>
-      <Image src={(company.imageId === "noId") ? defaultImage : Images.getFileUrlFromId(company.imageId)} width={75} />
+      <Image src={(company.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(company.imageId)} width={75} />
       <Card.Title>{company.name}</Card.Title>
       <Card.Subtitle>{company.website}</Card.Subtitle>
     </Card.Header>
