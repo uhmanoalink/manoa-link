@@ -20,7 +20,7 @@ Meteor.publish(Companies.studentPublicationName, function () {
 // Company-level publication.
 // If logged in and with company role, then publish the documents for companys. Otherwise publish nothing.
 Meteor.publish(Companies.companyPublicationName, function () {
-  if (this.userId) {
+  if (this.userId && Roles.userIsInRole(this.userId, 'company')) {
     return Companies.collection.find({ _id: this.userId });
   }
   return this.ready();

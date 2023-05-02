@@ -91,7 +91,7 @@
 
   "defaultCompanies": [
     {
-      "userId": "a",
+      "userId": "noId",
       "name": "RevaComm",
       "imageId": "noId",
       "website": "#",
@@ -99,7 +99,7 @@
       "description": "A mission-driven digital transformation firm focused on Agile DevSecOps practices that deliver scale, speed, and security for government agencies and enterprises facing continually evolving IT needs and cyber security threats."
     },
     {
-      "userId": "b",
+      "userId": "noId",
       "name": "NASA",
       "imageId": "noId",
       "website": "#",
@@ -107,7 +107,7 @@
       "description": "NASA explores the unknown in air and space, innovates for the benefit of humanity, and inspires the world through discovery."
     },
     {
-      "userId": "c",
+      "userId": "noId",
       "name": "ISEC",
       "imageId": "noId",
       "website": "#",
@@ -115,7 +115,7 @@
       "description": "The mission of ISEC Conferences is to enhance communication and understanding between structural, system, and construction engineers, for successful design and construction of engineering projects."
     },
     {
-      "userId": "d",
+      "userId": "noId",
       "name": "OpenAI",
       "imageId": "noId",
       "website": "#",

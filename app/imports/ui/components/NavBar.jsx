@@ -40,7 +40,7 @@ const NavBar = () => {
                 Dashboard
               </Nav.Link>
               <ProtectedRender allowedRoles={['company']}>
-                <Nav.Link as={NavLink} to="/companies">
+                <Nav.Link as={NavLink} to="/manage-listings">
                   Manage Listings
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/manage-events">
