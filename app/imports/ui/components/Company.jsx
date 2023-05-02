@@ -8,11 +8,14 @@ import { studentFollowsCompany, studentUnfollowsCompany } from '../../../lib/rel
 import { Students } from '../../api/student/Student';
 
 const defaultImage = 'images/sample-image-landscape.png';
+
 const Company = ({ company }) => {
   const { ready, student } = useTracker(() => {
-    const sub = Meteor.subscribe(Students.studentPublicationName);
+    const studentsSub = Meteor.subscribe(Students.studentPublicationName);
+    const imagesSub = Meteor.subscribe(Images.allImagesPublication);
+
     return {
-      ready: sub.ready(),
+      ready: studentsSub.ready() && imagesSub.ready(),
       student: Students.collection.findOne({ userId: Meteor.userId() }),
     };
   }, []);
@@ -39,20 +42,22 @@ const Company = ({ company }) => {
 
   return (
     <div className="company-listing">
-      <Card>
-        <Card.Img variant="top" src={(company.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(company.imageId)} />
-        <Card.Title>{company.name}</Card.Title>
-        <div className="card-text-wrapper">
-          <div className="card-text-fade" />
-          <Card.Text>{company.description}</Card.Text>
-        </div>
-        <ButtonToolbar>
-          <Button variant="success" onClick={onVisit} className="me-2">Visit</Button>
-          {ready && student.followedCompanies.includes(company._id)
-            ? <Button variant="danger" onClick={onUnfollow}>Unfollow</Button>
-            : <Button variant="success" onClick={onFollow}>Follow</Button>}
-        </ButtonToolbar>
-      </Card>
+      {ready && student ? (
+        <Card>
+          <Card.Img variant="top" src={(company.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(company.imageId)} />
+          <Card.Title>{company.name}</Card.Title>
+          <div className="card-text-wrapper">
+            <div className="card-text-fade" />
+            <Card.Text>{company.description}</Card.Text>
+          </div>
+          <ButtonToolbar>
+            <Button variant="success" onClick={onVisit} className="me-2">Visit</Button>
+            {student.followedCompanies.includes(company._id)
+              ? <Button variant="danger" onClick={onUnfollow}>Unfollow</Button>
+              : <Button variant="success" onClick={onFollow}>Follow</Button>}
+          </ButtonToolbar>
+        </Card>
+      ) : undefined}
     </div>
   );
 };
