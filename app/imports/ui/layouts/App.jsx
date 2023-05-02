@@ -8,7 +8,7 @@ import Landing from '../pages/Landing';
 import AddEvent from '../pages/AddEvent';
 import ListEvents from '../pages/ListEvents';
 import CompanyListing from '../pages/CompanyListing';
-import JobListing from '../pages/JobListing';
+import JobListings from '../pages/JobListings';
 import NotFound from '../pages/NotFound';
 import SignUp from '../pages/SignUp';
 import SignOut from '../pages/SignOut';
@@ -22,6 +22,7 @@ import Dashboard from '../pages/Dashboard';
 import MainEventsList from '../pages/MainEventsList';
 import EventPage from '../pages/EventPage';
 import CompanyProtectedRoute from './CompanyProtectedRoute';
+import StudentProtectedRoute from './StudentProtectedRoute';
 import Profile from '../pages/Profile';
 import CompanyManageEvents from '../pages/CompanyManageEvents';
 

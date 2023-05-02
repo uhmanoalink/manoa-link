@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Container, Button, Card, Dropdown } from 'react-bootstrap';
 import { Bookmark, BookmarkDash, Calendar, ThreeDots } from 'react-bootstrap-icons';
+import { useTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 import HelpButton from '../components/HelpButton';
 import Company from '../components/Company';
 import AddToCalendarDropdown from '../components/AddToCalendarDropdown';
+import { Companies } from '../../api/company/Company';
+import { Listings } from '../../api/listing/Listing';
 
 const StudentDashboard = () => {
   const [activeFeed, setActiveFeed] = useState('events');
@@ -67,6 +71,26 @@ const StudentDashboard = () => {
       _id: '2',
     },
   };
+
+  const { companiesReady, companies } = useTracker(() => {
+    const subscription = Meteor.subscribe(Companies.studentPublicationName);
+    const rdy = subscription.ready();
+    const allCompanies = Companies.collection.find({}).fetch();
+    return {
+      companiesReady: rdy,
+      companies: allCompanies,
+    };
+  });
+
+  const { jobsReady, listings } = useTracker(() => {
+    const subscription = Meteor.subscribe(Listings.studentPublicationName);
+    const rdy = subscription.ready();
+    const allListings = Listings.collection.find({}).fetch();
+    return {
+      jobsReady: rdy,
+      listings: allListings,
+    };
+  });
 
   const convertEmploymentType = (type) => {
     switch (type) {
@@ -200,8 +224,8 @@ const StudentDashboard = () => {
         <section id="interesting-companies">
           <h1 className="section-title">Companies you might be interested in:</h1>
           <div className="companies">
-            {sampleInterestingCompanies.map((id) => (
-              <Company company={sampleCompanyData[id]} key={id} />
+            {companiesReady && companies.map((company) => (
+              <Company company={company} key={company._id} />
             ))}
           </div>
         </section>
