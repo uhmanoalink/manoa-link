@@ -48,7 +48,7 @@ const Company = ({ company }) => {
         </div>
         <ButtonToolbar>
           <Button variant="success" onClick={onVisit} className="me-2">Visit</Button>
-          {student.followedCompanies.includes(company._id)
+          {ready && student.followedCompanies.includes(company._id)
             ? <Button variant="danger" onClick={onUnfollow}>Unfollow</Button>
             : <Button variant="success" onClick={onFollow}>Follow</Button>}
         </ButtonToolbar>
