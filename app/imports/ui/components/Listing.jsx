@@ -1,25 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Col } from 'react-bootstrap';
+import { Badge, Button, Card, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 import { Images } from '../../api/image/Image';
+import { Listings } from '../../api/listing/Listing';
+import SavedJob from './SavedJob';
+import { Students } from '../../api/student/Student';
+import ProtectedRender from './ProtectedRender';
+import SavedConfirmation from './SavedConfirmation';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 
 const defaultImage = 'images/sample-image-landscape.png';
-const Listing = ({ listing }) => (
-  <Col xs={12} md={4}>
-    <Card className="justify-content-center" id="listing-card">
-      <Card.Img id="listing-card-image" variant="top" src={(listing.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(listing.imageId)} />
-      <Card.Title id="listing-card-title">{listing.title}</Card.Title>
-      <Card.Text id="listing-card-text">Company: {listing.companyId}</Card.Text>
-      <Card.Text id="listing-card-text">{listing.description}</Card.Text>
-      <div>
-        <Card.Link id="listing-card-link" to={listing.website}><button type="submit" className="visit-button">More Info</button></Card.Link>
-        <Card.Link id="listing-card-link" to={listing.updateOne('savedListings', listing.title)}><button type="submit" className="visit-button">Save Job</button></Card.Link>
-      </div>
-    </Card>
-  </Col>
-);
+const Listing = ({ listing }) => {
+  const { ready, student } = useTracker(() => {
+    const sub = Meteor.subscribe(Students.studentPublicationName);
+    const studentsItems = Students.collection.findOne({ userId: Meteor.userId() });
+    return {
+      ready: sub.ready(),
+      student: studentsItems,
+    };
+  }, []);
+  return (
+    <Col xs={12} md={4}>
+      <Card className="justify-content-center" id="listing-card">
+        <Card.Img id="listing-card-image" variant="top" src={(listing.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(listing.imageId)} />
+        <Card.Title id="listing-card-title">{listing.title}</Card.Title>
+        <Card.Text id="listing-card-text">Company: {listing.companyId}</Card.Text>
+        <Card.Text id="listing-card-text">{listing.description}</Card.Text>
+        <div>
+          <Card.Link id="listing-card-link" to={listing.website}><button type="submit" className="visit-button">More Info</button></Card.Link>
+          <SavedJob jobID={listing._id} student={student} collection={Students.collection} />
+        </div>
+      </Card>
+    </Col>
+  );
+};
 // Require a document to be passed to this component.
 Listing.propTypes = {
   listing: PropTypes.shape({
