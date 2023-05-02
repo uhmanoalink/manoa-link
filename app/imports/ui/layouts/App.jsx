@@ -51,7 +51,7 @@ const App = () => {
           <Route path="/events" element={<ProtectedRoute><MainEventsList /></ProtectedRoute>} />
           <Route path="/manage-events" element={<CompanyProtectedRoute ready={ready}><CompanyManageEvents /></CompanyProtectedRoute>} />
           <Route path="/company-listing" element={<ProtectedRoute><CompanyListing /></ProtectedRoute>} />
-          <Route path="/job-listing" element={<ProtectedRoute><JobListing /></ProtectedRoute>} />
+          <Route path="/job-listing" element={<ProtectedRoute><JobListings /></ProtectedRoute>} />
           <Route path="/edit-event/:_id" element={<CompanyProtectedRoute ready={ready}><EditEvent /></CompanyProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
