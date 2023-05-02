@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
