@@ -22,6 +22,7 @@ const formSchema = new SimpleSchema({
   employmentType: PropTypes.oneOf(['in-person', 'online', 'hybrid']),
   scheduleType: PropTypes.oneOf(['part-time', 'full-time', 'flexible']),
   tags: [String],
+  startDate: Date,
 });
 const bridge = new SimpleSchema2Bridge(formSchema);
 const ManageListings = () => {
@@ -37,11 +38,10 @@ const ManageListings = () => {
   });
 
   const submit = (data, formRef) => {
-    const { title, imageId, website, location, employmentType, scheduleType, description } = data;
+    const { title, imageId, website, location, employmentType, scheduleType, startDate, description } = data;
     const tags = selectedTags.map(tag => tag.value);
     const companyId = Meteor.user()._id;
     const createdAt = new Date();
-    const startDate = new Date();
     Listings.collection.insert(
       { companyId, title, description, imageId, website, location, employmentType, scheduleType, tags, createdAt, startDate },
       (error) => {
@@ -96,9 +96,10 @@ const ManageListings = () => {
                 <Col><TextField className="mb-3" name="location" placeholder="Location" /></Col>
               </Row>
               <Row>
-                <Col><SelectField name="employmentType" label="Employment Type" /><ErrorsField /></Col>
-                <Col><SelectField name="scheduleType" label="Schedule Type" /><ErrorsField /></Col>
+                <Col><SelectField name="employmentType" /><ErrorsField /></Col>
+                <Col><SelectField name="scheduleType" /><ErrorsField /></Col>
               </Row>
+              <DateField className="mb-3" name="startDate" placeholder="Start Date" />
               <LongTextField className="mb-3" name="description" placeholder="Description" />
               <ErrorsField />
               <SubmitField className="submit-btn" value="Post Job Listing" />
