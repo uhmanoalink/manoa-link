@@ -6,11 +6,12 @@ import { Companies } from '../../api/company/Company';
 import DeleteConfirmation from './DeleteConfirmation';
 import { Images } from '../../api/image/Image';
 
+const defaultImage = 'images/sample-image-landscape.png';
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const CompanyAdmin = ({ company }) => (
   <Card className="h-100">
     <Card.Header>
-      <Image src={Images.getFileUrlFromId(company.imageId) ?? ''} width={75} />
+      <Image src={(company.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(company.imageId)} width={75} />
       <Card.Title>{company.name}</Card.Title>
       <Card.Subtitle>{company.website}</Card.Subtitle>
     </Card.Header>

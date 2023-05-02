@@ -33,6 +33,7 @@ class ListingsCollection extends CRUDCollection {
       title: String,
       description: String,
       imageId: String, // also keep as string
+      website: String,
       location: String, // optional. if not given, defaults to the address of the company
       employmentType: {
         type: String,
@@ -51,7 +52,6 @@ class ListingsCollection extends CRUDCollection {
     // Define names for publications and subscriptions
     this.studentPublicationName = `${this.name}.publication.student`;
     this.companyPublicationName = `${this.name}.publication.company`;
-    this.adminPublicationName = `${this.name}.publication.admin`;
   }
 
   /**
