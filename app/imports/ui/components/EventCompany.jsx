@@ -2,11 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 import { Events } from '../../api/event/Event';
 import DeleteConfirmation from './DeleteConfirmation';
+import { Students } from '../../api/student/Student';
+import { Images } from '../../api/image/Image';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-const Event = ({ event }) => {
+const EventCompany = ({ event }) => {
+  const { ready, student } = useTracker(() => {
+    const studentsSub = Meteor.subscribe(Students.studentPublicationName);
+    const imagesSub = Meteor.subscribe(Images.allImagesPublication);
+    const studentsItems = Students.collection.findOne({ userId: Meteor.userId() });
+    return {
+      ready: studentsSub.ready() && imagesSub.ready(),
+      student: studentsItems,
+    };
+  }, []);
   const formatDate = (date) => {
     if (date) {
       const parsedDate = new Date(date);
@@ -20,6 +33,7 @@ const Event = ({ event }) => {
   return (
     <Card className="shadow event-card">
       <Card.Body className="event-body">
+        <Card.Img variant="top" src={(event.imageId === 'noId') ? 'images/sample-image-landscape.png' : Images.getFileUrlFromId(event.imageId)} className="event-image" />
         <Card.Title className="event-name">{event.eventName}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted event-address">{event.address}</Card.Subtitle>
         <Card.Text className="event-description">{event.description}</Card.Text>
@@ -49,7 +63,7 @@ const Event = ({ event }) => {
 };
 
 // Require a document to be passed to this component.
-Event.propTypes = {
+EventCompany.propTypes = {
   event: PropTypes.shape({
     eventName: PropTypes.string,
     companyId: PropTypes.string,
@@ -64,4 +78,4 @@ Event.propTypes = {
   }).isRequired,
 };
 
-export default Event;
+export default EventCompany;
