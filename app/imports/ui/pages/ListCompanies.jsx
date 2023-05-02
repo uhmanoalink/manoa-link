@@ -8,7 +8,7 @@ import { Companies } from '../../api/company/Company';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Company from '../components/Company';
 
-const CompanyListing = () => {
+const ListCompanies = () => {
   const { ready, companies } = useTracker(() => {
     const subscription = Meteor.subscribe(Companies.studentPublicationName);
     const rdy = subscription.ready();
@@ -26,11 +26,11 @@ const CompanyListing = () => {
           <Sidebar />
         </Col>
         <Col>
-          <Row>
+          <div className="company-listings">
             { ready ? (companies.map((company) => (
               <Company company={company} key={company._id} />
             ))) : (<LoadingSpinner />)}
-          </Row>
+          </div>
         </Col>
       </Row>
       <HelpButton />
@@ -38,4 +38,4 @@ const CompanyListing = () => {
   );
 };
 
-export default CompanyListing;
+export default ListCompanies;

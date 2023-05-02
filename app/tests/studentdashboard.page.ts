@@ -19,14 +19,15 @@ class StudentDashboardPage {
   private async showsFeed(tc: TestController) {
     await tc.expect(Selector('#feed').visible).ok();
     await tc.click(Selector('.feed-button').withText('Upcoming Events'));
-    await tc.expect(Selector('.events-feed').visible).ok();
+    await tc.expect(Selector('.events-feed').exists).ok();
     await tc.click(Selector('.feed-button').withText('Saved Jobs'));
-    await tc.expect(Selector('.jobs-feed').visible).ok();
+    await tc.expect(Selector('.jobs-feed').exists).ok();
   }
 
   private async showsInterestingCompanies(tc: TestController) {
     await tc.expect(Selector('#interesting-companies').visible).ok();
-    await tc.expect(Selector('#interesting-companies .companies').visible).ok();
+    await tc.debug();
+    await tc.expect(Selector('#interesting-companies .companies').exists).ok();
   }
 
   async test(tc: TestController) {

@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { Mongo } from 'meteor/mongo';
 
 const SavedConfirmation = ({ collection, student, eventId }) => {
-  const [isEventSaved, setIsEventSaved] = useState(student.savedEvents.includes(eventId));
+  const [isEventSaved, setIsEventSaved] = useState(false);
   const findStudentIdByUserId = (userId) => {
     const studentDoc = collection.findOne({ userId });
     return studentDoc ? studentDoc._id : null;
