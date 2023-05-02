@@ -12,7 +12,7 @@ Meteor.publish(Images.allImagesPublication, () => Images.collection.find({}));
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
 Meteor.publish(Companies.studentPublicationName, function () {
   if (this.userId) {
-    return Companies.collection.find({ });
+    return Companies.collection.find({});
   }
   return this.ready();
 });
@@ -60,8 +60,7 @@ Meteor.publish(Events.studentPublicationName, function () {
 // If logged in and with company role, then publish the documents for companys. Otherwise publish nothing.
 Meteor.publish(Events.companyPublicationName, function () {
   if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Events.collection.find({ owner: username });
+    return Events.collection.find({ companyId: this.userId });
   }
   return this.ready();
 });
