@@ -95,13 +95,6 @@ const AddEvent = () => {
                 <Row>
                   <Col><TextField className="mb-3" name="address" placeholder="Address" /></Col>
                   <FileUpload onUpload={handleUpload} name="imageId" />
-                  {/*<AutoField*/}
-                  {/*    className="mb-3"*/}
-                  {/*    name="imageId"*/}
-                  {/*    component={FileUpload}*/}
-                  {/*    onUpload={handleUpload}*/}
-                  {/*    label="Upload Event Image"*/}
-                  {/*/>*/}
                 </Row>
                 <LongTextField className="mb-3" name="description" placeholder="Description" />
                 <DateField className="mb-3" name="startDateTime" placeholder="Time to start the event" />
