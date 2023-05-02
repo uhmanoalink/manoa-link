@@ -77,7 +77,8 @@ const FileUpload = ({ fc, label, accept, buttonVariant, customButton, onUpload }
   };
 
   /** @type {React.MouseEventHandler<HTMLButtonElement>} */
-  const handleUpload = async () => {
+  const handleUpload = async (e) => {
+    e.preventDefault();
     if (!verifyFileType(inputFile, accept)) {
       throw new Error(`The file type of ${inputFile.name} is not a valid type`);
     }
