@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Card, Col, Container, Row } from 'react-bootstrap';
@@ -12,6 +12,7 @@ import HelpButton from '../components/HelpButton';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Listing from '../components/Listing';
 import { Listings } from '../../api/listing/Listing';
+import { Images } from '../../api/image/Image';
 
 const formSchema = new SimpleSchema({
   title: String,
@@ -19,13 +20,41 @@ const formSchema = new SimpleSchema({
   imageId: String,
   website: String,
   location: String,
-  employmentType: PropTypes.oneOf(['in-person', 'online', 'hybrid']),
-  scheduleType: PropTypes.oneOf(['part-time', 'full-time', 'flexible']),
+  employmentType: String,
+  scheduleType: String,
   tags: [String],
   startDate: Date,
 });
 const bridge = new SimpleSchema2Bridge(formSchema);
 const ManageListings = () => {
+  const [imageDoc, setImageDoc] = useState(null);
+  const { imagesReady, images, newImage } = useTracker(() => {
+    const sub = Meteor.subscribe(Images.allImagesPublication);
+    const imageDocs = Images.collection.find({}).fetch();
+    const newImageDoc = Images.collection.findOne({ _id: imageDoc?._id });
+
+    return {
+      ready: sub.ready(),
+      images: imageDocs,
+      newImage: newImageDoc,
+    };
+  }, [imageDoc]);
+
+  const convertImage = async (url) => {
+    const file = await Images.getFileFromImageUrl(url);
+    if (file) {
+      const doc = await Images.uploadFile(file);
+      setImageDoc(doc);
+    }
+  };
+
+  const handleClick = async () => {
+    const url = prompt('URL');
+    if (url) {
+      await convertImage(url);
+    }
+  };
+
   const [selectedTags, setSelectedTags] = React.useState([]);
   const { ready, listings } = useTracker(() => {
     const subscription = Meteor.subscribe(Listings.companyPublicationName);
@@ -38,10 +67,15 @@ const ManageListings = () => {
   });
 
   const submit = (data, formRef) => {
+    console.log('got to submit');
     const { title, imageId, website, location, employmentType, scheduleType, startDate, description } = data;
+    console.log('got to assignment');
     const tags = selectedTags.map(tag => tag.value);
-    const companyId = Meteor.user()._id;
+    const companyId = Meteor.userId();
     const createdAt = new Date();
+    const newListing = { companyId: companyId, title: title, description: description, imageId: imageId, website: website, location: location, employmentType: employmentType, scheduleType: scheduleType, tags: tags, createdAt: createdAt, startDate: startDate };
+    console.log(newListing);
+    console.log('inserting');
     Listings.collection.insert(
       { companyId, title, description, imageId, website, location, employmentType, scheduleType, tags, createdAt, startDate },
       (error) => {
@@ -73,7 +107,7 @@ const ManageListings = () => {
       <Row className="justify-content-center">
         <h2>Post a new job listing</h2>
         <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
-          <Card className="event-card">
+          <Card>
             <Card.Body>
               <Row>
                 <Col><TextField className="mb-3" name="title" placeholder="Job Title" /></Col>
@@ -89,21 +123,44 @@ const ManageListings = () => {
                 </Col>
               </Row>
               <Row>
-                <Col><TextField className="mb-3" name="imageId" placeholder="Image URL" /></Col>
+                <Col className="justify-content-center">
+                  <TextField className="mb-3" label="Image URL" name="imageId" placeholder="Image URL" />
+                  <button id="upload" onClick={handleClick} type="button">(Optional) Upload an Image</button>
+                  {newImage && ready ? <img alt="http://probablyprogramming.com/2009/03/15/the-tiniest-gif-ever" src={Images.getFileUrlFromId(newImage._id)} /> : undefined}
+                </Col>
               </Row>
               <Row>
                 <Col><TextField className="mb-3" name="website" placeholder="Website URL" /></Col>
                 <Col><TextField className="mb-3" name="location" placeholder="Location" /></Col>
               </Row>
               <Row>
-                <Col><SelectField name="employmentType" /><ErrorsField /></Col>
-                <Col><SelectField name="scheduleType" /><ErrorsField /></Col>
+                <Col><SelectField
+                  label="Employment Type"
+                  name="employmentType"
+                  options={[
+                    { label: 'In-Person', value: 'in-person' },
+                    { label: 'Remote', value: 'remote' },
+                    { label: 'Hybrid', value: 'hybrid' },
+                  ]}
+                  placeholder="Select"
+                />
+                </Col>
+                <Col><SelectField
+                  label="Schedule Type"
+                  name="scheduleType"
+                  options={[
+                    { label: 'Full-Time', value: 'full-time' },
+                    { label: 'Part-Time', value: 'part-time' },
+                    { label: 'Flexible', value: 'flexible' }]}
+                  placeholder="Select"
+                />
+                </Col>
               </Row>
               <DateField className="mb-3" name="startDate" placeholder="Start Date" />
-              <LongTextField className="mb-3" name="description" placeholder="Description" />
-              <ErrorsField />
+              <LongTextField name="description" placeholder="Description" />
               <SubmitField className="submit-btn" value="Post Job Listing" />
             </Card.Body>
+            <i><p>You will be able to modify this later.</p></i>
           </Card>
         </AutoForm>
       </Row>

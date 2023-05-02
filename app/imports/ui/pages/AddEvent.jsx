@@ -83,7 +83,6 @@ const AddEvent = () => {
                 <LongTextField className="mb-3" name="description" placeholder="Description" />
                 <DateField className="mb-3" name="startDateTime" placeholder="Time to start the event" />
                 <DateField className="mb-3" name="endDateTime" placeholder="Time to end the event" />
-                <ErrorsField />
                 <SubmitField className="submit-btn" value="Add Event" />
               </Card.Body>
             </Card>
