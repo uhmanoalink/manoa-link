@@ -31,6 +31,7 @@ export const insertFileToFilesCollection = async (filesCollection, file) => new 
  */
 export const removeFileFromFilesCollection = (filesCollection, _id) => {
   filesCollection.remove({ _id: _id });
+  filesCollection.collection.remove(_id);
 };
 
 /**
