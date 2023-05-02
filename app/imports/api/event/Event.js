@@ -49,7 +49,10 @@ class EventsCollection extends CRUDCollection {
   /**
    * Inserts a single document into the collection.
    *
+   * ---
+   *
    * @param {EventSchema} newDoc
+   * @override
    */
   insertOne(newDoc) {
     return Meteor.call('insert', newDoc);
@@ -58,35 +61,44 @@ class EventsCollection extends CRUDCollection {
   /**
    * Finds a single document from the collection.
    *
-   * @param {string} _id
+   * ---
+   *
+   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query describing the documents to find.
+   * @override
    */
-  findOne(_id) {
-    return Meteor.call('find', this.name, _id);
+  findOne(selector) {
+    return Meteor.call('find', this.name, selector);
   }
 
   /**
    * Updates a single document in the collection.
    *
-   * @param {string} _id
-   * @param {EventSchema} doc
+   * ---
+   *
+   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query that specifies which documents to modify.
+   * @param {EventSchema | Mongo.Modifier<Document>} modifier
+   * @override
    */
-  updateOne(_id, doc) {
-    return Meteor.call('update', this.name, _id, doc);
+  updateOne(selector, modifier) {
+    return Meteor.call('update', this.name, selector, modifier);
   }
 
   /**
    * Removes a single document from the collection.
    *
-   * @param {string} _id
+   * ---
+   *
+   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query that specifies which documents to remove.
+   * @override
    */
-  removeOne(_id) {
+  removeOne(selector) {
     Meteor.call(
       'update',
       Students.name,
-      { savedEvents: _id },
-      { $pull: { savedEvents: _id } },
+      { savedEvents: selector },
+      { $pull: { savedEvents: selector } },
     );
-    return Meteor.call('remove', this.name, _id);
+    return Meteor.call('remove', this.name, selector);
   }
 }
 

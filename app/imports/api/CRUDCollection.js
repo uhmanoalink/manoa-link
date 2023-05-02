@@ -6,6 +6,8 @@ class CRUDCollection {
   /**
    * Inserts a single document into the collection.
    *
+   * ---
+   *
    * @param {DocumentSchema} newDoc
    * @abstract
    */
@@ -16,30 +18,36 @@ class CRUDCollection {
   /**
    * Finds a single document from the collection.
    *
-   * @param {string} _id
+   * ---
+   *
+   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query describing the documents to find.
    */
-  findOne(_id) {
+  findOne(selector) {
     throw new Error("Method 'findOne' must be implemented.");
   }
 
   /**
    * Updates a single document in the collection.
    *
-   * @param {string} _id
-   * @param {DocumentSchema} doc
+   * ---
+   *
+   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query that specifies which documents to modify.
+   * @param {DocumentSchema | Mongo.Modifier<Document>} modifier
    * @abstract
    */
-  updateOne(_id, doc) {
+  updateOne(selector, modifier) {
     throw new Error("Method 'updateOne' must be implemented.");
   }
 
   /**
    * Removes a single document from the collection.
    *
-   * @param {string} _id
+   * ---
+   *
+   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query that specifies which documents to remove.
    * @abstract
    */
-  removeOne(_id) {
+  removeOne(selector) {
     throw new Error("Method 'removeOne' must be implemented.");
   }
 }
