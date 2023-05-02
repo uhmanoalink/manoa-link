@@ -11,6 +11,16 @@ export const studentFollowsCompany = (studentId, companyId) => {
 };
 
 /**
+ * Removes a company id from the followedCompanies array.
+ *
+ * @param {string} studentId
+ * @param {string} companyId
+ */
+export const studentUnfollowsCompany = (studentId, companyId) => {
+  Students.updateOne(studentId, { $pull: { followedCompanies: companyId } });
+};
+
+/**
  * Adds a event id to the savedEvents array.
  *
  * @param {string} studentId
@@ -21,6 +31,16 @@ export const studentSavesEvent = (studentId, eventId) => {
 };
 
 /**
+ * Removes a event id from the savedEvents array.
+ *
+ * @param {string} studentId
+ * @param {string} eventId
+ */
+export const studentUnsavesEvent = (studentId, eventId) => {
+  Students.updateOne(studentId, { $pull: { savedEvents: eventId } });
+};
+
+/**
  * Adds a listing id to the savedListings array.
  *
  * @param {string} studentId
@@ -28,4 +48,14 @@ export const studentSavesEvent = (studentId, eventId) => {
  */
 export const studentSavesListing = (studentId, listingId) => {
   Students.updateOne(studentId, { $addToSet: { savedListings: listingId } });
+};
+
+/**
+ * Removes a listing id from the savedListings array.
+ *
+ * @param {string} studentId
+ * @param {string} listingId
+ */
+export const studentUnsavesListing = (studentId, listingId) => {
+  Students.updateOne(studentId, { $pull: { savedListings: listingId } });
 };

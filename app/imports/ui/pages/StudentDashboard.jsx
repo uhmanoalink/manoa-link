@@ -61,9 +61,10 @@ const StudentDashboard = () => {
     },
   };
 
-  const { companiesReady, companies } = useTracker(() => {
-    const subscription = Meteor.subscribe(Companies.studentPublicationName);
-    const rdy = subscription.ready();
+  const { ready, companies, listings } = useTracker(() => {
+    const companiesSub = Meteor.subscribe(Companies.studentPublicationName);
+    const listingsSub = Meteor.subscribe(Listings.studentPublicationName);
+    const rdy = companiesSub.ready() && listingsSub.ready();
     const allCompanies = Companies.collection.find({}).fetch();
     return {
       companiesReady: rdy,
@@ -78,7 +79,8 @@ const StudentDashboard = () => {
     const allListings = Listings.collection.findOne({ userId: Meteor.userId() });
     const studentDoc = Students.collection.findOne({ userId: Meteor.userId() });
     return {
-      jobsReady: rdy,
+      ready: rdy,
+      companies: allCompanies,
       listings: allListings,
       student: studentDoc,
     };
@@ -220,7 +222,7 @@ const StudentDashboard = () => {
         <section id="interesting-companies">
           <h1 className="section-title">Companies you might be interested in:</h1>
           <div className="companies">
-            {companiesReady && companies.map((company) => (
+            {ready && companies.map((company) => (
               <Company company={company} key={company._id} />
             ))}
           </div>

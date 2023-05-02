@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import AddEvent from '../pages/AddEvent';
 import ListEvents from '../pages/ListEvents';
-import CompanyListing from '../pages/CompanyListing';
+import ListCompanies from '../pages/ListCompanies';
 import JobListings from '../pages/JobListings';
 import NotFound from '../pages/NotFound';
 import SignUp from '../pages/SignUp';
@@ -50,8 +50,8 @@ const App = () => {
           <Route path="/list-events" element={<ProtectedRoute><ListEvents /></ProtectedRoute>} />
           <Route path="/events" element={<ProtectedRoute><MainEventsList /></ProtectedRoute>} />
           <Route path="/manage-events" element={<CompanyProtectedRoute ready={ready}><CompanyManageEvents /></CompanyProtectedRoute>} />
-          <Route path="/company-listing" element={<ProtectedRoute><CompanyListing /></ProtectedRoute>} />
           <Route path="/job-listings" element={<ProtectedRoute><JobListings /></ProtectedRoute>} />
+          <Route path="/companies" element={<ProtectedRoute><ListCompanies /></ProtectedRoute>} />
           <Route path="/edit-event/:_id" element={<CompanyProtectedRoute ready={ready}><EditEvent /></CompanyProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
