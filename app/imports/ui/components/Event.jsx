@@ -30,7 +30,7 @@ const Event = ({ event }) => {
   }, []);
   return (
     <Card className="shadow event-card">
-      <Card.Img variant="top" src={(event.imageId === 'noId') ? 'images/sample-image-landscape.png' : Images.getFileUrlFromId(event.imageId)} className="event-image" />
+      {/* <Card.Img variant="top" src={(event.imageId === 'noId') ? 'images/sample-image-landscape.png' : Images.getFileUrlFromId(event.imageId)} className="event-image" /> */}
       <Card.Body className="event-body">
         <Card.Title className="event-name">{event.eventName}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted event-address">{event.address}</Card.Subtitle>
@@ -52,10 +52,12 @@ const Event = ({ event }) => {
           <Link to={`/edit-event/${event._id}`} className="event-edit-link mx-1">
             <Button variant="dark" size="sm">Edit</Button>
           </Link>
-          { ready ? (<SavedConfirmation collection={Students.collection} student={student} eventId={event._id} />) : undefined }
         </ProtectedRender>
+        <Link to={`/event/${event._id}`} className="event-edit-link">
+          <Button variant="secondary" size="sm">View</Button>
+        </Link>
+        { ready ? (<SavedConfirmation collection={Students.collection} student={student} eventId={event._id} />) : undefined }
       </Card.Body>
-
     </Card>
   );
 };

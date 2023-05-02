@@ -59,15 +59,9 @@ const ManageEvents = () => {
           <Row>
             <Col>
               <div className="d-flex justify-content-center">
-                <OverlayTrigger
-                  placement="top"
-                  overlay={(<Tooltip id="tooltip-top">Do you want to add an event?</Tooltip>
-                  )}
-                >
-                  <Link to="/add-event">
-                    <Button className="btn btn-add-event me-3">Add Event</Button>
-                  </Link>
-                </OverlayTrigger>
+                <Link to="/add-event">
+                  <Button className="btn btn-add-event me-3">Add Event</Button>
+                </Link>
                 <Select
                   className="align-content-center mb-3 customSelectWidth"
                   value={selectedTags}

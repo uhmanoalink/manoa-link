@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Link } from 'react-router-dom';
-import { Col, Container, Row, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Col, Container, Row, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import Select from 'react-select';
 import LoadingSpinner from '../components/LoadingSpinner';
