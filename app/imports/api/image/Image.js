@@ -6,6 +6,7 @@ https://github.com/veliovgroup/Meteor-Files/blob/master/docs/insert.md
 */
 
 import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random';
 import { FilesCollection } from 'meteor/ostrio:files';
 import { createBucket } from './grid/createBucket';
 import { createOnAfterUpload } from './files/createOnAfterUpload';
@@ -51,6 +52,8 @@ class ImagesCollection {
    *
    * FilesCollection documentation: https://github.com/veliovgroup/Meteor-Files/blob/master/docs/constructor.md
    *
+   * ---
+   *
    * @param {FilesCollection} filesCollection
    * @param {File} imageFile
    * @typedef {{
@@ -86,10 +89,35 @@ class ImagesCollection {
   }
 
   /**
+   * Gets the image at the given URL and converts it to a File object.
+   *
+   * ---
+   *
+   * @param {string} url The URL to the image file.
+   * @param {string | undefined} fileName An optional file name (with extension). If not defined, a random one is generated.
+   * @returns {Promise<File | null>} A promise that resolves to a File or null if the image could not be found.
+   * @async
+   */
+  async getFileFromImageUrl(url, fileName) {
+    const acceptedTypes = ['image/png', 'image/jpeg'];
+    const fetchRes = await fetch(url);
+    if (!acceptedTypes.includes(fetchRes.headers.get('Content-Type'))) {
+      return null;
+    }
+    let fileExt = '.png';
+    if (fetchRes.headers.get('Content-Type') === 'image/jpeg') fileExt = '.jpeg';
+    else if (fetchRes.headers.get('Content-Type') === 'image/png') fileExt = '.png';
+    const blob = await fetchRes.blob();
+    return new File([blob], fileName ?? `${Random.hexString(16)}${fileExt}`, { type: fetchRes.headers.get('Content-Type') });
+  }
+
+  /**
    * Given the ObjectId of an image, convert to the URL of the file.
    *
-   * @param {string} imageId
-   * @returns {string}
+   * ---
+   *
+   * @param {string} imageId The ObjectId of the image in the Images collection.
+   * @returns {string} A URL that leads to the image.
    */
   getFileUrlFromId(imageId) {
     const imageDoc = this.collection.findOne({ _id: imageId });
@@ -101,10 +129,10 @@ class ImagesCollection {
     allImages.forEach(({ _id }) => {
       // Check all collections for usage of the _id
       const used =
-      (Students.collection.find({ profileImageId: _id }).fetch().length() !== 0) ||
-      (Companies.collection.find({ imageId: _id }).fetch().length() !== 0) ||
-      (Events.collection.find({ imageId: _id }).fetch().length() !== 0) ||
-      (Listings.collection.find({ imageId: _id }).fetch().length() !== 0);
+      (Students.collection.find({ profileImageId: _id }).fetch().length !== 0) ||
+      (Companies.collection.find({ imageId: _id }).fetch().length !== 0) ||
+      (Events.collection.find({ imageId: _id }).fetch().length !== 0) ||
+      (Listings.collection.find({ imageId: _id }).fetch().length !== 0);
 
       if (!used) {
         removeFileFromFilesCollection(this.filesCollection, _id);
