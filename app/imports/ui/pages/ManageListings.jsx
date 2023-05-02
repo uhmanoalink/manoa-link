@@ -13,32 +13,29 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import Listing from '../components/Listing';
 import { Listings } from '../../api/listing/Listing';
 import { Images } from '../../api/image/Image';
+import FileUpload from '../components/FileUpload';
 
 const formSchema = new SimpleSchema({
   title: String,
   description: String,
-  imageId: String,
   website: String,
   location: String,
   employmentType: String,
   scheduleType: String,
-  tags: [String],
+  tags: {
+    type: Array,
+    defaultValue: [],
+    optional: true,
+  },
+  'tags.$': {
+    type: String,
+  },
   startDate: Date,
 });
 const bridge = new SimpleSchema2Bridge(formSchema);
 const ManageListings = () => {
   const [imageDoc, setImageDoc] = useState(null);
-  const { imagesReady, images, newImage } = useTracker(() => {
-    const sub = Meteor.subscribe(Images.allImagesPublication);
-    const imageDocs = Images.collection.find({}).fetch();
-    const newImageDoc = Images.collection.findOne({ _id: imageDoc?._id });
-
-    return {
-      ready: sub.ready(),
-      images: imageDocs,
-      newImage: newImageDoc,
-    };
-  }, [imageDoc]);
+  const [uploadedFileId, setUploadedFileId] = useState();
 
   const convertImage = async (url) => {
     const file = await Images.getFileFromImageUrl(url);
@@ -48,11 +45,8 @@ const ManageListings = () => {
     }
   };
 
-  const handleClick = async () => {
-    const url = prompt('URL');
-    if (url) {
-      await convertImage(url);
-    }
+  const handleUpload = (fileDoc) => {
+    setUploadedFileId(fileDoc._id);
   };
 
   const [selectedTags, setSelectedTags] = React.useState([]);
@@ -65,11 +59,11 @@ const ManageListings = () => {
       listings: myListings,
     };
   });
-
   const submit = (data, formRef) => {
     console.log('got to submit');
-    const { title, imageId, website, location, employmentType, scheduleType, startDate, description } = data;
+    const { title, website, location, employmentType, scheduleType, startDate, description } = data;
     console.log('got to assignment');
+    const imageId = uploadedFileId;
     const tags = selectedTags.map(tag => tag.value);
     const companyId = Meteor.userId();
     const createdAt = new Date();
@@ -123,11 +117,7 @@ const ManageListings = () => {
                 </Col>
               </Row>
               <Row>
-                <Col className="justify-content-center">
-                  <TextField className="mb-3" label="Image URL" name="imageId" placeholder="Image URL" />
-                  <button id="upload" onClick={handleClick} type="button">(Optional) Upload an Image</button>
-                  {newImage && ready ? <img alt="http://probablyprogramming.com/2009/03/15/the-tiniest-gif-ever" src={Images.getFileUrlFromId(newImage._id)} /> : undefined}
-                </Col>
+                <FileUpload onUpload={handleUpload} name="imageId" />
               </Row>
               <Row>
                 <Col><TextField className="mb-3" name="website" placeholder="Website URL" /></Col>
