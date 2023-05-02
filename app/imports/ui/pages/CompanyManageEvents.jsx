@@ -15,7 +15,7 @@ const ManageEvents = () => {
     const subscription = Meteor.subscribe(Events.studentPublicationName);
     const subscription2 = Meteor.subscribe(Events.adminPublicationName);
     const rdy = subscription.ready() && subscription2.ready();
-    let allEvents = Events.collection.find({}).fetch();
+    let allEvents = Events.collection.find({ companyId: Meteor.userId() }).fetch();
     const upcoming = [];
     const past = [];
     if (selectedTags.length > 0) {

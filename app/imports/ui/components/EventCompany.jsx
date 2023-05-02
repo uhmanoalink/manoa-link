@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Events } from '../../api/event/Event';
+import DeleteConfirmation from './DeleteConfirmation';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const Event = ({ event }) => {
@@ -40,6 +42,7 @@ const Event = ({ event }) => {
         <Link to={`/event/${event._id}`} className="event-edit-link">
           <Button variant="secondary" size="sm">View</Button>
         </Link>
+        <DeleteConfirmation collection={Events} document={event} />
       </Card.Body>
     </Card>
   );

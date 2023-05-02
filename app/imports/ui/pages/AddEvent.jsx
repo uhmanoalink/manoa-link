@@ -43,8 +43,9 @@ const AddEvent = () => {
   const [selectedTags, setSelectedTags] = React.useState([]);
 
   const submit = (data, formRef) => {
-    const { eventName, address, imageId, description, companyId = Companies.companyPublicationName, createdAt = new Date(), startDateTime, endDateTime } = data;
+    const { eventName, address, imageId, description, createdAt = new Date(), startDateTime, endDateTime } = data;
     const tags = selectedTags.map(tag => tag.value);
+    const companyId = Meteor.userId();
     Events.collection.insert(
       { eventName, companyId, address, description, imageId, tags, createdAt, startDateTime, endDateTime },
       (error) => {
