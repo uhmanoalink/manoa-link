@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -29,11 +29,18 @@ const EventCompany = ({ event }) => {
     }
     return 'Invalid Date';
   };
+  const [imageSrc, setImageSrc] = useState('');
+  useEffect(() => {
+    if (ready) {
+      const imageUrl = (event.imageId === 'noId') ? 'images/sample-image-landscape.png' : Images.getFileUrlFromId(event.imageId);
+      setImageSrc(imageUrl);
+    }
+  }, [ready, event.imageId]);
 
   return (
     <Card className="shadow event-card">
       <Card.Body className="event-body">
-        <Card.Img variant="top" src={(event.imageId === 'noId') ? 'images/sample-image-landscape.png' : Images.getFileUrlFromId(event.imageId)} className="event-image" />
+        <Card.Img variant="top" src={imageSrc} className="event-image" />
         <Card.Title className="event-name">{event.eventName}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted event-address">{event.address}</Card.Subtitle>
         <Card.Text className="event-description">{event.description}</Card.Text>
