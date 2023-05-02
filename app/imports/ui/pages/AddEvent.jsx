@@ -15,7 +15,14 @@ const formSchema = new SimpleSchema({
   address: String,
   description: String,
   imageId: String,
-  tags: [String],
+  tags: {
+    type: Array,
+    defaultValue: [],
+    optional: true,
+  },
+  'tags.$': {
+    type: String,
+  },
   startDateTime: Date,
   endDateTime: Date,
 });
@@ -36,11 +43,11 @@ const AddEvent = () => {
   const [selectedTags, setSelectedTags] = React.useState([]);
 
   const submit = (data, formRef) => {
-    const { eventName, address, imageId, description, companyId = Companies.companyPublicationName, createdAt = new Date(), startDateTime, endDateTime } = data;
+    const { eventName, address, imageId, description, createdAt = new Date(), startDateTime, endDateTime } = data;
     const tags = selectedTags.map(tag => tag.value);
-    const owner = Meteor.user().username;
+    const companyId = Meteor.userId();
     Events.collection.insert(
-      { eventName, imageId, address, description, tags, companyId, createdAt, startDateTime, endDateTime, owner },
+      { eventName, companyId, address, description, imageId, tags, createdAt, startDateTime, endDateTime },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -72,7 +79,8 @@ const AddEvent = () => {
                       isMulti
                       options={tagOptions}
                       value={selectedTags}
-                      onChange={setSelectedTags}
+                      onChange={(selected) => setSelectedTags(selected)}
+                      name="tags"
                     />
                   </Col>
                 </Row>

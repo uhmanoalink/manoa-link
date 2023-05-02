@@ -28,7 +28,7 @@ const EventPage = () => {
           <Image src={doc.imageId} fluid className="event-page-image mb-4" />
           <div className="event-page-info">
             <p className="event-page-address"><strong>Address:</strong> {doc.address}</p>
-            <p className="event-page-date"><strong>Date:</strong> {doc.eventAt.toString()}</p>
+            <p className="event-page-date"><strong>Date:</strong> {doc.startDateTime.toString()}</p>
             <div className="event-page-tags mb-3">
               {doc.tags.map((tag, index) => (
                 <Badge variant="black" className="event-page-tag mr-2 mx-1" key={index}>{tag}</Badge>

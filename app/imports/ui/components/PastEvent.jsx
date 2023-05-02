@@ -15,7 +15,7 @@ const formatDate = (date) => {
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const PastEvent = ({ event }) => (
   <Card className="shadow event-card h-100 bg-dark past-event">
-    <Card.Img variant="top" src={event.image} className="event-image" />
+    <Card.Img variant="top" src={event.imageId} className="event-image" />
     <Card.Body className="event-body">
       <Card.Title className="event-name">{event.eventName}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted event-address">{event.address}</Card.Subtitle>
@@ -43,7 +43,7 @@ PastEvent.propTypes = {
     companyId: PropTypes.string,
     address: PropTypes.string,
     description: PropTypes.string,
-    image: PropTypes.string,
+    imageId: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     createdAt: PropTypes.instanceOf(Date),
     startDateTime: PropTypes.instanceOf(Date),

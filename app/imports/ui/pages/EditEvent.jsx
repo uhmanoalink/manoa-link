@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import swal from 'sweetalert';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, DateField, ErrorsField, HiddenField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, DateField, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -9,7 +9,6 @@ import Select from 'react-select';
 import { useParams } from 'react-router';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Events } from '../../api/event/Event';
-import { Companies } from '../../api/company/Company';
 
 const bridge = new SimpleSchema2Bridge(Events.schema);
 
@@ -29,7 +28,6 @@ const EditEvent = () => {
   const [selectedTags, setSelectedTags] = React.useState([]);
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
-  // console.log('EditEvent', _id);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { doc, ready } = useTracker(() => {
     // Get access to Contact documents.
@@ -44,7 +42,6 @@ const EditEvent = () => {
       ready: rdy,
     };
   }, [_id]);
-
   // This is the code for having default tags that event has have when you click edit
   useEffect(() => {
     if (doc && doc.tags) {
@@ -56,8 +53,9 @@ const EditEvent = () => {
   // console.log('EditEvent', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
-    const { eventName, address, imageId, description, companyId = Companies.companyPublicationName, createdAt = new Date(), startDateTime, endDateTime } = data;
+    const { eventName, address, imageId, description, createdAt = new Date(), startDateTime, endDateTime } = data;
     const tags = selectedTags.map(tag => tag.value);
+    const companyId = Meteor.userId();
     Events.collection.update(_id, { $set: { eventName, address, imageId, description, tags, companyId, createdAt, startDateTime, endDateTime } }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
@@ -88,15 +86,14 @@ const EditEvent = () => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col><TextField name="image" /></Col>
+                  <Col><TextField name="imageId" /></Col>
                   <Col><TextField name="address" /></Col>
                 </Row>
                 <LongTextField name="description" />
-                <DateField className="mb-3" name="eventAt" placeholder="Time to start the event" />
-                <DateField className="mb-3" name="eventDoneAt" placeholder="Time to end the event" />
+                <DateField className="mb-3" name="startDateTime" placeholder="Time to start the event" />
+                <DateField className="mb-3" name="endDateTime" placeholder="Time to end the event" />
                 <SubmitField />
                 <ErrorsField />
-                <HiddenField name="owner" />
               </Card.Body>
             </Card>
           </AutoForm>
