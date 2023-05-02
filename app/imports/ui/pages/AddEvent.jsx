@@ -51,8 +51,6 @@ const AddEvent = () => {
     const tags = selectedTags.map(tag => tag.value);
     const companyId = Meteor.userId();
     const imageId = uploadedFileId;
-    console.log(imageId);
-    console.log(companyId);
     Events.collection.insert(
       { eventName, companyId, address, description, imageId, tags, createdAt, startDateTime, endDateTime },
       (error) => {

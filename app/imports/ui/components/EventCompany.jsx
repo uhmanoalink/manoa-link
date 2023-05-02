@@ -11,13 +11,11 @@ import { Images } from '../../api/image/Image';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const EventCompany = ({ event }) => {
-  const { ready, student } = useTracker(() => {
-    const studentsSub = Meteor.subscribe(Students.studentPublicationName);
+  const { ready } = useTracker(() => {
     const imagesSub = Meteor.subscribe(Images.allImagesPublication);
-    const studentsItems = Students.collection.findOne({ userId: Meteor.userId() });
+    const subscription2 = Meteor.subscribe(Events.companyPublicationName);
     return {
-      ready: studentsSub.ready() && imagesSub.ready(),
-      student: studentsItems,
+      ready: imagesSub.ready() && subscription2.ready(),
     };
   }, []);
   const formatDate = (date) => {

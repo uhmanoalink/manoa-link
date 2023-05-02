@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import swal from 'sweetalert';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, DateField, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-bootstrap5';
@@ -9,6 +9,7 @@ import Select from 'react-select';
 import { useParams } from 'react-router';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Events } from '../../api/event/Event';
+import FileUpload from '../components/FileUpload';
 
 const bridge = new SimpleSchema2Bridge(Events.schema);
 
@@ -26,6 +27,8 @@ const tagOptions = [
 /* Renders the EditEvent page for editing a single document. */
 const EditEvent = () => {
   const [selectedTags, setSelectedTags] = React.useState([]);
+  const [selectedEventName, setSelectedEventName] = React.useState([]);
+  const [uploadedFileId, setUploadedFileId] = useState();
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -47,15 +50,17 @@ const EditEvent = () => {
     if (doc && doc.tags) {
       const initialTags = doc.tags.map(tag => ({ label: tag, value: tag }));
       setSelectedTags(initialTags);
+      setSelectedEventName(doc.eventName);
     }
   }, [doc]);
-
   // console.log('EditEvent', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
-    const { eventName, address, imageId, description, createdAt = new Date(), startDateTime, endDateTime } = data;
+    const { address, description, createdAt = new Date(), startDateTime, endDateTime } = data;
     const tags = selectedTags.map(tag => tag.value);
+    const eventName = selectedEventName;
     const companyId = Meteor.userId();
+    const imageId = uploadedFileId;
     Events.collection.update(_id, { $set: { eventName, address, imageId, description, tags, companyId, createdAt, startDateTime, endDateTime } }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
@@ -63,6 +68,10 @@ const EditEvent = () => {
         swal('Success', 'Item updated successfully', 'success');
       }
     });
+  };
+
+  const handleUpload = (fileDoc) => {
+    setUploadedFileId(fileDoc._id);
   };
 
   return ready ? (
@@ -86,7 +95,7 @@ const EditEvent = () => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col><TextField name="imageId" /></Col>
+                  <FileUpload onUpload={handleUpload} name="imageId" />
                   <Col><TextField name="address" /></Col>
                 </Row>
                 <LongTextField name="description" />
