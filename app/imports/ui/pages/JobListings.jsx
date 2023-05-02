@@ -10,7 +10,6 @@ import Listing from '../components/Listing';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const JobListings = () => {
-
   const { ready, listings } = useTracker(() => {
     const subscription = Meteor.subscribe(Listings.studentPublicationName);
     const rdy = subscription.ready();

@@ -61,10 +61,9 @@ const StudentDashboard = () => {
     },
   };
 
-  const { ready, companies, listings } = useTracker(() => {
-    const companiesSub = Meteor.subscribe(Companies.studentPublicationName);
-    const listingsSub = Meteor.subscribe(Listings.studentPublicationName);
-    const rdy = companiesSub.ready() && listingsSub.ready();
+  const { companiesReady, companies } = useTracker(() => {
+    const subscription = Meteor.subscribe(Companies.studentPublicationName);
+    const rdy = subscription.ready();
     const allCompanies = Companies.collection.find({}).fetch();
     return {
       companiesReady: rdy,
@@ -74,19 +73,16 @@ const StudentDashboard = () => {
 
   const { jobsReady, listings, student } = useTracker(() => {
     const subscription = Meteor.subscribe(Listings.studentPublicationName);
+    const rdy = subscription.ready();
+    const allListings = Listings.collection.find({}).fetch();
     const subscription2 = Meteor.subscribe(Students.studentPublicationName);
-    const rdy = subscription.ready() && subscription2.ready();
-    const allListings = Listings.collection.findOne({ userId: Meteor.userId() });
     const studentDoc = Students.collection.findOne({ userId: Meteor.userId() });
     return {
-      ready: rdy,
-      companies: allCompanies,
+      jobsReady: rdy,
       listings: allListings,
       student: studentDoc,
     };
   });
-
-  console.log(student);
 
   const convertEmploymentType = (type) => {
     switch (type) {
@@ -191,13 +187,13 @@ const StudentDashboard = () => {
                               href={website}
                               target="_blank"
                             >
-                              Go to {companyId}&apos;s Website
+                              Go to {website}&apos;s Website
                             </Dropdown.Item>
-                            {/* <Dropdown.Item
+                            <Dropdown.Item
                               onClick={handleRemoveJob}
                             >
                               <BookmarkDash /> Remove
-                            </Dropdown.Item> */}
+                            </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
                         <Button className="btn-apply-now">Apply Now!</Button>
@@ -222,7 +218,7 @@ const StudentDashboard = () => {
         <section id="interesting-companies">
           <h1 className="section-title">Companies you might be interested in:</h1>
           <div className="companies">
-            {ready && companies.map((company) => (
+            {companiesReady && companies.map((company) => (
               <Company company={company} key={company._id} />
             ))}
           </div>
