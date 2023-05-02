@@ -4,13 +4,13 @@ import { Button } from 'react-bootstrap';
 import { Mongo } from 'meteor/mongo';
 
 const SavedJob = ({ collection, student, jobID }) => {
-  const [isJobSaved, setIsJobSaved] = useState(student.savedJobs.includes(jobID));
+  const [isJobSaved, setIsJobSaved] = useState(student.savedListings.includes(jobID));
   const findStudentIdByUserId = (userId) => {
     const studentDoc = collection.findOne({ userId });
     return studentDoc ? studentDoc._id : null;
   };
   useEffect(() => {
-    setIsJobSaved(student.savedJobs.includes(jobID));
+    setIsJobSaved(student.savedListings.includes(jobID));
   }, [student, jobID]);
 
   const handleToggleSave = () => {
@@ -18,12 +18,12 @@ const SavedJob = ({ collection, student, jobID }) => {
     if (isJobSaved) {
       collection.update(
         { _id: studentId },
-        { $pull: { savedJobs: jobID } },
+        { $pull: { savedListings: jobID } },
       );
     } else {
       collection.update(
         { _id: studentId },
-        { $push: { savedJobs: jobID } },
+        { $push: { savedListings: jobID } },
       );
     }
     setIsJobSaved(!isJobSaved);
@@ -40,7 +40,7 @@ SavedJob.propTypes = {
   collection: PropTypes.instanceOf(Mongo.Collection).isRequired,
   student: PropTypes.shape({
     userId: PropTypes.string,
-    savedJobs: PropTypes.arrayOf(PropTypes.string),
+    savedListings: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   jobID: PropTypes.string.isRequired,
 };

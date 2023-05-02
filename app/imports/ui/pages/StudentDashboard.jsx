@@ -8,6 +8,7 @@ import Company from '../components/Company';
 import AddToCalendarDropdown from '../components/AddToCalendarDropdown';
 import { Companies } from '../../api/company/Company';
 import { Listings } from '../../api/listing/Listing';
+import { Students } from '../../api/student/Student';
 
 const StudentDashboard = () => {
   const [activeFeed, setActiveFeed] = useState('events');
@@ -24,18 +25,6 @@ const StudentDashboard = () => {
       endDateTime: new Date('2023-04-16T20:00:00'),
       location: 'Campus Ballroom',
       hostedBy: 'ACM Club',
-    },
-  ];
-
-  const sampleJobData = [
-    {
-      id: 0,
-      companyId: 0,
-      jobTitle: 'React Developer',
-      description: 'Work on the UH websites.',
-      employmentType: 1, // 0 = in-person, 1 = remote, 2 = hybrid
-      scheduleType: 0, // 0 = full-time, 1 = part-time, 2 = flexible
-      location: 'Campus Ballroom',
     },
   ];
 
@@ -82,15 +71,20 @@ const StudentDashboard = () => {
     };
   });
 
-  const { jobsReady, listings } = useTracker(() => {
+  const { jobsReady, listings, student } = useTracker(() => {
     const subscription = Meteor.subscribe(Listings.studentPublicationName);
-    const rdy = subscription.ready();
-    const allListings = Listings.collection.find({}).fetch();
+    const subscription2 = Meteor.subscribe(Students.studentPublicationName);
+    const rdy = subscription.ready() && subscription2.ready();
+    const allListings = Listings.collection.findOne({ userId: Meteor.userId() });
+    const studentDoc = Students.collection.findOne({ userId: Meteor.userId() });
     return {
       jobsReady: rdy,
       listings: allListings,
+      student: studentDoc,
     };
   });
+
+  console.log(student);
 
   const convertEmploymentType = (type) => {
     switch (type) {
@@ -173,14 +167,16 @@ const StudentDashboard = () => {
             )}
             {(activeFeed === 'jobs') && (
               <div className="jobs-feed">
-                {sampleJobData.map(({ id, companyId, jobTitle, description, employmentType, scheduleType }) => {
-                  const { companyName, image, companyPage } = sampleCompanyData[companyId];
+                { student && student.savedListings.map((listingId) => {
+                  const listing = Listings.collection.findOne({ _id: listingId });
+                  console.log(listing);
+                  const { companyId, title, description, imageID, website, location, employmentType, scheduleType, createdAt, startDate } = listing;
                   return (
-                    <Card className="job-card" key={id}>
-                      <Card.Img src={image} alt="Company Logo" />
+                    <Card className="job-card" key={companyId}>
+                      <Card.Img src={imageID} alt="Company Logo" />
                       <Card.Body>
-                        <Card.Title>{jobTitle}</Card.Title>
-                        <Card.Subtitle>{companyName}</Card.Subtitle>
+                        <Card.Title>{title}</Card.Title>
+                        <Card.Subtitle>{companyId}</Card.Subtitle>
                         <Card.Text>{description}</Card.Text>
                         <Card.Text>{convertEmploymentType(employmentType).toUpperCase()}</Card.Text>
                         <Card.Text>{convertScheduleType(scheduleType).toUpperCase()}</Card.Text>
@@ -190,16 +186,16 @@ const StudentDashboard = () => {
                           </Dropdown.Toggle>
                           <Dropdown.Menu>
                             <Dropdown.Item
-                              href={companyPage}
+                              href={website}
                               target="_blank"
                             >
-                              Go to {companyName}&apos;s Website
+                              Go to {companyId}&apos;s Website
                             </Dropdown.Item>
-                            <Dropdown.Item
+                            {/* <Dropdown.Item
                               onClick={handleRemoveJob}
                             >
                               <BookmarkDash /> Remove
-                            </Dropdown.Item>
+                            </Dropdown.Item> */}
                           </Dropdown.Menu>
                         </Dropdown>
                         <Button className="btn-apply-now">Apply Now!</Button>
@@ -207,7 +203,7 @@ const StudentDashboard = () => {
                     </Card>
                   );
                 })}
-                {(activeFeed === 'jobs') && (sampleJobData.length === 0) && (
+                {listings && (activeFeed === 'jobs') && (listings.length === 0) && (
                   <>
                     <h1 className="section-title">
                       😬 There&apos;s nothing to see...

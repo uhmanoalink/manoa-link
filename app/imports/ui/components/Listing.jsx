@@ -32,7 +32,7 @@ const Listing = ({ listing }) => {
         <Card.Text id="listing-card-text">{listing.description}</Card.Text>
         <div>
           <Card.Link id="listing-card-link" to={listing.website}><button type="submit" className="visit-button">More Info</button></Card.Link>
-          <SavedJob jobID={listing._id} student={student} collection={Students.collection} />
+          { ready ? (<SavedJob jobID={listing._id} student={student} collection={Students.collection} />) : undefined}
         </div>
       </Card>
     </Col>
