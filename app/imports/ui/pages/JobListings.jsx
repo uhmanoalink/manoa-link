@@ -1,10 +1,11 @@
-import React from 'react';
-import { Container, Col, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Col, Row, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import HelpButton from '../components/HelpButton';
 import Sidebar from '../components/Sidebar';
 import { Listings } from '../../api/listing/Listing';
+import { Students } from '../../api/student/Student';
 import Listing from '../components/Listing';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -22,9 +23,9 @@ const JobListings = () => {
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
-        <Col xs={12} md={3}>
-          <Sidebar />
-        </Col>
+        {/* <Col xs={12} md={3}> */}
+        {/*  <Sidebar /> */}
+        {/* </Col> */}
         <Col>
           <Row>
             { ready ? (listings.map((listing) => (
