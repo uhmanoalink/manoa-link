@@ -5,7 +5,7 @@
  *
  * @param {FilesCollection} filesCollection
  * @param {File} file
- * @typedef {number} FileDocument
+ * @typedef {object} FileDocument
  * @returns {Promise<FileDocument>} The new document of the file in the collection.
  */
 export const insertFileToFilesCollection = async (filesCollection, file) => new Promise((res, rej) => {

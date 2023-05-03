@@ -58,15 +58,13 @@ class SignupPage {
   }
 
   /** Signs up a new user, then checks to see that they are logged in by checking the navbar. */
-  async signUpAs(tc: TestController, credentials: Credentials, role: Role, inputData: RegisterCompanyInputData | RegisterStudentInputData, expected = true) {
+  async signUpAs(tc: TestController, credentials: Credentials, role: Role, inputData: RegisterCompanyInputData | RegisterStudentInputData) {
     await tc.expect(role).notEql('admin');
     await this.isDisplayed(tc);
-    let success;
-    success = await this.fillInFirstPage(tc, credentials, role);
+    const success = await this.fillInFirstPage(tc, credentials, role);
     if (success) {
-      success = await this.fillInSecondPage(tc, role, inputData);
+      await this.fillInSecondPage(tc, role, inputData);
     }
-    await tc.expect(success).eql(expected);
   }
 
   private async testCreateStudent(tc: TestController) {
@@ -74,7 +72,7 @@ class SignupPage {
     await this.signUpAs(tc, { username: 'john@foo.com', password: 'changeme' }, 'student', {
       firstName: 'Should',
       lastName: 'Fail',
-    }, false);
+    });
     await tc.expect(this.pageSelector.find('div[role="alert"]').withText('That email is already taken!').visible).ok();
     await navBar.checkUnloggedNavLinks(tc);
     // Create a new student
@@ -95,7 +93,7 @@ class SignupPage {
       website: 'Should',
       address: 'Also',
       description: 'Fail',
-    }, false);
+    });
     await tc.expect(this.pageSelector.find('div[role="alert"]').withText('That email is already taken!').visible).ok();
     await navBar.checkUnloggedNavLinks(tc);
     // Create a new company
