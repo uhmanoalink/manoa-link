@@ -8,6 +8,7 @@ import { Images } from '../../api/image/Image';
 const defaultImage = 'images/sample-image-landscape.png';
 
 function addHttpAndWww(url) {
+  console.log(url);
   let newUrl = url;
   if (!url.startsWith('http') && !url.startsWith('https')) {
     newUrl = `https://${newUrl}`;
