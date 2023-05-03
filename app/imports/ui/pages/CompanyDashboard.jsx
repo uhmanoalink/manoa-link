@@ -98,8 +98,8 @@ const CompanyDashboard = () => {
           />
         </section>
         <section id="about">
-          <h2>{company.name}</h2>
-          <a href={company.website}><h6>{company.website}</h6></a>
+          <h2>{company && company.name}</h2>
+          <a href={company && company.website}><h6>{company && company.website}</h6></a>
           {/* <Company company={company} /> */}
         </section>
       </main>
