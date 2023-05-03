@@ -16,7 +16,7 @@ const EventAdmin = ({ event }) => (
           <Badge variant="primary" className="event-tag" key={index}>{tag}</Badge>
         ))}
       </div>
-      <Link to={`/edit/${event._id}`} className="event-edit-link">
+      <Link to={`/edit-event/${event._id}`} className="event-edit-link">
         <Button variant="outline-dark" size="sm">Edit</Button>
       </Link>
       <DeleteConfirmation collection={Events} document={event} />
