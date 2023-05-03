@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Badge, Button, Card, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Card, Col } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
 import { Companies } from '../../api/company/Company';
 import { Images } from '../../api/image/Image';
-import { Listings } from '../../api/listing/Listing';
 import SavedJob from './SavedJob';
 import { Students } from '../../api/student/Student';
 import ProtectedRender from './ProtectedRender';
-import SavedConfirmation from './SavedConfirmation';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 
@@ -54,7 +50,7 @@ const Listing = ({ listing }) => {
     companyName = company.name;
   }
   return (
-    <Col xs={12} md={4}>
+    <Col xs={12} md={3}>
       <Card className="justify-content-center" id="listing-card">
         <Card.Img id="listing-card-image" variant="top" src={(listing.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(listing.imageId)} />
         <Card.Title id="listing-card-title">{listing.title}</Card.Title>

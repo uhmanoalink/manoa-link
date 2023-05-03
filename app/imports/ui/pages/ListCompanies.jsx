@@ -3,7 +3,6 @@ import { Container, Col, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import HelpButton from '../components/HelpButton';
-import Sidebar from '../components/Sidebar';
 import { Companies } from '../../api/company/Company';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Company from '../components/Company';
@@ -22,9 +21,6 @@ const ListCompanies = () => {
   return (
     <Container id="listing" className="py-3">
       <Row className="justify-content-center">
-        <Col xs={12} md={3}>
-          <Sidebar />
-        </Col>
         <Col>
           <div className="company-listings">
             { ready ? (companies.map((company) => (
