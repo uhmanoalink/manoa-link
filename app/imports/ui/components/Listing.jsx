@@ -9,19 +9,6 @@ import { Companies } from '../../api/company/Company';
 
 const defaultImage = 'images/sample-image-landscape.png';
 
-function addHttpAndWww(url) {
-  console.log(url);
-  let newUrl = url;
-  if (!url.startsWith('http') && !url.startsWith('https')) {
-    newUrl = `https://${newUrl}`;
-  }
-  const hostname = new URL(newUrl).hostname;
-  if (!hostname.startsWith('www.')) {
-    newUrl = `https://www.${hostname}`;
-  }
-  return newUrl;
-}
-
 const Listing = ({ listing }) => {
   const { ready, company } = useTracker(() => {
     const subscription = Meteor.subscribe(Companies.studentPublicationName);
@@ -32,6 +19,18 @@ const Listing = ({ listing }) => {
       company: myCompany,
     };
   });
+  function addHttpAndWww(url) {
+    console.log(url);
+    let newUrl = url;
+    if (!url.startsWith('http') && !url.startsWith('https')) {
+      newUrl = `https://${newUrl}`;
+    }
+    const hostname = new URL(newUrl).hostname;
+    if (!hostname.startsWith('www.')) {
+      newUrl = `https://www.${hostname}`;
+    }
+    return newUrl;
+  }
   let companyName;
   if (ready) {
     companyName = company.name;
