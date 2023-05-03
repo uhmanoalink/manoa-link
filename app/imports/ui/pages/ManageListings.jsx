@@ -13,6 +13,7 @@ import Listing from '../components/Listing';
 import { Listings } from '../../api/listing/Listing';
 import { Images } from '../../api/image/Image';
 import FileUpload from '../components/FileUpload';
+import { Companies } from '../../api/company/Company';
 
 const formSchema = new SimpleSchema({
   title: String,
@@ -63,6 +64,9 @@ const ManageListings = () => {
     const imageId = uploadedFileId;
     const tags = selectedTags.map(tag => tag.value);
     const companyId = Meteor.userId();
+    console.log(companyId);
+    const associatedCompany = Companies.collection.findOne({ userId: companyId });
+    console.log(associatedCompany);
     const createdAt = new Date();
     Listings.collection.insert(
       { companyId, title, description, imageId, website, location, employmentType, scheduleType, tags, createdAt, startDate },

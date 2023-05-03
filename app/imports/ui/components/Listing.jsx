@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
+import { Companies } from '../../api/company/Company';
 import { Images } from '../../api/image/Image';
 import { Listings } from '../../api/listing/Listing';
 import SavedJob from './SavedJob';
@@ -17,6 +18,16 @@ import SavedConfirmation from './SavedConfirmation';
 const defaultImage = 'images/sample-image-landscape.png';
 
 const Listing = ({ listing }) => {
+  const { readyCompany, company } = useTracker(() => {
+    const subscription = Meteor.subscribe(Companies.studentPublicationName);
+    const rdy = subscription.ready();
+    const myCompany = Companies.collection.findOne({ userId: listing.companyId });
+    return {
+      ready: rdy,
+      company: myCompany,
+    };
+  });
+
   const { ready, student } = useTracker(() => {
     const sub = Meteor.subscribe(Students.studentPublicationName);
     const studentsItems = Students.collection.findOne({ userId: Meteor.userId() });
@@ -38,17 +49,20 @@ const Listing = ({ listing }) => {
     }
     return newUrl;
   }
-
+  let companyName;
+  if (readyCompany) {
+    companyName = company.name;
+  }
   return (
     <Col xs={12} md={4}>
       <Card className="justify-content-center" id="listing-card">
         <Card.Img id="listing-card-image" variant="top" src={(listing.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(listing.imageId)} />
         <Card.Title id="listing-card-title">{listing.title}</Card.Title>
-        <Card.Text id="listing-card-text">Company: {listing.companyId}</Card.Text>
+        <Card.Text id="listing-card-text">Company: {companyName}</Card.Text>
         <Card.Text id="listing-card-text">{listing.description}</Card.Text>
         <div>
           <Card.Link id="listing-card-link" href={addHttpAndWww(listing.website)} target="_blank">
-            <button type="button" className="visit-button">More Info</button>
+            <button type="button" className="visit-button">Visit Website</button>
           </Card.Link>
           <ProtectedRender allowedRoles={['student']}>{(student && ready) ? (<SavedJob jobID={listing._id} student={student} collection={Students.collection} />) : undefined}</ProtectedRender>
         </div>
