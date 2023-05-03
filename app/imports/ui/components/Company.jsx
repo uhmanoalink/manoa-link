@@ -9,6 +9,19 @@ import { Students } from '../../api/student/Student';
 
 const defaultImage = 'images/sample-image-landscape.png';
 
+function addHttpAndWww(url) {
+  console.log(url);
+  let newUrl = url;
+  if (!url.startsWith('http') && !url.startsWith('https')) {
+    newUrl = `https://${newUrl}`;
+  }
+  const hostname = new URL(newUrl).hostname;
+  if (!hostname.startsWith('www.')) {
+    newUrl = `https://www.${hostname}`;
+  }
+  return newUrl;
+}
+
 const Company = ({ company }) => {
   const { ready, student } = useTracker(() => {
     const studentsSub = Meteor.subscribe(Students.studentPublicationName);
@@ -21,7 +34,7 @@ const Company = ({ company }) => {
   }, []);
 
   const onVisit = () => {
-    window.open(company.website, '_blank');
+    window.open(addHttpAndWww(company.website), '_blank');
   };
 
   const onFollow = () => {

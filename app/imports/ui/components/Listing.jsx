@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Col } from 'react-bootstrap';
 import { Images } from '../../api/image/Image';
-
+import { Companies } from '../../api/company/Company';
+import { Listings } from '../../api/listing/Listing';
+import { useTracker } from 'meteor/react-meteor-data';
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 
 const defaultImage = 'images/sample-image-landscape.png';
@@ -19,19 +21,34 @@ function addHttpAndWww(url) {
   }
   return newUrl;
 }
-const Listing = ({ listing }) => (
-  <Col xs={12} md={4}>
+
+
+const Listing = ({ listing }) => {
+  const { ready, company } = useTracker(() => {
+    const subscription = Meteor.subscribe(Companies.studentPublicationName);
+    const rdy = subscription.ready();
+    const myCompany = Companies.collection.findOne({ userId: listing.companyId });
+    return {
+      ready: rdy,
+      company: myCompany,
+    };
+  });
+  let companyName = undefined;
+  if (ready) {
+    companyName = company.name;
+  }
+  return (<Col xs={12} md={4}>
     <Card className="justify-content-center" id="listing-card">
       <Card.Img id="listing-card-image" variant="top" src={(listing.imageId === 'noId') ? defaultImage : Images.getFileUrlFromId(listing.imageId)} />
       <Card.Title id="listing-card-title">{listing.title}</Card.Title>
-      <Card.Text id="listing-card-text">Company: {listing.companyId}</Card.Text>
+      <Card.Text id="listing-card-text">Company: {companyName}</Card.Text>
       <Card.Text id="listing-card-text">{listing.description}</Card.Text>
       <Card.Link id="listing-card-link" href={addHttpAndWww(listing.website)} target="_blank">
-        <button type="button" className="visit-button">More Info</button>
+        <button type="button" className="visit-button">Visit Website</button>
       </Card.Link>
     </Card>
   </Col>
-);
+)};
 // Require a document to be passed to this component.
 Listing.propTypes = {
   listing: PropTypes.shape({

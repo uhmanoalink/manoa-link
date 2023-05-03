@@ -59,7 +59,7 @@ class CompaniesCollection extends CRUDCollection {
    *
    * ---
    *
-   * @param {string | Mongo.ObjectID | Mongo.Selector<Document>} selector A query describing the documents to find.
+   * @param {{_id: string}} selector A query describing the documents to find.
    * @override
    */
   findOne(selector) {
