@@ -22,7 +22,7 @@ const CompanyDashboard = () => {
 
     const eventItems = Events.collection.find({}).fetch();
     const listingItems = Listings.collection.find({ companyId: Meteor.userId() }).fetch();
-    const companyItem = Companies.collection.findOne({ _id: Meteor.userId() });
+    const companyItem = Companies.collection.findOne({ userId: Meteor.userId() });
 
     return {
       events: eventItems,
@@ -98,7 +98,8 @@ const CompanyDashboard = () => {
           />
         </section>
         <section id="about">
-          <h2>Company Name</h2>
+          <h2>{company.name}</h2>
+          <a href={company.website}><h6>{company.website}</h6></a>
           {/* <Company company={company} /> */}
         </section>
       </main>
