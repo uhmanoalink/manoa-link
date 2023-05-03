@@ -65,7 +65,7 @@ const ManageListings = () => {
     const tags = selectedTags.map(tag => tag.value);
     const companyId = Meteor.userId();
     console.log(companyId);
-    const associatedCompany = Companies.collection.findOne({ userId: companyId});
+    const associatedCompany = Companies.collection.findOne({ userId: companyId });
     console.log(associatedCompany);
     const createdAt = new Date();
     Listings.collection.insert(
