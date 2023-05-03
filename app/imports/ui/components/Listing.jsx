@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Companies } from '../../api/company/Company';
 import { Badge, Button, Card, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
+import { Companies } from '../../api/company/Company';
 import { Images } from '../../api/image/Image';
 import { Listings } from '../../api/listing/Listing';
 import SavedJob from './SavedJob';
@@ -27,7 +27,7 @@ const Listing = ({ listing }) => {
       company: myCompany,
     };
   });
-  
+
   const { ready, student } = useTracker(() => {
     const sub = Meteor.subscribe(Students.studentPublicationName);
     const studentsItems = Students.collection.findOne({ userId: Meteor.userId() });
@@ -36,7 +36,7 @@ const Listing = ({ listing }) => {
       student: studentsItems,
     };
   }, []);
-  
+
   function addHttpAndWww(url) {
     console.log(url);
     let newUrl = url;
