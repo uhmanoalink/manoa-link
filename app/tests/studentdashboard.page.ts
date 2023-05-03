@@ -26,7 +26,6 @@ class StudentDashboardPage {
 
   private async showsInterestingCompanies(tc: TestController) {
     await tc.expect(Selector('#interesting-companies').visible).ok();
-    await tc.debug();
     await tc.expect(Selector('#interesting-companies .companies').exists).ok();
   }
 
