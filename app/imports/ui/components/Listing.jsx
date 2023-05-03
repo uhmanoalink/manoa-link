@@ -15,6 +15,7 @@ import SavedConfirmation from './SavedConfirmation';
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 
 const defaultImage = 'images/sample-image-landscape.png';
+
 const Listing = ({ listing }) => {
   const { ready, student } = useTracker(() => {
     const sub = Meteor.subscribe(Students.studentPublicationName);
@@ -24,6 +25,19 @@ const Listing = ({ listing }) => {
       student: studentsItems,
     };
   }, []);
+  
+  function addHttpAndWww(url) {
+    console.log(url);
+    let newUrl = url;
+    if (!url.startsWith('http') && !url.startsWith('https')) {
+      newUrl = `https://${newUrl}`;
+    }
+    const hostname = new URL(newUrl).hostname;
+    if (!hostname.startsWith('www.')) {
+      newUrl = `https://www.${hostname}`;
+    }
+    return newUrl;
+  }
 
   return (
     <Col xs={12} md={4}>
@@ -33,13 +47,16 @@ const Listing = ({ listing }) => {
         <Card.Text id="listing-card-text">Company: {listing.companyId}</Card.Text>
         <Card.Text id="listing-card-text">{listing.description}</Card.Text>
         <div>
-          <Card.Link id="listing-card-link" to={listing.website}><button type="submit" className="visit-button">More Info</button></Card.Link>
+          <Card.Link id="listing-card-link" href={addHttpAndWww(listing.website)} target="_blank">
+            <button type="button" className="visit-button">More Info</button>
+          </Card.Link>
           <ProtectedRender allowedRoles={['student']}>{(student && ready) ? (<SavedJob jobID={listing._id} student={student} collection={Students.collection} />) : undefined}</ProtectedRender>
         </div>
       </Card>
     </Col>
   );
 };
+
 // Require a document to be passed to this component.
 Listing.propTypes = {
   listing: PropTypes.shape({

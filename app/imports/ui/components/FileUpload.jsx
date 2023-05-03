@@ -53,6 +53,7 @@ import { insertFileToFilesCollection, verifyFileType } from '../../../lib/files'
  */
 const FileUpload = ({ fc, label, accept, buttonVariant, customButton, onUpload }) => {
   const [inputFile, setInputFile] = useState(null);
+  const [showConfirmMsg, setShowConfirmMsg] = useState();
   const [alertMsg, setAlertMsg] = useState();
   const [showAlert, setShowAlert] = useState(false);
 
@@ -77,13 +78,18 @@ const FileUpload = ({ fc, label, accept, buttonVariant, customButton, onUpload }
   };
 
   /** @type {React.MouseEventHandler<HTMLButtonElement>} */
-  const handleUpload = async () => {
+  const handleUpload = async (e) => {
+    e.preventDefault();
     if (!verifyFileType(inputFile, accept)) {
       throw new Error(`The file type of ${inputFile.name} is not a valid type`);
     }
     try {
       const fileObj = await insertFileToFilesCollection(fc, inputFile);
+      setShowConfirmMsg(true);
       onUpload?.(fileObj);
+      setTimeout(() => {
+        setShowConfirmMsg();
+      }, 2000);
     } catch (err) {
       alert(`There was a problem while uploading file ${inputFile.name}`);
     }
@@ -96,23 +102,19 @@ const FileUpload = ({ fc, label, accept, buttonVariant, customButton, onUpload }
           {label}
           <OverlayTrigger
             placement="bottom"
-            overlay={inputFile?.type.startsWith('image') ? (
-              <Popover>
-                <Popover.Body>
-                  <Image
-                    alt="preview"
-                    src={URL.createObjectURL(inputFile)}
-                    width={100}
-                  />
-                </Popover.Body>
-              </Popover>
-            ) : <div />}
+            overlay={
+              inputFile?.type.startsWith('image') ? (
+                <Popover>
+                  <Popover.Body>
+                    <Image alt="preview" src={URL.createObjectURL(inputFile)} width={100} />
+                  </Popover.Body>
+                </Popover>
+              ) : (
+                <div />
+              )
+            }
           >
-            <Form.Control
-              type="file"
-              accept={accept}
-              onChange={handleChangeFile}
-            />
+            <Form.Control type="file" accept={accept} onChange={handleChangeFile} />
           </OverlayTrigger>
         </Form.Label>
       </Form.Group>
@@ -121,7 +123,14 @@ const FileUpload = ({ fc, label, accept, buttonVariant, customButton, onUpload }
           {alertMsg}
         </Alert>
       )}
-      <Button variant={buttonVariant} type="submit" onClick={handleUpload}>{customButton || 'Upload'}</Button>
+      <span>
+        <Button className="me-2" variant={buttonVariant} type="submit" onClick={handleUpload}>
+          {customButton || 'Upload'}
+        </Button>
+        <span className={showConfirmMsg ? 'confirm-msg' : 'confirm-msg hide'}>
+          File was uploaded!
+        </span>
+      </span>
     </div>
   );
 };

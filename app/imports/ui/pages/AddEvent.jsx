@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, TextField, LongTextField, SubmitField, DateField } from 'uniforms-bootstrap5';
+import { AutoForm, AutoField, ErrorsField, TextField, LongTextField, SubmitField, DateField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -9,12 +9,16 @@ import Select from 'react-select';
 import { Events } from '../../api/event/Event';
 import { Companies } from '../../api/company/Company';
 import HelpButton from '../components/HelpButton';
+import FileUpload from '../components/FileUpload';
 
 const formSchema = new SimpleSchema({
   eventName: String,
   address: String,
   description: String,
-  imageId: String,
+  imageId: {
+    type: String,
+    optional: true,
+  },
   tags: {
     type: Array,
     defaultValue: [],
@@ -41,11 +45,12 @@ const tagOptions = [
 
 const AddEvent = () => {
   const [selectedTags, setSelectedTags] = React.useState([]);
-
+  const [uploadedFileId, setUploadedFileId] = useState();
   const submit = (data, formRef) => {
-    const { eventName, address, imageId, description, createdAt = new Date(), startDateTime, endDateTime } = data;
+    const { eventName, address, description, createdAt = new Date(), startDateTime, endDateTime } = data;
     const tags = selectedTags.map(tag => tag.value);
     const companyId = Meteor.userId();
+    const imageId = uploadedFileId;
     Events.collection.insert(
       { eventName, companyId, address, description, imageId, tags, createdAt, startDateTime, endDateTime },
       (error) => {
@@ -60,6 +65,9 @@ const AddEvent = () => {
     );
   };
 
+  const handleUpload = (fileDoc) => {
+    setUploadedFileId(fileDoc._id);
+  };
   let fRef = null;
 
   return (
@@ -86,12 +94,11 @@ const AddEvent = () => {
                 </Row>
                 <Row>
                   <Col><TextField className="mb-3" name="address" placeholder="Address" /></Col>
-                  <Col><TextField className="mb-3" name="imageId" placeholder="Image URL" /></Col>
+                  <FileUpload onUpload={handleUpload} name="imageId" />
                 </Row>
                 <LongTextField className="mb-3" name="description" placeholder="Description" />
                 <DateField className="mb-3" name="startDateTime" placeholder="Time to start the event" />
                 <DateField className="mb-3" name="endDateTime" placeholder="Time to end the event" />
-                <ErrorsField />
                 <SubmitField className="submit-btn" value="Add Event" />
               </Card.Body>
             </Card>

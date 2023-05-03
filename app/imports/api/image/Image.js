@@ -121,7 +121,10 @@ class ImagesCollection {
    */
   getFileUrlFromId(imageId) {
     const imageDoc = this.collection.findOne({ _id: imageId });
-    return this.filesCollection.link(imageDoc);
+    if (imageDoc) {
+      return this.filesCollection.link(imageDoc);
+    }
+    return undefined;
   }
 
   purgeUnused() {
@@ -129,10 +132,10 @@ class ImagesCollection {
     allImages.forEach(({ _id }) => {
       // Check all collections for usage of the _id
       const used =
-      (Students.collection.find({ profileImageId: _id }).fetch().length !== 0) ||
-      (Companies.collection.find({ imageId: _id }).fetch().length !== 0) ||
-      (Events.collection.find({ imageId: _id }).fetch().length !== 0) ||
-      (Listings.collection.find({ imageId: _id }).fetch().length !== 0);
+        Students.collection.find({ profileImageId: _id }).fetch().length !== 0 ||
+        Companies.collection.find({ imageId: _id }).fetch().length !== 0 ||
+        Events.collection.find({ imageId: _id }).fetch().length !== 0 ||
+        Listings.collection.find({ imageId: _id }).fetch().length !== 0;
 
       if (!used) {
         removeFileFromFilesCollection(this.filesCollection, _id);
