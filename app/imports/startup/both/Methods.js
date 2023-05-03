@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { check, Match } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
 import { Mongo } from 'meteor/mongo';
@@ -60,5 +61,18 @@ Meteor.methods({
     const { userId } = collection.findOne(selector);
     Meteor.users.remove({ _id: userId });
     collection.remove(selector);
+  },
+  changeAccountEmail(userId, oldEmail, newEmail) {
+    check(userId, String);
+    check(oldEmail, String);
+    // Email regex from: https://regexr.com/3e48o
+    Match.Where(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(oldEmail));
+    check(newEmail, String);
+    Match.Where(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(newEmail));
+    if (Meteor.isServer) {
+      Accounts.removeEmail(userId, oldEmail);
+      Accounts.addEmail(userId, newEmail);
+      Accounts.setUsername(userId, newEmail);
+    }
   },
 });

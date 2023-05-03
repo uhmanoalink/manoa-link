@@ -1,11 +1,52 @@
 $manoa-green: #024731;
 
-#student-profile, #company-profile {
+#student-profile,
+#company-profile {
   align-self: center;
   align-items: center;
   width: 800px;
 
+  .change-pfp-button {
+    position: relative;
+    width: min-content;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+
+    img {
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      outline: 2px solid black;
+    }
+
+    .edit-pfp-icon {
+      $color: #111;
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      border: 1px solid $color;
+      border-radius: 50%;
+      color: $color;
+      background: rgb(255, 255, 255);
+      line-height: 1em;
+      width: 2.5em;
+      aspect-ratio: 1 / 1;
+      display: grid;
+      place-items: center;
+    }
+  }
+
   #pfp {
     width: 200px;
   }
+
+  .profile-field {
+    max-width: 400px;
+  }
+}
+
+.change-pfp-modal-backdrop {
+  opacity: 0.1 !important;
 }
