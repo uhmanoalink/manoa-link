@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, DateField, ErrorsField, LongTextField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, DateField, LongTextField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import Select from 'react-select';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
-import PropTypes from 'prop-types';
 import HelpButton from '../components/HelpButton';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Listing from '../components/Listing';
@@ -35,7 +34,7 @@ const formSchema = new SimpleSchema({
 const bridge = new SimpleSchema2Bridge(formSchema);
 const ManageListings = () => {
   const [imageDoc, setImageDoc] = useState(null);
-  const [uploadedFileId, setUploadedFileId] = useState("noId");
+  const [uploadedFileId, setUploadedFileId] = useState('noId');
 
   const convertImage = async (url) => {
     const file = await Images.getFileFromImageUrl(url);
@@ -60,16 +59,11 @@ const ManageListings = () => {
     };
   });
   const submit = (data, formRef) => {
-    console.log('got to submit');
     const { title, website, location, employmentType, scheduleType, startDate, description } = data;
-    console.log('got to assignment');
     const imageId = uploadedFileId;
     const tags = selectedTags.map(tag => tag.value);
     const companyId = Meteor.userId();
     const createdAt = new Date();
-    const newListing = { companyId: companyId, title: title, description: description, imageId: imageId, website: website, location: location, employmentType: employmentType, scheduleType: scheduleType, tags: tags, createdAt: createdAt, startDate: startDate };
-    console.log(newListing);
-    console.log('inserting');
     Listings.collection.insert(
       { companyId, title, description, imageId, website, location, employmentType, scheduleType, tags, createdAt, startDate },
       (error) => {

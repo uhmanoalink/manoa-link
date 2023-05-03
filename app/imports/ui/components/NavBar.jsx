@@ -4,7 +4,6 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight, PersonCircle, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
-import { Roles } from 'meteor/alanning:roles';
 
 import ProtectedRender from './ProtectedRender';
 

@@ -16,7 +16,6 @@ import NavBar from '../components/NavBar';
 import SignIn from '../pages/SignIn';
 import NotAuthorized from '../pages/NotAuthorized';
 import ProtectedRoute from './ProtectedRoute';
-import AdminProtectedRoute from './AdminProtectedRoute';
 import EditEvent from '../pages/EditEvent';
 import Dashboard from '../pages/Dashboard';
 import MainEventsList from '../pages/MainEventsList';

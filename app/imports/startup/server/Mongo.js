@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Companies } from '../../api/company/Company';
 import { Events } from '../../api/event/Event';
 import { Listings } from '../../api/listing/Listing';
-import { Images } from '../../api/image/Image';
+// import { Images } from '../../api/image/Image';
 // import { Positions } from '../../api/position/Position';
 // import { Users } from '../../api/user/User';
 

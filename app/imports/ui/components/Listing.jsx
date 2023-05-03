@@ -26,7 +26,7 @@ const Listing = ({ listing }) => (
       <Card.Text id="listing-card-text">Company: {listing.companyId}</Card.Text>
       <Card.Text id="listing-card-text">{listing.description}</Card.Text>
       <Card.Link id="listing-card-link" href={addHttpAndWww(listing.website)} target="_blank">
-        <button className="visit-button" >More Info</button>
+        <button type="button" className="visit-button">More Info</button>
       </Card.Link>
     </Card>
   </Col>
