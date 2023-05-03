@@ -177,7 +177,7 @@ const StudentDashboard = () => {
         <section id="interesting-companies">
           <h1 className="section-title">Companies you might be interested in:</h1>
           <div className="companies">
-            {ready && interestingCompanies.map((company) => (
+            {ready && interestingCompanies && interestingCompanies.map((company) => (
               <Company company={company} key={company._id} />
             ))}
           </div>
