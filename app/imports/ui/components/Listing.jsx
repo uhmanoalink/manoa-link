@@ -25,7 +25,7 @@ const Listing = ({ listing }) => {
       student: studentsItems,
     };
   }, []);
-  
+
   function addHttpAndWww(url) {
     console.log(url);
     let newUrl = url;
