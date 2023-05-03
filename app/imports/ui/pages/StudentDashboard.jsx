@@ -140,13 +140,15 @@ const StudentDashboard = () => {
             {(activeFeed === 'jobs') && (
               <div className="jobs-feed">
                 { savedListings && savedListings.map((listing) => {
-                  const { companyId, title, description, imageID, website, location, employmentType, scheduleType, createdAt, startDate } = listing;
+                  const defaultImage = 'images/sample-image-landscape.png';
+                  const { companyId, title, description, imageId, website, location, employmentType, scheduleType, createdAt, startDate } = listing;
+                  const imagePath = (imageId !== 'noId') ? Images.getFileUrlFromId(imageId) : defaultImage;
                   return (
                     <Card className="job-card" key={companyId}>
-                      <Card.Img src={imageID} alt="Company Logo" />
+                      <Card.Img src={imagePath} alt="Company Logo" />
                       <Card.Body>
                         <Card.Title>{title}</Card.Title>
-                        <Card.Subtitle>{companyId}</Card.Subtitle>
+                        <Card.Subtitle>{Companies.collection.findOne({ userId: companyId }).name}</Card.Subtitle>
                         <Card.Text>{description}</Card.Text>
                         <Card.Text>{employmentType.toUpperCase()}</Card.Text>
                         <Card.Text>{scheduleType.toUpperCase()}</Card.Text>

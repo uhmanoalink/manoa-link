@@ -47,7 +47,7 @@ const MainEventsPage = () => {
     'Economics', 'Anthropology', 'English', 'History', 'Philosophy', 'Religious Studies', 'Classics',
     'Fine Arts', 'Music', 'Theater', 'Film', 'Creative Writing', 'Nursing', 'Pre-Med', 'Public Health',
     'Health Sciences', 'Physical Therapy', 'Linguistics', 'Journalism', 'Advertising', 'Public Relations',
-    'Communication Studies', 'Law', 'Criminal Justice', 'Paralegal Studies', 'Political Science', 'Sociology',
+    'Communication Studies', 'Law', 'Criminal Justice', 'Paralegal Studies',
     'International Relations', 'Global Studies', 'Foreign Languages', 'Engineering',
   ].sort().map(tag => ({ label: tag, value: tag }));
 
