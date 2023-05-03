@@ -8,29 +8,37 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { Events } from '../../api/event/Event';
 import PastEvent from '../components/PastEvent';
 import EventCompany from '../components/EventCompany';
+import { Companies } from '../../api/company/Company';
 
 const ManageEvents = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const { ready, upcomingEvents, pastEvents } = useTracker(() => {
-    const subscription = Meteor.subscribe(Events.studentPublicationName);
-    const subscription2 = Meteor.subscribe(Events.adminPublicationName);
-    const rdy = subscription.ready() && subscription2.ready();
-    let allEvents = Events.collection.find({ companyId: Meteor.userId() }).fetch();
+    const eventsSub = Meteor.subscribe(Events.companyPublicationName);
+    const companySub = Meteor.subscribe(Companies.companyPublicationName);
+    const rdy = eventsSub.ready() && companySub.ready();
+
+    const company = Companies.collection.findOne({ userId: Meteor.userId() });
+
     const upcoming = [];
     const past = [];
-    if (selectedTags.length > 0) {
-      const selectedTagValues = selectedTags.map((tag) => tag.value);
-      allEvents = allEvents.filter((event) => selectedTagValues.some((tag) => event.tags.includes(tag)));
-    }
-    allEvents.forEach((event) => {
-      if (new Date(event.startDateTime) > new Date()) {
-        upcoming.push(event);
-      } else {
-        past.push(event);
+    if (company) {
+      let allEvents = Events.collection.find({ companyId: company._id }).fetch();
+
+      if (selectedTags.length > 0) {
+        const selectedTagValues = selectedTags.map((tag) => tag.value);
+        allEvents = allEvents.filter((event) => selectedTagValues.some((tag) => event.tags.includes(tag)));
       }
-    });
-    upcoming.sort((a, b) => a.startDateTime - b.startDateTime);
-    past.sort();
+      allEvents.forEach((event) => {
+        if (new Date(event.startDateTime) > new Date()) {
+          upcoming.push(event);
+        } else {
+          past.push(event);
+        }
+      });
+      upcoming.sort((a, b) => a.startDateTime - b.startDateTime);
+      past.sort();
+    }
+
     return {
       upcomingEvents: upcoming,
       pastEvents: past,

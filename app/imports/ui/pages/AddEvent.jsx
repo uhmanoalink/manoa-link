@@ -3,6 +3,7 @@ import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, AutoField, ErrorsField, TextField, LongTextField, SubmitField, DateField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import Select from 'react-select';
@@ -46,23 +47,36 @@ const tagOptions = [
 const AddEvent = () => {
   const [selectedTags, setSelectedTags] = React.useState([]);
   const [uploadedFileId, setUploadedFileId] = useState();
+
+  const { ready, company } = useTracker(() => {
+    const companySub = Meteor.subscribe(Companies.companyPublicationName);
+    const companyDoc = Companies.collection.findOne({ userId: Meteor.userId() });
+
+    return {
+      ready: companySub.ready(),
+      company: companyDoc,
+    };
+  }, []);
+
   const submit = (data, formRef) => {
-    const { eventName, address, description, createdAt = new Date(), startDateTime, endDateTime } = data;
-    const tags = selectedTags.map(tag => tag.value);
-    const companyId = Meteor.userId();
-    const imageId = uploadedFileId;
-    Events.collection.insert(
-      { eventName, companyId, address, description, imageId, tags, createdAt, startDateTime, endDateTime },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Item added successfully', 'success');
-          formRef.reset();
-          setSelectedTags([]);
-        }
-      },
-    );
+    if (ready) {
+      const { eventName, address, description, createdAt = new Date(), startDateTime, endDateTime } = data;
+      const tags = selectedTags.map(tag => tag.value);
+      const companyId = company._id;
+      const imageId = uploadedFileId;
+      Events.collection.insert(
+        { eventName, companyId, address, description, imageId, tags, createdAt, startDateTime, endDateTime },
+        (error) => {
+          if (error) {
+            swal('Error', error.message, 'error');
+          } else {
+            swal('Success', 'Item added successfully', 'success');
+            formRef.reset();
+            setSelectedTags([]);
+          }
+        },
+      );
+    }
   };
 
   const handleUpload = (fileDoc) => {

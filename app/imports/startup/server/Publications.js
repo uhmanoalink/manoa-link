@@ -21,7 +21,7 @@ Meteor.publish(Companies.studentPublicationName, function () {
 // If logged in and with company role, then publish the documents for companys. Otherwise publish nothing.
 Meteor.publish(Companies.companyPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'company')) {
-    return Companies.collection.find({ _id: this.userId });
+    return Companies.collection.find({ userId: this.userId });
   }
   return this.ready();
 });
@@ -60,7 +60,8 @@ Meteor.publish(Events.studentPublicationName, function () {
 // If logged in and with company role, then publish the documents for companys. Otherwise publish nothing.
 Meteor.publish(Events.companyPublicationName, function () {
   if (this.userId) {
-    return Events.collection.find({ companyId: this.userId });
+    const { _id: companyId } = Companies.collection.findOne({ userId: this.userId });
+    return Events.collection.find({ companyId });
   }
   return this.ready();
 });
