@@ -19,7 +19,7 @@ const Listing = ({ listing }) => {
     const rdy = subscription.ready();
     const myCompany = Companies.collection.findOne({ userId: listing.companyId });
     return {
-      ready: rdy,
+      readyCompany: rdy,
       company: myCompany,
     };
   });
@@ -34,7 +34,6 @@ const Listing = ({ listing }) => {
   }, []);
 
   function addHttpAndWww(url) {
-    console.log(url);
     let newUrl = url;
     if (!url.startsWith('http') && !url.startsWith('https')) {
       newUrl = `https://${newUrl}`;

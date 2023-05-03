@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Students } from '../../api/student/Student';
+import { Images } from '../../api/image/Image';
+import { useTracker } from 'meteor/react-meteor-data';
+
+const defaultImage = "images/sample-image-landscape.png";
 
 const formatDate = (date) => {
   if (date) {
@@ -12,10 +17,20 @@ const formatDate = (date) => {
   }
   return 'Invalid Date';
 };
+
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-const PastEvent = ({ event }) => (
+const PastEvent = ({ event }) => {
+  const { ready, image } = useTracker(() => {
+    const imagesSub = Meteor.subscribe(Images.allImagesPublication);
+    const img = (event.imageId !== "noId") ? Images.getFileUrlFromId(event.imageId) : defaultImage;
+    return {
+      ready: imagesSub.ready(),
+      image: img,
+    };
+  }, []);
+  return (
   <Card className="shadow event-card h-100 bg-dark past-event">
-    <Card.Img variant="top" src={event.imageId} className="event-image" />
+    <Card.Img variant="top" src={(ready) ? image : defaultImage} className="event-image" />
     <Card.Body className="event-body">
       <Card.Title className="event-name">{event.eventName}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted event-address">{event.address}</Card.Subtitle>
@@ -34,7 +49,7 @@ const PastEvent = ({ event }) => (
       </Link>
     </Card.Body>
   </Card>
-);
+);}
 
 // Require a document to be passed to this component.
 PastEvent.propTypes = {
