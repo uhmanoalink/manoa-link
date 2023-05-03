@@ -13,6 +13,19 @@ import { Students } from '../../api/student/Student';
 import { Images } from '../../api/image/Image';
 
 const StudentDashboard = () => {
+  function addHttpAndWww(url) {
+    console.log(url);
+    let newUrl = url;
+    if (!url.startsWith('http') && !url.startsWith('https')) {
+      newUrl = `https://${newUrl}`;
+    }
+    const hostname = new URL(newUrl).hostname;
+    if (!hostname.startsWith('www.')) {
+      newUrl = `https://www.${hostname}`;
+    }
+    return newUrl;
+  }
+
   const [activeFeed, setActiveFeed] = useState('events');
 
   const { ready, student, interestingCompanies, upcomingEvents, savedListings } = useTracker(() => {
@@ -143,7 +156,7 @@ const StudentDashboard = () => {
                           </Dropdown.Toggle>
                           <Dropdown.Menu>
                             <Dropdown.Item
-                              href={website}
+                              href={addHttpAndWww(website)}
                               target="_blank"
                             >
                               Go to {website}&apos;s Website
