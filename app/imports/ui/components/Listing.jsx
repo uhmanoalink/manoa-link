@@ -4,6 +4,7 @@ import { Badge, Button, Card, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 import { Images } from '../../api/image/Image';
 import { Listings } from '../../api/listing/Listing';
 import SavedJob from './SavedJob';
@@ -23,6 +24,7 @@ const Listing = ({ listing }) => {
       student: studentsItems,
     };
   }, []);
+
   return (
     <Col xs={12} md={4}>
       <Card className="justify-content-center" id="listing-card">
@@ -32,7 +34,7 @@ const Listing = ({ listing }) => {
         <Card.Text id="listing-card-text">{listing.description}</Card.Text>
         <div>
           <Card.Link id="listing-card-link" to={listing.website}><button type="submit" className="visit-button">More Info</button></Card.Link>
-          { ready ? (<SavedJob jobID={listing._id} student={student} collection={Students.collection} />) : undefined}
+          <ProtectedRender allowedRoles={['student']}>{(student && ready) ? (<SavedJob jobID={listing._id} student={student} collection={Students.collection} />) : undefined}</ProtectedRender>
         </div>
       </Card>
     </Col>
