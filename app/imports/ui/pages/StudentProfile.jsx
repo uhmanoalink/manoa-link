@@ -162,7 +162,7 @@ const StudentProfile = () => {
                   </AutoForm>
                 ) : undefined}
             </section>
-            <hr />
+            <hr className="mb-5" />
             <section id="email" className="mb-5">
               <h4>Email: {Meteor.user().username}</h4>
               <AutoForm schema={emailSchema} onSubmit={handleSubmitChangeEmail}>
