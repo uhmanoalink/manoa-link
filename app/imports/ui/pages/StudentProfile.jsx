@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Alert, Button, ButtonGroup, Container, Image, Modal, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Alert, Button, Container, Image, Modal, Row } from 'react-bootstrap';
 import { Pencil, PencilSquare } from 'react-bootstrap-icons';
 import { AutoForm, TextField } from 'uniforms-bootstrap5';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
