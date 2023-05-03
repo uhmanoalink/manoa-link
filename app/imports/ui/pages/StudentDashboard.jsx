@@ -32,7 +32,11 @@ const StudentDashboard = () => {
       const followedCompanies = Companies.collection.find({ _id: { $in: studentDoc.followedCompanies } }).fetch();
       followedCompanyIds = followedCompanies.map(company => company._id);
       if (followedCompanyIds) {
-        upcomingEventsItems = Events.collection.find({ companyId: { $in: followedCompanyIds } }).fetch();
+        const upcomingEventsItemsId = Events.collection.find({ companyId: { $in: followedCompanyIds } }, { fields: { _id: 1 } }).fetch();
+        const savedEvents = studentDoc.savedEvents;
+        const unionEventIds = [...new Set([...upcomingEventsItemsId, ...savedEvents])];
+        upcomingEventsItems = Events.collection.find({ _id: { $in: unionEventIds } })
+          .fetch().sort(({ startDateTime: startA }, { startDateTime: startB }) => startA - startB);
       }
     }
 
