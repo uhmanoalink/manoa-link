@@ -107,15 +107,17 @@ const NavBar = () => {
               <NavDropdown
                 id="navbar-dropdown"
                 align="end"
-                title={(
-                  <Image
-                    style={{ aspectRatio: '1 / 1' }}
-                    src={imageUrl ?? '/images/sample-pfp.png'}
-                    alt="pfp"
-                    aria-details={currentUser}
-                    width={36}
-                  />
-                )}
+                title={
+                  ready ? (
+                    <Image
+                      style={{ aspectRatio: '1 / 1' }}
+                      src={imageUrl ?? '/images/sample-pfp.png'}
+                      alt="pfp"
+                      aria-details={currentUser}
+                      width={36}
+                    />
+                  ) : null
+                }
               >
                 <ProtectedRender allowedRoles={['student', 'company']}>
                   <NavDropdown.Item as={NavLink} to="/my-profile">
