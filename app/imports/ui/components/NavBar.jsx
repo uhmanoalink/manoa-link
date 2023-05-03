@@ -1,20 +1,43 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 import { useTracker } from 'meteor/react-meteor-data';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight, PersonCircle, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
+import { Images } from '../../api/image/Image';
 import ProtectedRender from './ProtectedRender';
+import { Students } from '../../api/student/Student';
+import { Companies } from '../../api/company/Company';
 
 const NavBar = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { currentUser } = useTracker(
-    () => ({
+  const { ready, currentUser, imageUrl } = useTracker(() => {
+
+    const imagesSub = Meteor.subscribe(Images.allImagesPublication);
+    const studentsSub = Meteor.subscribe(Students.studentPublicationName);
+    const companiesSub = Meteor.subscribe(Companies.companyPublicationName);
+
+    let imageId;
+    if (Roles.userIsInRole(Meteor.userId(), 'student')) {
+      const student = Students.collection.findOne({ userId: Meteor.userId() });
+      if (student) {
+        imageId = student.profileImageId;
+      }
+    } else if (Roles.userIsInRole(Meteor.userId(), 'company')) {
+      const company = Companies.collection.findOne({ userId: Meteor.userId() });
+      if (company) {
+        imageId = company.imageId;
+      }
+    }
+
+    return {
+      ready: imagesSub.ready() && studentsSub.ready() && companiesSub.ready(),
       currentUser: Meteor.user() ? Meteor.user().username : '',
-    }),
-    [],
-  );
+      imageUrl: Images.getFileUrlFromId(imageId),
+    };
+  }, []);
 
   const location = useLocation();
 
@@ -84,15 +107,17 @@ const NavBar = () => {
               <NavDropdown
                 id="navbar-dropdown"
                 align="end"
-                title={(
-                  <Image
-                    style={{ aspectRatio: '1 / 1' }}
-                    src="/images/sample-pfp.png"
-                    alt="pfp"
-                    aria-details={currentUser}
-                    width={36}
-                  />
-                )}
+                title={
+                  ready ? (
+                    <Image
+                      style={{ aspectRatio: '1 / 1' }}
+                      src={imageUrl ?? '/images/sample-pfp.png'}
+                      alt="pfp"
+                      aria-details={currentUser}
+                      width={36}
+                    />
+                  ) : null
+                }
               >
                 <ProtectedRender allowedRoles={['student', 'company']}>
                   <NavDropdown.Item as={NavLink} to="/my-profile">

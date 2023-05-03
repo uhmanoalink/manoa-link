@@ -8,99 +8,56 @@ import Company from '../components/Company';
 import AddToCalendarDropdown from '../components/AddToCalendarDropdown';
 import { Companies } from '../../api/company/Company';
 import { Listings } from '../../api/listing/Listing';
+import { Events } from '../../api/event/Event';
 import { Students } from '../../api/student/Student';
+import { Images } from '../../api/image/Image';
 
 const StudentDashboard = () => {
   const [activeFeed, setActiveFeed] = useState('events');
 
-  const sampleInterestingCompanies = [0, 1];
+  const { ready, student, interestingCompanies, upcomingEvents, savedListings } = useTracker(() => {
+    const imagesSub = Meteor.subscribe(Images.allImagesPublication);
+    const studentsSub = Meteor.subscribe(Students.studentPublicationName);
+    const companiesSub = Meteor.subscribe(Companies.studentPublicationName);
+    const listingsSub = Meteor.subscribe(Listings.studentPublicationName);
+    const eventsSub = Meteor.subscribe(Events.studentPublicationName);
 
-  const sampleEventData = [
-    {
-      id: 0,
-      eventName: 'Tech Talk',
-      description: 'A talk with professionals.',
-      imagePath: '/images/sample-pfp.png',
-      startDateTime: new Date('2023-04-16T18:00:00'),
-      endDateTime: new Date('2023-04-16T20:00:00'),
-      location: 'Campus Ballroom',
-      hostedBy: 'ACM Club',
-    },
-  ];
+    const rdy = imagesSub.ready() && studentsSub.ready() && companiesSub.ready() && listingsSub.ready() && eventsSub.ready();
 
-  const sampleCompanyData = {
-    0: {
-      companyName: 'UH Manoa',
-      companyPage: 'https://www.ics.hawaii.edu/',
-      address: '2500 Campus Rd, Honolulu, HI 96822',
-      description: 'The University of Hawaiʻi at Mānoa is a public land-grant research university in Mānoa, a neighborhood of Honolulu, Hawaii. It is the flagship campus of the University of Hawaiʻi system and houses the main offices of the system.',
-      image: '/images/sample-pfp.png',
-      tag: '',
-      owner: '',
-      _id: '0',
-    },
-    1: {
-      companyName: 'UH Manoa 1',
-      companyPage: 'https://www.ics.hawaii.edu/',
-      address: '2500 Campus Rd, Honolulu, HI 96822',
-      description: 'The University of Hawaiʻi at Mānoa is a public land-grant research university in Mānoa, a neighborhood of Honolulu, Hawaii. It is the flagship campus of the University of Hawaiʻi system and houses the main offices of the system.',
-      image: '/images/sample-pfp.png',
-      tag: '',
-      owner: '',
-      _id: '1',
-    },
-    2: {
-      companyName: 'UH Manoa 2',
-      companyPage: 'https://www.ics.hawaii.edu/',
-      address: '2500 Campus Rd, Honolulu, HI 96822',
-      description: 'The University of Hawaiʻi at Mānoa is a public land-grant research university in Mānoa, a neighborhood of Honolulu, Hawaii. It is the flagship campus of the University of Hawaiʻi system and houses the main offices of the system.',
-      image: '/images/sample-pfp.png',
-      tag: '',
-      owner: '',
-      _id: '2',
-    },
-  };
-
-  const { companiesReady, companies } = useTracker(() => {
-    const subscription = Meteor.subscribe(Companies.studentPublicationName);
-    const rdy = subscription.ready();
-    const allCompanies = Companies.collection.find({}).fetch();
-    return {
-      companiesReady: rdy,
-      companies: allCompanies,
-    };
-  });
-
-  const { jobsReady, listings, student } = useTracker(() => {
-    const subscription = Meteor.subscribe(Listings.studentPublicationName);
-    const rdy = subscription.ready();
-    const allListings = Listings.collection.find({}).fetch();
-    const subscription2 = Meteor.subscribe(Students.studentPublicationName);
     const studentDoc = Students.collection.findOne({ userId: Meteor.userId() });
+
+    let followedCompanyIds;
+    let upcomingEventsItems;
+    if (studentDoc) {
+      const followedCompanies = Companies.collection.find({ _id: { $in: studentDoc.followedCompanies } }).fetch();
+      followedCompanyIds = followedCompanies.map(company => company._id);
+      if (followedCompanyIds) {
+        const upcomingEventsItemsId = Events.collection.find({ companyId: { $in: followedCompanyIds } }, { fields: { _id: 1 } }).fetch();
+        const savedEvents = studentDoc.savedEvents;
+        const unionEventIds = [...new Set([...upcomingEventsItemsId, ...savedEvents])];
+        upcomingEventsItems = Events.collection.find({ _id: { $in: unionEventIds } })
+          .fetch().sort(({ startDateTime: startA }, { startDateTime: startB }) => startA - startB);
+      }
+    }
+
+    let savedListingsItems;
+    if (studentDoc) {
+      savedListingsItems = Listings.collection.find({ _id: { $in: studentDoc.savedListings } }).fetch();
+    }
+
+    let companiesNotFollowed;
+    if (followedCompanyIds) {
+      companiesNotFollowed = Companies.collection.find({ _id: { $nin: followedCompanyIds } }).fetch();
+    }
+
     return {
-      jobsReady: rdy,
-      listings: allListings,
+      ready: rdy,
       student: studentDoc,
+      interestingCompanies: companiesNotFollowed,
+      upcomingEvents: upcomingEventsItems,
+      savedListings: savedListingsItems,
     };
   });
-
-  const convertEmploymentType = (type) => {
-    switch (type) {
-    case 0: return 'in-person';
-    case 1: return 'remote';
-    case 2: return 'hybrid';
-    default: return 'unknown';
-    }
-  };
-
-  const convertScheduleType = (type) => {
-    switch (type) {
-    case 0: return 'full-time';
-    case 1: return 'part-time';
-    case 2: return 'flexible';
-    default: return 'unknown';
-    }
-  };
 
   /** @type {(event: React.MouseEvent<HTMLButtonElement>) => void} */
   const handleRemoveJob = (e) => {
@@ -130,28 +87,32 @@ const StudentDashboard = () => {
           <div className="feed">
             {(activeFeed === 'events') && (
               <div className="events-feed">
-                {sampleEventData.map(({ id, imagePath, eventName, description, startDateTime, endDateTime, location }) => (
-                  <Card className="event-card" key={id}>
-                    <Card.Img src={imagePath} alt="Event Image" />
-                    <Card.Body>
-                      <Card.Title>{eventName}</Card.Title>
-                      <Card.Text>{description}</Card.Text>
-                      <Card.Text>{`${startDateTime.toLocaleDateString()}`}</Card.Text>
-                      <Card.Text>{`${startDateTime.toLocaleTimeString()} - ${endDateTime.toLocaleTimeString()}`}</Card.Text>
-                      <Card.Text>{location}</Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                      <AddToCalendarDropdown
-                        eventName={eventName}
-                        description={description}
-                        location={location}
-                        startDateTime={startDateTime}
-                        endDateTime={endDateTime}
-                      />
-                    </Card.Footer>
-                  </Card>
-                ))}
-                {(sampleEventData.length === 0) && (
+                {upcomingEvents && upcomingEvents.map(({ _id, imageId, eventName, description, startDateTime, endDateTime, address }) => {
+                  const imagePath = Images.getFileUrlFromId(imageId);
+
+                  return (
+                    <Card className="event-card" key={_id}>
+                      <Card.Img src={imagePath} alt="Event Image" />
+                      <Card.Body>
+                        <Card.Title>{eventName}</Card.Title>
+                        <Card.Text>{description}</Card.Text>
+                        <Card.Text>{`${startDateTime.toLocaleDateString()}`}</Card.Text>
+                        <Card.Text>{`${startDateTime.toLocaleTimeString()} - ${endDateTime.toLocaleTimeString()}`}</Card.Text>
+                        <Card.Text>{address}</Card.Text>
+                      </Card.Body>
+                      <Card.Footer>
+                        <AddToCalendarDropdown
+                          eventName={eventName}
+                          description={description}
+                          location={address}
+                          startDateTime={startDateTime}
+                          endDateTime={endDateTime}
+                        />
+                      </Card.Footer>
+                    </Card>
+                  );
+                })}
+                {(upcomingEvents && upcomingEvents.length === 0) && (
                   <>
                     <h1 className="section-title">
                       😬 There&apos;s nothing to see...
@@ -165,9 +126,7 @@ const StudentDashboard = () => {
             )}
             {(activeFeed === 'jobs') && (
               <div className="jobs-feed">
-                { student && student.savedListings.map((listingId) => {
-                  const listing = Listings.collection.findOne({ _id: listingId });
-                  console.log(listing);
+                { savedListings && savedListings.map((listing) => {
                   const { companyId, title, description, imageID, website, location, employmentType, scheduleType, createdAt, startDate } = listing;
                   return (
                     <Card className="job-card" key={companyId}>
@@ -176,8 +135,8 @@ const StudentDashboard = () => {
                         <Card.Title>{title}</Card.Title>
                         <Card.Subtitle>{companyId}</Card.Subtitle>
                         <Card.Text>{description}</Card.Text>
-                        <Card.Text>{convertEmploymentType(employmentType).toUpperCase()}</Card.Text>
-                        <Card.Text>{convertScheduleType(scheduleType).toUpperCase()}</Card.Text>
+                        <Card.Text>{employmentType.toUpperCase()}</Card.Text>
+                        <Card.Text>{scheduleType.toUpperCase()}</Card.Text>
                         <Dropdown drop="end">
                           <Dropdown.Toggle>
                             <ThreeDots />
@@ -201,7 +160,7 @@ const StudentDashboard = () => {
                     </Card>
                   );
                 })}
-                {listings && (activeFeed === 'jobs') && (listings.length === 0) && (
+                {(activeFeed === 'jobs') && savedListings && (savedListings.length === 0) && (
                   <>
                     <h1 className="section-title">
                       😬 There&apos;s nothing to see...
@@ -218,7 +177,7 @@ const StudentDashboard = () => {
         <section id="interesting-companies">
           <h1 className="section-title">Companies you might be interested in:</h1>
           <div className="companies">
-            {companiesReady && companies.map((company) => (
+            {ready && interestingCompanies && interestingCompanies.map((company) => (
               <Company company={company} key={company._id} />
             ))}
           </div>
