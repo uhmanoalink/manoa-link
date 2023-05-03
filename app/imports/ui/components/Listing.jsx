@@ -6,6 +6,18 @@ import { Images } from '../../api/image/Image';
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 
 const defaultImage = 'images/sample-image-landscape.png';
+
+function addHttpAndWww(url) {
+  let newUrl = url;
+  if (!url.startsWith('http') && !url.startsWith('https')) {
+    newUrl = `https://${newUrl}`;
+  }
+  const hostname = new URL(newUrl).hostname;
+  if (!hostname.startsWith('www.')) {
+    newUrl = `https://www.${hostname}`;
+  }
+  return newUrl;
+}
 const Listing = ({ listing }) => (
   <Col xs={12} md={4}>
     <Card className="justify-content-center" id="listing-card">
@@ -13,7 +25,9 @@ const Listing = ({ listing }) => (
       <Card.Title id="listing-card-title">{listing.title}</Card.Title>
       <Card.Text id="listing-card-text">Company: {listing.companyId}</Card.Text>
       <Card.Text id="listing-card-text">{listing.description}</Card.Text>
-      <Card.Link id="listing-card-link" to={listing.website}><button type="submit" className="visit-button">More Info</button></Card.Link>
+      <Card.Link id="listing-card-link" href={addHttpAndWww(listing.website)} target="_blank">
+        <button className="visit-button" >More Info</button>
+      </Card.Link>
     </Card>
   </Col>
 );

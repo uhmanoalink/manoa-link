@@ -35,7 +35,7 @@ const formSchema = new SimpleSchema({
 const bridge = new SimpleSchema2Bridge(formSchema);
 const ManageListings = () => {
   const [imageDoc, setImageDoc] = useState(null);
-  const [uploadedFileId, setUploadedFileId] = useState();
+  const [uploadedFileId, setUploadedFileId] = useState("noId");
 
   const convertImage = async (url) => {
     const file = await Images.getFileFromImageUrl(url);
@@ -129,7 +129,7 @@ const ManageListings = () => {
                   name="employmentType"
                   options={[
                     { label: 'In-Person', value: 'in-person' },
-                    { label: 'Remote', value: 'remote' },
+                    { label: 'Online', value: 'online' },
                     { label: 'Hybrid', value: 'hybrid' },
                   ]}
                   placeholder="Select"
