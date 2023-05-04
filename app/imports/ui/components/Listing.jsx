@@ -47,7 +47,7 @@ const Listing = ({ listing }) => {
   }
   let companyName;
   if (readyCompany) {
-    companyName = company.name;
+    companyName = company ? company.name : undefined;
   }
   return (
     <Col xs={12} md={3}>
